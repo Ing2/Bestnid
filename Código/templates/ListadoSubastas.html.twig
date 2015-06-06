@@ -1,0 +1,204 @@
+<!DOCTYPE HTML>
+<head>
+<title>{% block title %}{% endblock %}</title>
+{%block meta%}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
+{%endblock%}
+{% block stylesheets %}
+<link href="../estilos/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="../javascript/jquery-1.9.0.min.js"></script> 
+<script type="text/javascript" src="../javascript/jquery.min.js"></script>
+<script type="text/javascript" src="../javascript/bootstrap.min.js"></script>
+<script type="text/javascript" src="../javascript/easing.js"></script>
+<script type="text/javascript" src="../javascript/move-top.js"></script>
+{% endblock %}
+</head>
+<body>
+
+	<div class="header">
+	 {% block header%}
+  	  		<div class="wrap">
+				<div class="header_top">
+					<div class="logo">
+						<a href="index.html"><img src="../imagenes/logo.jpg" alt="{{Bestnid}}" /></a>
+						<img src="../imagenes/slider-img.png" alt="{{Bestnid}}" />
+						<img src="../imagenes/logo2.jpg" alt="{{Bestnid}}" />
+					</div>
+					
+			
+						<div class="header_top_right">
+							  <div class="search_box">
+							  	<span>{{Buscar}}</span>
+					     		<form>
+					     			<input type="text" value=""><input type="submit" value="">
+					     		</form>
+					     		<div class="clear"></div>
+					     	</div>
+					</div>
+					
+			     <div class="clear"></div>
+  		    </div>     
+  		    <div class="navigation">
+  		    	<a class="toggleMenu" href="#">{{Menu}}</a>
+					<ul class="nav">
+						<li>
+							<a href="index.html">{{Home}}</a>
+						</li>
+						<li  class="test">
+							<a href="#">{{SobreBestnid}}</a>
+							<ul>
+								
+								
+								
+							</ul>
+						</li>
+						<li>
+							<a href="#">{{Subastas}}</a>
+							<ul>
+								
+							</ul>
+						</li>
+						<li>
+							<a href="#">{{ComoSubastar}}</a>
+							
+						</li>
+						
+						<li>
+							<a href="#">{{MapaDelSitio}}</a>
+						</li>
+						<li>
+							<a href="#">{{IniciarSesion}}</a>
+						</li>
+						<li>
+							<a href="contacto.html">{{MiCuenta}}</a>
+						</li>
+						<li>
+							<a href="contacto.html">{{Registrarse}}</a>
+						</li>
+					</ul>
+					
+  		    </div>
+
+   		</div>
+		{%endblock%}
+   </div>
+   <!------------Cabezera------------>
+   
+  <div class="main">
+  {% block main%}
+      <div class="content">
+    	       
+    	  <div class="content_bottom">
+		  {% block menu%}
+		  
+		  
+    	    <div class="wrap">
+			 
+			
+			
+    	    	
+    	    	
+    	    	<h7>Listado de todas las subastas de Bestnid</h7>
+				
+	           <div class="volver"><a href="../sesion/controlbackend.php"> >>Volver Atrás</a></div><br>
+				
+				<table class="table table-bordered">
+				<thead>
+                <tr>
+                <th>Titulo</th>
+                <th>Descripcion</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+			    <th>Estado</th>
+				<th>Categoria</th>
+				<th>Usuario</th>
+				<th>Ver Subasta</th>
+                </tr>
+                </thead>
+				<tbody>
+				{% for subasta in subastas %} 
+						
+					{% if subasta.getIdEstadoSub()==1 %}
+                               <tr class="info">
+                   {% endif %}	
+				   	{% if subasta.getIdEstadoSub()==2 %}
+                               <tr class="danger">
+                   {% endif %}
+				   	{% if subasta.getIdEstadoSub()==3 %}
+                               <tr class="sucess">
+                   {% endif %}
+					 	{% if subasta.getIdEstadoSub()==4 %}
+                               <tr class="warning">
+                   {% endif %}	
+					   
+							
+                    
+						
+                 
+				
+					
+					
+				
+				<td>{{subasta.getTitulo()}}</td>
+				 <td>{{subasta.getDescripcion()}}</td>
+				 <td>{{subasta.getFechaInicio()}}</td>
+				 <td>{{subasta.getFechaFin()}}</td>
+				 <td>{{subasta.recuperarEstadoSubasta(subasta.getIdEstadoSub())}}</td>
+				 <td>{{subasta.recuperarCategoriaSubasta(subasta.getIdCategoriaSub())}}</td>
+				 <td>{{subasta.recuperarUsuarioSubasta(subasta.getIdUsuarioSub())}}</td>
+				  <td><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></td>
+				</tr>
+				{%endfor %}  
+
+       </tbody>
+</table>
+			</div>
+					 
+				
+				    
+				
+				 </div>
+			    </div>
+		      </div>
+		      <div class="clear"></div>
+		   </div>
+         </div>
+		 {%endblock%}
+      </div>
+	  {%endblock%}
+    </div>
+   <div class="footer">
+   {% block footer%}
+   	  <div class="wrap">	
+			 <div class="copy_right">
+				<p>Bestnid © Todos los derechos reservados </p>
+		   </div>	
+		   <div class="footer-nav">
+		   	<ul>
+		   		<li><a href="#">Terminos de uso</a> : </li>
+		   		<li><a href="#">Privacidad</a> : </li>
+		   		
+		   	</ul>
+		   </div>		
+        </div>
+	{%endblock%}
+    </div>
+	{% block final%}
+    <script type="text/javascript">
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+	</script>
+    <a href="#" id="toTop"> </a>
+    <script type="text/javascript" src="../javascript/navigation.js"></script>
+	{%endblock%}
+	
+</body>
+</html>

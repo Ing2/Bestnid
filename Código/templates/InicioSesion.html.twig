@@ -1,0 +1,51 @@
+{% extends 'index.html.twig' %}
+ 
+{% block title %}Bestnid{% endblock %}
+{% block stylesheets %}
+
+<link href="../estilos/style.css" rel="stylesheet" type="text/css" media="all"/>
+
+<link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
+
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="../javascript/validarInicioSesion.js"></script>
+  
+	
+{% endblock %}
+ 
+{% block body %}
+
+{{ parent() }} 
+{% block main%} 
+
+<h8>Gracias por volver a elegirnos!</h8><br>
+&nbsp<img src="../imagenes/martillo.jpg" alt="Bienvenido Smile">
+<div class="wrap6">
+						  <form method="POST" onSubmit="return myFunction()" action="ControlarSesion.php">
+						
+									<div class="titulo">{{IniciarSesion}}</div>  
+								
+										Email:<br>
+										
+										<input title="" type="email" class="form-control2" name="email" id="email" size="30" value="" required/>
+										<br>Contraseña:
+										<input title="" type="password" class="form-control2" name="password" id="password" size="30" value="" required/>
+								
+									<br><input type="submit" class="btn btn-primary" value="Iniciar Sesion" onClick="myFunction()">
+								<br><br>
+						</form>
+						
+						</div><br>
+	
+<div class="volver"><a href="../templates/index2.php">Volver Al Inicio</a></div><br>	
+
+{%endblock%}
+{%endblock%}
+
+
+{% block footer%}	
+{{ parent() }}
+{%endblock%}

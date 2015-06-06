@@ -1,0 +1,237 @@
+
+<!DOCTYPE HTML>
+<head>
+<title>{% block title %}{% endblock %}</title>
+{%block meta%}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
+{%endblock%}
+{% block stylesheets %}
+<link href="../estilos/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../font/css/font-awesome.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../font/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all"/>
+
+
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="../javascript/jquery-1.9.0.min.js"></script> 
+<script src="../javascript/jquery.openCarousel.js" type="text/javascript"></script>
+<script type="text/javascript" src="../javascript/easing.js"></script>
+<script type="text/javascript" src="../javascript/move-top.js"></script>
+<script type="text/javascript" src="../javascript/validarFechas.js"></script>
+{% endblock %}
+</head>
+<body>
+
+	<div class="header">
+	 {% block header%}
+  	  		<div class="wrap">
+				<div class="header_top">
+					<div class="logo">
+						<a href="index.html"><img src="../imagenes/logo.jpg" alt="{{Bestnid}}" /></a>
+						<img src="../imagenes/slider-img.png" alt="{{Bestnid}}" />
+						<img src="../imagenes/logo2.jpg" alt="{{Bestnid}}" />
+					</div>
+					
+			
+						
+					
+			     <div class="clear"></div>
+  		    </div>     
+  		    <div class="navigation">
+  		    	<a class="toggleMenu" href="#">{{Menu}}</a>
+					<ul class="nav">
+						<li>
+							<a href="../templates/index.php">{{Home}}</a>
+						</li>
+						
+						<li>
+							<a href="#">{{Subastas}}</a>
+							<ul>
+								
+							</ul>
+						</li>
+						
+						
+						
+						<li>
+							<a href="../sesion/inicioSesion.php">{{IniciarSesion}}</a>
+						</li>
+						
+						<li>
+							<a href="../registro/Registro.php">{{Registrarse}}</a>
+						</li>
+						<li>
+							<a href="../ayuda/Ayuda.php">{{Ayuda}}</a>
+						</li>
+					</ul>
+					
+  		    </div>
+
+   		</div>
+		{%endblock%}
+   </div>
+   <!------------Cabezera------------>
+   
+  <div class="main">
+  {% block main%}
+					<a href="../templates/index2.php" accesskey="i"> </a>
+				   <a href="../registro/Registro.php" accesskey="q"> </a>
+      <div class="content">
+    	        <div class="content_top">
+				
+    	        	<div class="wrap">
+		          	   <h4>Categorias</h4>
+		          	</div>
+		          	<div class="line"> </div>
+		          	<div class="wrap">
+		          	 <div class="ocarousel_slider">  
+	      				<div class="ocarousel example_photos" data-ocarousel-perscroll="3">
+			                <div class="ocarousel_window">
+			                   <a href="#" title="Alimentos"> <img src="../imagenes/Alimentos.jpg" alt="Alimentos" /><p>Alimentos</p></a>
+			                   <a href="#" title="Computacion"> <img src="../imagenes/computacion.jpg" alt="" /><p>Computacion</p></a>
+			                   <a href="#" title="Electrodomesticos"> <img src="../imagenes/electrodomesticos.jpg" alt="" /><p>Electrodomesticos</p></a>
+			                   <a href="#" title="Muebles"> <img src="../imagenes/muebles.jpg" alt="" /><p>Muebles</p></a>
+			                   <a href="#" title="Ropa y Accesorios"> <img src="../imagenes/ropa.jpg" alt="" /><p>Ropa y Accesorios</p></a>
+			                   <a href="#" title="Antiguedades"> <img src="../imagenes/antiguedad.jpg" alt="" /><p>Antiguedades</p></a>
+			                   <a href="#" title="Camaras"> <img src="../imagenes/camara.jpg" alt="" /><p>Camaras</p></a>
+			                   <a href="#" title="Libros y Revistas"> <img src="../imagenes/libro.jpg" alt="" /><p>Libros y Revistas</p></a>
+			                   <a href="#" title="Joyas y Relojes"> <img src="../imagenes/reloj.jpg" alt="" /><p>Joyas y Relojes</p></a>
+			                   <a href="#" title="Animales"> <img src="../imagenes/animal.jpg" alt="" /><p>Animales</p></a>
+			                   <a href="#" title="Coleccionables"> <img src="../imagenes/coleccionable.jpg" alt="" /><p>Coleccionables</p></a>
+			                   <a href="#" title="Celulares y Telefonos"> <img src="../imagenes/celular.jpg" alt="" /><p>Celulares y Telefonos</p></a>
+							    <a href="#" title="Otros"> <img src="../imagenes/kriptonita.jpg" alt="" /><p>Otros</p></a>
+			                </div>
+			               <span>           
+			                <a href="#" data-ocarousel-link="left" style="float: left;" class="prev"> </a>
+			                <a href="#" data-ocarousel-link="right" style="float: right;" class="next"> </a>
+			               </span>
+					   </div>
+				     </div>  
+				   </div>    		
+    	       </div>
+    	  <div class="content_bottom">
+		  {% block menu%}
+    	    <div class="wrap">
+    	    	<div class="content-bottom-left">
+    	    		<div class="categories">
+						   <ul>
+						  	  <div class="panel-heading">Filtros de subastas</div>
+							   
+						<div class="wrap4">
+				
+				           <form METHOD="GET" onSubmit="return validacionFechas()" action="index3.php" >
+                           <strong>Nombre De subasta: </strong><input class="form-control" type="text" name="titulo" >
+								   
+                           
+                           
+                           </div>
+						    <div class="wrap4">
+                 
+				<strong>Categoria de la subasta:</strong><select name="categoria" class="form-control">
+				<option selected="selected" name="categoria" value="i">Seleccionar Categoria</option>
+				   {% for categoria in categorias %}                   							
+								<option  name="categoria" id="categoria" value="{{categoria.getIdCategoria()}}" >{{categoria.getContenidoCategoria()}}</option>
+				   {%endfor %}
+					
+				 </select>
+				 
+                 </div>
+				 <div class="wrap4">
+
+			<strong>Subastas entre dos fechas:</strong><br>
+			Fecha Inicio:<input type="date" name="fechainicio" id="fechainicio"><br><br>
+			Fecha Fin:  &nbsp; <input type="date" name="fechafin" id="fechafin">
+			&nbsp;<input type="submit" class="btn btn-primary" value="Buscar">
+</form>			
+</div>
+				 
+				 
+				 <div class="wrap4">
+<form action="index5.php">
+			<strong>Ordenar subastas por:</strong><hr>
+			
+        <strong><a href='index4.php'>Ordenar Alfabéticamente</a></strong><hr>
+		<strong><a href='index5.php'>Ordenar por fecha de vencimiento</a></strong>
+</form>			
+</div>
+				 
+				 
+						  	 </ul>
+						</div>	
+                         
+    	    	</div>
+    	    	
+    	    	<div class="content-bottom-right">
+    	    	<div class="panel-heading2">Subastas Activas</div>
+					
+         
+	
+			   <div class="section group">
+			
+						
+				        {% for subasta in subastas %}        
+						<div class="grid_1_of_4 images_1_of_4">
+							   <strong><h4>{{subasta.getTitulo()}}</h4></strong>
+								<a href="preview.html" title="{{subasta.getTitulo()}}"><img src="../{{subasta.recuperarFoto(subasta.getIdSubasta())}}" alt="" /></a>
+								  <div class="price-details">
+								  <div class="vencimiento"><strong>Vence el día: {{subasta.getFechaFin()}}</strong></div>
+					       		          <div class="descripcion">	
+													<strong>{{subasta.getDescripcion()}}</strong></div>
+													<div class="add-cart">
+									      <div class="panel-heading3"><a href="#" title="Haga click para ver la subasta mas detalladamente y/o hacer un ofertar">Ver Subasta</a></div>
+							                 </div>
+							             <div class="clear"></div>
+								
+					            </div>
+						</div>	
+						
+			            {%endfor %}        
+						
+			
+						
+			    </div>
+				
+				
+		      </div>
+		      <div class="clear"></div>
+		   </div>
+         </div>
+		 {%endblock%}
+      </div>
+	  {%endblock%}
+    </div>
+   <div class="footer">
+   {% block footer%}
+   	  <div class="wrap">	
+			 <div class="copy_right">
+				<p>Bestnid © Todos los derechos reservados </p>
+		   </div>	
+		   <div class="footer-nav">
+		   	<ul>
+		   		<li><a href="#">Terminos de uso</a> : </li>
+		   		<li><a href="#">Privacidad</a> : </li>
+		   		
+		   	</ul>
+		   </div>		
+        </div>
+	{%endblock%}
+    </div>
+	{% block final%}
+    <script type="text/javascript">
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+	</script>
+    <a href="#" id="toTop"> </a>
+    <script type="text/javascript" src="javascript/navigation.js"></script>
+	{%endblock%}
+	
+</body>
+</html>
+

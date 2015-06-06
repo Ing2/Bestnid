@@ -1,0 +1,119 @@
+{% extends 'index.html.twig' %}
+ 
+{% block title %}Bestnid{% endblock %}
+{% block stylesheets %}
+
+<link href="../estilos/style.css" rel="stylesheet" type="text/css" media="all"/>
+
+<link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="http://fonts.googleapis.com/css?family=Corben:bold" rel="stylesheet" type="text/css">
+ <link href="http://fonts.googleapis.com/css?family=Nobile" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="../javascript/validarInicioSesion.js"></script>
+  
+	
+{% endblock %}
+ 
+{% block body %}
+
+			<script type="text/javascript"><!--
+google_ad_client = "pub-2674404638298268";
+google_ad_width = 728;
+google_ad_height = 90;
+google_ad_format = "728x90_as";
+google_ad_type = "text_image";
+google_ad_channel ="";
+google_color_border = "000000";
+google_color_bg = "FFFFC0";
+google_color_link = "0000CC";
+google_color_url = "008000.html";
+google_color_text = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+{{ parent() }} 
+{% block main%} 	
+<h7>Regístrate para empezar a subastar!</h7><br>
+
+<img src="../imagenes/Bienvenido2.png" alt="Bienvenido Smile">
+<div class="wrap6">
+						  <div class="titulo">Registro</div>  
+				   
+	
+<title>Librer&iacute;a JavaScript para validar formularios HTML sin programar</title>
+</head>
+<body>
+
+<script type="text/javascript" src="../javascript/editcheck.js"></script>
+
+<form method="POST" name="form1" onSubmit="return valforms(this)" action="../usuario/altausuario.php">
+Correo electr&oacute;nico:
+
+<input type="email" name="email" class="form-control2" id="email" size=50  maxlength=80 onChange="return valforms(this.form,this)" editcheck="type=email;req=Y=Por favor ingrese su e-mail;cvt=UTC" action="../usuario/altausuario.php" required/>
+
+
+  Nombre: 
+    <input type=text name="nombre" title="Ingrese como minimo 2 letras para su nombre" class="form-control2" id="nombre" id=size=20  maxlength=50 onChange="return valforms(this.form,this)" editcheck="type=alpha;req=Y=Por favor ingrese su nombre;cvt=UTC" required/> 
+
+
+Apellido:
+<input type=text name="apellido" class="form-control2" id="apellido" size=20  maxlength=50 onChange="return valforms(this.form,this)" editcheck="type=alpha2;req=Y=Por favor ingrese su apellido;cvt=UTC" required/>
+ 
+
+Contraseña: 
+<input type="password" class="form-control2" name="con1" id="con1" size=20 minlength=5 maxlength=25 onChange="return valforms(this.form,this)" editcheck="type=pass;req=Y=Por favor ingrese una contraseña;cvt=UTC" required/>
+
+
+Repetir Contraseña: 
+<input type="password" class="form-control2" name="con2" id="con2" size=20 minlength=5 maxlength=25 onChange="return valforms(this.form,this)" editcheck="type=pass2;req=Y=Por favor repita su contraseña;cvt=UTC" required/>
+
+<BR><BR>
+
+
+
+
+
+<input type=submit value="Enviar"> <input type=reset>
+
+</form>
+
+</table>
+<script type="text/javascript"><!--
+google_ad_client = "pub-2674404638298268";
+google_ad_width = 728;
+google_ad_height = 90;
+google_ad_format = "728x90_as";
+google_ad_type = "text_image";
+google_ad_channel ="";
+google_color_border = "000000";
+google_color_bg = "FFFFC0";
+google_color_link = "0000CC";
+google_color_url = "008000.html";
+google_color_text = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+					<br>
+				   
+						
+						</div>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br><br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+{%endblock%}
+{%endblock%}
+
+
+{% block footer%}	
+{{ parent() }}
+{%endblock%}

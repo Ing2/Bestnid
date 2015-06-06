@@ -1,0 +1,159 @@
+
+<!DOCTYPE HTML>
+<head>
+<title>{% block title %}{% endblock %}</title>
+{%block meta%}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
+{%endblock%}
+{% block stylesheets %}
+<link href="../estilos/style.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="../javascript/jquery-1.9.0.min.js"></script> 
+<script src="../javascript/jquery.openCarousel.js" type="text/javascript"></script>
+<script type="text/javascript" src="../javascript/easing.js"></script>
+<script type="text/javascript" src="../javascript/move-top.js"></script>
+{% endblock %}
+</head>
+<body>
+
+	<div class="header">
+	 {% block header%}
+  	  		<div class="wrap">
+				<div class="header_top">
+					<div class="logo">
+						<a href="index.html"><img src="../imagenes/logo.jpg" alt="{{Bestnid}}" /></a>
+						<img src="../imagenes/slider-img.png" alt="{{Bestnid}}" />
+						<img src="../imagenes/logo2.jpg" alt="{{Bestnid}}" />
+					</div>
+					
+			
+						<div class="header_top_right">
+							  <div class="search_box">
+							  	<span>{{Buscar}}</span>
+					     		<form>
+					     			<input type="text" value=""><input type="submit" value="">
+					     		</form>
+					     		<div class="clear"></div>
+					     	</div>
+					</div>
+					
+			     <div class="clear"></div>
+  		    </div>     
+  		    <div class="navigation">
+  		    	<a class="toggleMenu" href="#">{{Menu}}</a>
+					<ul class="nav">
+						<li>
+							<a href="index.html">{{Home}}</a>
+						</li>
+						
+						<li>
+							<a href="#">{{Subastas}}</a>
+							<ul>
+								
+							</ul>
+						</li>
+						
+						
+						<li>
+							<a href="contacto.html">{{MiCuenta}}</a>
+						</li>
+						<li>
+							<a href="../ayuda/ayuda.php">{{Ayuda}}</a>
+						</li>
+						<li>
+							<a href="#">{{CerrarSesion}}</a>
+						</li>
+					</ul>
+					
+  		    </div>
+
+   		</div>
+		{%endblock%}
+   </div>
+   <!------------Cabezera------------>
+   
+  <div class="main">
+  {% block main%}
+      <div class="content">
+    	       
+    	  <div class="content_bottom">
+		  {% block menu%}
+    	    <div class="wrap">
+    	    	<div class="content-bottom-left">
+    	    		<div class="categories">
+						   <ul>
+						  	   <h3>{{Acciones}}</h3>
+							   <li ><a href="../admin/listadosubastas.php">Listado de Subastas</a></li>
+							     <li><a href="#">{{ModificarDatos}}</a></li>				         
+								<li><a href="#">{{ManejoUsuario}}</a></li>
+								<li><a href="#">{{ManejoCategoria}}</a></li>
+			                    <li><a href="#">{{VerComentarios}}</a></li>
+								 <li><a href="#">{{VerOfertas}}</a></li>
+								<li ><a href="#">{{VerSubastas}}</a></li>
+								
+						
+						  	 </ul>
+						</div>	
+                         
+    	    	</div>
+    	    	
+    	    	<div class="content-bottom-right">
+    	    	<h3>{{Admin}}</h3>
+				
+	            
+				
+		
+				
+			   
+			  
+				
+				
+			
+			  
+			
+					 
+				
+				    
+				
+				 </div>
+			    </div>
+		      </div>
+		      <div class="clear"></div>
+		   </div>
+         </div>
+		 {%endblock%}
+      </div>
+	  {%endblock%}
+    </div>
+   <div class="footer">
+   {% block footer%}
+   	  <div class="wrap">	
+			 <div class="copy_right">
+				<p>Bestnid © Todos los derechos reservados </p>
+		   </div>	
+		   <div class="footer-nav">
+		   	<ul>
+		   		<li><a href="#">Terminos de uso</a> : </li>
+		   		<li><a href="#">Privacidad</a> : </li>
+		   		
+		   	</ul>
+		   </div>		
+        </div>
+	{%endblock%}
+    </div>
+	{% block final%}
+    <script type="text/javascript">
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+	</script>
+    <a href="#" id="toTop"> </a>
+    <script type="text/javascript" src="javascript/navigation.js"></script>
+	{%endblock%}
+	
+</body>
+</html>
