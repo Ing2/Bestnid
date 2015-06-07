@@ -6,11 +6,11 @@
 
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
- font-family: 'Tech';
+  font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
- @font-face {
+@font-face {
   font-family: 'Tech';
   src: url('Tech.ttf');
 }
@@ -269,7 +269,7 @@ th {
   }
 }
 @font-face {
-  font-family:'Glyphicons Halflings';
+  font-family: 'Tech';
 
   src: url('../fonts/glyphicons-halflings-regular.eot');
   src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
@@ -278,7 +278,7 @@ th {
   position: relative;
   top: 1px;
   display: inline-block;
-  font-family:'Glyphicons Halflings';
+  font-family: 'Tech';
   font-style: normal;
   font-weight: normal;
   line-height: 1;
@@ -1090,7 +1090,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: 'Tech';
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333;
@@ -1530,7 +1530,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: 'Tech';
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 code {
   padding: 2px 4px;
@@ -2366,7 +2366,7 @@ table th[class*="col-"] {
 .table > thead > tr.success > th,
 .table > tbody > tr.success > th,
 .table > tfoot > tr.success > th {
-  background-color: blue;
+  background-color: #dff0d8;
 }
 .table-hover > tbody > tr > td.success:hover,
 .table-hover > tbody > tr > th.success:hover,
@@ -5320,58 +5320,11 @@ a.list-group-item-danger.active:focus {
   padding: 15px;
 }
 .panel-heading {
-	font-weight:700;
-  background-color:#89191E;
   padding: 10px 15px;
-  color:white;
   border-bottom: 1px solid transparent;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
 }
-.panel-heading a{
-  color:white;  
-}
-.panel-heading a :hover{
-  color:white;  
-}
-
-
-
-.panel-heading2 {
-font-weight:700;
-  background-color:#23272a;
-  padding: 10px 15px;
-  color:white;
-  border-bottom: 1px solid transparent;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-}
-.panel-heading3 {
-  margin-left:10%;
-  background-color:#89191E;
-  width:140px;
-  color:white;
-  border-bottom: 1px solid transparent;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-}
-.panel-heading3  :hover{
-  background-color:#23272a;
- text-decoration:none;   
-  color:white;
-
-}
-.panel-heading3 a {
-  font-weight:300;
-	color:white;
-	font-size:16px;
-	padding-bottom:5px;
-	overflow:hidden;
-    white-space:nowrap;
-    text-overflow: ellipsis;
-}
-
-
 .panel-heading > .dropdown .dropdown-toggle {
   color: inherit;
 }
@@ -5895,7 +5848,7 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: 'Tech';
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 12px;
   font-weight: normal;
   line-height: 1.4;
@@ -6002,7 +5955,7 @@ button.close {
   display: none;
   max-width: 276px;
   padding: 1px;
-  font-family: 'Tech';
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
   line-height: 1.42857143;
@@ -6259,7 +6212,7 @@ button.close {
   width: 20px;
   height: 20px;
   margin-top: -10px;
-  font-family: 'Tech';
+  font-family: serif;
   line-height: 1;
 }
 .carousel-control .icon-prev:before {
@@ -6631,6 +6584,5 @@ button.close {
   .hidden-print {
     display: none !important;
   }
-  
 }
 /*# sourceMappingURL=bootstrap.css.map */
