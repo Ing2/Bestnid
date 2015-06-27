@@ -1,0 +1,287 @@
+<?php
+
+session_start();
+
+
+
+?>
+<!DOCTYPE HTML>
+<head>
+<title>{% block title %}{% endblock %}</title>
+{%block meta%}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
+{%endblock%}
+{% block stylesheets %}
+<link href="../estilos/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.min2.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../font/css/font-awesome.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../font/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="../javascript/jquery-1.9.0.min.js"></script> 
+<script src="../javascript/jquery.openCarousel.js" type="text/javascript"></script>
+<script type="text/javascript" src="../javascript/easing.js"></script>
+<script type="text/javascript" src="../javascript/move-top.js"></script>
+<script type="text/javascript" src="../javascript/editcheck2.js"></script>
+<script type="text/javascript" src="../javascript/bootstrap.min.js"></script>
+<script type="text/javascript" src="../javascript/jquery.min.js"></script>
+<script type="text/javascript" src="../javascript/bootstrap-collapse.js"></script>
+<script type="text/javascript" src="../javascript/bootstrap-transition.js"></script>
+{% endblock %}
+
+<script language="JavaScript">
+function muestra_oculta(id){
+if (document.getElementById){ //se obtiene el id
+var el = document.getElementById(id); //se define la variable "el" igual a nuestro div
+el.style.display = (el.style.display == 'none') ? 'block' : 'none'; //damos un atributo display:none que oculta el div
+}
+}
+window.onload = function(){/*hace que se cargue la función lo que predetermina que div estará oculto hasta llamar a la función nuevamente*/
+muestra_oculta('contenido_a_mostrar');/* "contenido_a_mostrar" es el nombre que le dimos al DIV */
+}
+</script>
+
+
+</head>
+<body>
+
+	<div class="header">
+	 {% block header%}
+  	  		<div class="wrap">
+				<div class="header_top">
+					<div class="logo">
+						<a href="../index.php"><img src="../imagenes/logo.jpg" alt="{{Bestnid}}" /></a>
+						<img src="../imagenes/slider-img.png" alt="{{Bestnid}}" />
+						<img src="../imagenes/logo2.jpg" alt="{{Bestnid}}" />
+					</div>
+					
+		
+					
+			     <div class="clear"></div>
+  		    </div>     
+  		    <div class="navigation">
+  		    	<a class="toggleMenu" href="#">{{Menu}}</a>
+					<ul class="nav">
+						<li>
+						<a href="../templates/index.php">{{Home}}<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>	
+						</li>
+						
+						<li>
+							<a href="#">{{Subastas}}</a>
+							<ul>
+								
+							</ul>
+						</li>
+						
+							{% if sobrebestnid is not null %}		
+						<li>
+							<a href="../sobrebestnid/sobrebestnid.php">{{sobrebestnid}}</a>
+						</li>
+						{% endif %}
+						
+							{% if contacto is not null %}		
+						<li>
+							<a href="../contacto/contacto.php">{{contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+						</li>
+						{% endif %}
+						
+						
+						
+						{% if IniciarSesion is not null %}		
+						<li>
+							<a href="../sesion/inicioSesion.php">{{IniciarSesion}}<span class="glyphicon glyphicon-off" aria-hidden="true"></span></a>
+						</li>
+						{% endif %}
+						
+						{% if Registrarse is not null %}		
+						<li>
+							<a href="../registro/Registro.php">{{Registrarse}}<span class="glyphicon glyphicon-align-left"></span></a>
+						</li>
+						{% endif %}
+						
+						
+					
+						
+						
+						
+							
+						
+						
+						
+						
+						
+						
+						
+						{% if MiCuenta is not null %}
+						<li>
+							<a href="../ayuda/Ayuda.php">{{MiCuenta}}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span></a>
+					
+							
+							
+						</li>
+						{% endif %}
+						
+						{% if CerrarSesion is not null %}
+						<li>
+							<a href="../sesion/CerrarSesion.php">{{CerrarSesion}}<span class="glyphicon glyphicon-off" aria-hidden="true"></span></a>
+						</li>
+						{% endif %}
+						
+						<li>
+							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
+						</li>
+						
+						
+						{% if (nombre is not null) and (apellido is not null) %}		
+						<li>
+							
+							{% if tipo==1 %}
+							<a href="../sesion/controlBackEnd.php">{{bienvenido}}{{nombre}} {{apellido}}<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+							{% else %}
+							<a href="../sesion/controlFrontEnd.php">{{bienvenido}}{{nombre}} {{apellido}}<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+							{% endif %}
+						</li>
+						{% endif %}
+						
+					</ul>
+					
+  		    </div>
+
+   		</div>
+		{%endblock%}
+   </div>
+   <!------------Cabezera------------>
+   
+  <div class="main2">
+  {% block main%}
+      
+    	       
+    	  <div class="content_bottom2">
+		  {% block menu%}
+    	    <div class="wrap">
+    	    	<div class="content-bottom-left2">
+    	    		<div class="categories">
+					<div class="panel-heading11">Acciones</div>
+					
+						   <ul>
+						 <li ><a href="../usuario/ListadoSubastasActivas.php">Mis Subastas Activas</a></li>
+							     <li><a href="../subasta/altasubasta.php">Crear Subasta</a></li>
+								<li><a href="#">Modificar Datos Personales</a></li>
+								<li><a href="#">Ver Mi Historial de ofertas</a></li>
+			                    <li><a href="#">Ver Ofertas Actuales</a></li>
+								 <li><a href="#">Ver Mis Comentarios</a></li>
+								<li ><a href="#">Darme de baja</a></li>
+								
+						
+						  	 </ul>
+						</div>	
+                         
+    	    	</div>
+    	    	
+    	    	<div class="content-bottom-right2">
+    	    	<div class="panel-heading2">Alta de una subasta</div>
+				<div class="wrap">
+				<div class="linea">Complete el siguiente formulario para dar de alta una subasta en Bestnid 
+				
+				
+				<span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span></div>
+					
+					{% if agrego is not null %}		
+						Se Agrego una nueva subasta a Bestnid!!!
+				{% endif %}
+					
+	            <form method="POST" name="form1" onSubmit="return valforms(this)" action="../subasta/crearsubasta.php" enctype="multipart/form-data">
+  <div class="titulos">Titulo:</div>  
+ <input type=text name="titulo" title="Ingrese como minimo 2 letras para el Titulo" class="form-control2" id="titulo"  size="20"  maxlength="50" onChange="return valforms(this.form,this)" editcheck="type=alpha;req=Y=Por favor ingrese su nombre;cvt=UTC" /> 
+	
+ <div class="titulos">Descripción:</div> 
+<input type=text-area name="descripcion" class="form-control2" id="descripcion" size="120"  maxlength="100" onChange="return valforms(this.form,this)" editcheck="type=alpha2;req=Y=Por favor ingrese su apellido;cvt=UTC"/>
+ 
+ <div class="titulos">Categoría:</div> 
+<select name="categoria" class="form-control11">
+				
+				   {% for categoria in categorias %}                   							
+								<option  name="categoria" id="categoria" value="{{categoria.getIdCategoria()}}" >{{categoria.getContenidoCategoria()}}</option>
+				   {%endfor %}
+					
+				 </select>
+				 <div class="titulos">Cantidad de días en subasta:</div> 
+				 <div class="dias"><input id="dias" name="dias" type="number" value=15 min="15" max="30" title="el valor ingresado debe estar entre 15 y 30 dias"/></div>
+
+
+<div class="titulos">Imagen:</div> 
+<div class="abajo">
+	<input type="file" title="Seleccione una imagen para la subasta" name="imagen0" id="imagen0" required="true"/>
+
+<div id="campos">
+ </div>
+ <br>
+
+
+
+
+
+<p><a href="#agregar" name="agregar" onclick="muestra_oculta('contenido_a_mostrar')" title="">Agregar Más Imágenes</a></p>
+
+<div id="contenido_a_mostrar">
+<input type="file" title="Seleccione una imagen para la subasta" name="imagen1" id="imagen1" /><br>
+<input type="file" title="Seleccione una imagen para la subasta" name="imagen2" id="imagen2" /><br>
+<input type="file" title="Seleccione una imagen para la subasta" name="imagen3" id="imagen3" /><br>
+<input type="file" title="Seleccione una imagen para la subasta" name="imagen4" id="imagen4" /><br>
+</div>
+
+<input type=submit value="Enviar" title="Click para enviar y finalizar la creacion de la subasta"> <input type=reset title="Click para limpiar todos los campos del formulario">
+
+
+
+
+
+
+</form>
+</div>		
+		 	<div class="volver4"><a href="../sesion/controlFrontEnd.php">>>Volver Al Menu de usuario</a></div>	 
+
+			    </div>
+		      </div>
+		      <div class="clear"></div>
+		 
+         </div>
+		 {%endblock%}
+      </div>
+	  {%endblock%}
+    </div>
+   <div class="footer">
+   {% block footer%}
+   	  <div class="wrap">	
+			 <div class="copy_right">
+				<p>Bestnid © Todos los derechos reservados </p>
+		   </div>	
+		   <div class="footer-nav">
+		   	<ul>
+		   		<li><a href="#">Terminos de uso</a> : </li>
+		   		<li><a href="#">Privacidad</a> : </li>
+		   		
+		   	</ul>
+		   </div>		
+        </div>
+	{%endblock%}
+    </div>
+	{% block final%}
+    <script type="text/javascript">
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+	</script>
+    <a href="#" id="toTop"> </a>
+    <script type="text/javascript" src="javascript/navigation.js"></script>
+	{%endblock%}
+	
+</body>
+</html>

@@ -1,10 +1,9 @@
-
 <!DOCTYPE HTML>
+{% block body%}
 <head>
 <title>{% block title %}{% endblock %}</title>
 {%block meta%}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
 {%endblock%}
@@ -12,27 +11,32 @@
 <link href="../estilos/style.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="../estilos/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.min2.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="../font/css/font-awesome.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="../font/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all"/>
-
-
 {% endblock %}
 {% block javascripts %}
-<script type="text/javascript" src="../javascript/jquery-1.9.0.min.js"></script> 
+ <script type="text/javascript" src="../javascript/jquery-1.9.0.min.js"></script> 
 <script src="../javascript/jquery.openCarousel.js" type="text/javascript"></script>
 <script type="text/javascript" src="../javascript/easing.js"></script>
 <script type="text/javascript" src="../javascript/move-top.js"></script>
 <script type="text/javascript" src="../javascript/validarFechas.js"></script>
+<script type="text/javascript" src="../javascript/bootstrap.min.js"></script>
+<script type="text/javascript" src="../javascript/jquery.min.js"></script>
 {% endblock %}
 </head>
+
 <body>
 
+{% block header %}
 	<div class="header">
-	 {% block header%}
+	 
   	  		<div class="wrap">
 				<div class="header_top">
+			
 					<div class="logo">
-						<a href="index.html"><img src="../imagenes/logo.jpg" alt="{{Bestnid}}" /></a>
+						<a href="../index.php"><img src="../imagenes/logo.jpg" alt="{{Bestnid}}" /></a>
 						<img src="../imagenes/slider-img.png" alt="{{Bestnid}}" />
 						<img src="../imagenes/logo2.jpg" alt="{{Bestnid}}" />
 					</div>
@@ -46,7 +50,7 @@
   		    	<a class="toggleMenu" href="#">{{Menu}}</a>
 					<ul class="nav">
 						<li>
-							<a href="../templates/index.php">{{Home}}</a>
+						<a href="../templates/index.php">{{Home}}<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>	
 						</li>
 						
 						<li>
@@ -57,31 +61,86 @@
 						</li>
 						
 						
+							{% if contacto is not null %}		
+						<li>
+							<a href="#">{{contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+						</li>
+						{% endif %}
+						
+						
+						
+						{% if IniciarSesion is not null %}		
+						<li>
+							<a href="../sesion/inicioSesion.php">{{IniciarSesion}}<span class="glyphicon glyphicon-off" aria-hidden="true"></span></a>
+						</li>
+						{% endif %}
+						
+						{% if Registrarse is not null %}		
+						<li>
+							<a href="../registro/Registro.php">{{Registrarse}}<span class="glyphicon glyphicon-align-left"></span></a>
+						</li>
+						{% endif %}
+						
+						
+					
+						
+						
+						
+							
+						
+						
+						
+						
+						
+						
+						
+						{% if MiCuenta is not null %}
+						<li>
+							<a href="#">{{MiCuenta}}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span></a>
+					
+							
+							
+						</li>
+						{% endif %}
+						
+						{% if CerrarSesion is not null %}
+						<li>
+							<a href="../sesion/CerrarSesion.php">{{CerrarSesion}}<span class="glyphicon glyphicon-off" aria-hidden="true"></span></a>
+						</li>
+						{% endif %}
 						
 						<li>
-							<a href="../sesion/inicioSesion.php">{{IniciarSesion}}</a>
+							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
 						</li>
 						
+						{% if (nombre is not null) and (apellido is not null) %}		
 						<li>
-							<a href="../registro/Registro.php">{{Registrarse}}</a>
+							
+							{% if tipo==1 %}
+							<a href="../sesion/controlBackEnd.php">{{bienvenido}}{{nombre}} {{apellido}}<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+							{% else %}
+							<a href="../sesion/controlFrontEnd.php">{{bienvenido}}{{nombre}} {{apellido}}<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+							{% endif %}
 						</li>
-						<li>
-							<a href="../ayuda/Ayuda.php">{{Ayuda}}</a>
-						</li>
+						{% endif %}
+						
 					</ul>
 					
   		    </div>
 
    		</div>
-		{%endblock%}
+
    </div>
+{%endblock%}
    <!------------Cabezera------------>
-   
+    {% block main %} 
   <div class="main">
-  {% block main%}
+
+  		
 					<a href="../templates/index2.php" accesskey="i"> </a>
 				   <a href="../registro/Registro.php" accesskey="q"> </a>
       <div class="content">
+	  {% block carrusel %}
     	        <div class="content_top">
 				
     	        	<div class="wrap">
@@ -112,12 +171,14 @@
 			               </span>
 					   </div>
 				     </div>  
-				   </div>    		
+				   </div> 
+						
     	       </div>
+			{% endblock %}
     	  <div class="content_bottom">
-		  {% block menu%}
     	    <div class="wrap">
     	    	<div class="content-bottom-left">
+				 {% block categorias %}
     	    		<div class="categories">
 						   <ul>
 						  	  <div class="panel-heading">Filtros de subastas</div>
@@ -126,8 +187,7 @@
 				
 				           <form METHOD="GET" onSubmit="return validacionFechas()" action="index3.php" >
                            <strong>Nombre De subasta: </strong><input class="form-control" type="text" name="titulo" >
-								   
-                           
+						
                            
                            </div>
 						    <div class="wrap4">
@@ -139,51 +199,62 @@
 				   {%endfor %}
 					
 				 </select>
-				 
+				  
                  </div>
-				 <div class="wrap4">
+				 
+				  <div class="wrap4">
+			      <strong>Subastas entre dos fechas:</strong><br>
+			      Fecha Inicio:<input type="date" name="fechainicio" id="fechainicio"><br><br>
+			      Fecha Fin:  &nbsp; <input type="date" name="fechafin" id="fechafin">
+		
+			      <div class="subbarra">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-primary" value="Buscar"></div>
+                  </form>			
+                  </div>
+				 
+				 
 
-			<strong>Subastas entre dos fechas:</strong><br>
-			Fecha Inicio:<input type="date" name="fechainicio" id="fechainicio"><br><br>
-			Fecha Fin:  &nbsp; <input type="date" name="fechafin" id="fechafin">
-			&nbsp;<input type="submit" class="btn btn-primary" value="Buscar">
-</form>			
-</div>
-				 
-				 
-				 <div class="wrap4">
-<form action="index5.php">
-			<strong>Ordenar subastas por:</strong><hr>
-			
-        <strong><a href='index4.php'>Ordenar Alfabéticamente</a></strong><hr>
-		<strong><a href='index5.php'>Ordenar por fecha de vencimiento</a></strong>
-</form>			
-</div>
 				 
 				 
 						  	 </ul>
-						</div>	
-                         
+				</div>	
+        {% endblock %}  
     	    	</div>
-    	    	
+    	    	 
     	    	<div class="content-bottom-right">
-    	    	<div class="panel-heading2">Subastas Activas</div>
-					
+    	    	<div class="panel-heading2">Subastas</div>
+						<div>
+				 {% if subastas is not empty %}  
+				 
+					<div class="subbarra">
+			
+			    <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span> Si quiere ver alguna subasta en particular dispone de los filtros para poder buscar la subasta deseada.<br>
+				
+				{{ordenar}}<br>
+				<span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span><a href='../templates/index4.php'><button type="button" class="btn btn-success">Ordenar alfabéticamente</button></a>
+				<span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span><a href='../templates/index5.php'><button type="button" class="btn btn-success">Ordenar por fecha de vencimiento</button></a>
+				</div>
+				<div class="panel-heading2">{{informar}} <span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span>:</div>
+				{% endif %}
+				</div>	
          
 	
 			   <div class="section group">
-			
+				
+				
+						
 						
 				        {% for subasta in subastas %}        
 						<div class="grid_1_of_4 images_1_of_4">
 							   <strong><h4>{{subasta.getTitulo()}}</h4></strong>
-								<a href="preview.html" title="{{subasta.getTitulo()}}"><img src="../{{subasta.recuperarFoto(subasta.getIdSubasta())}}" alt="" /></a>
+								<a href="../web/preview.php?id={{subasta.getIdSubasta()}}" title="{{subasta.getTitulo()}}"><img src="../{{subasta.recuperarFoto(subasta.getIdSubasta())}}" alt="" /></a>
 								  <div class="price-details">
+								  <div class="categoria"><strong>Categoria:{{subasta.recuperarCategoriaSubasta(subasta.getIdCategoriaSub())}}</strong></div>
+								  <div class="inicio"><strong>inicio el día: {{subasta.getFechaInicio()}}</strong></div>
 								  <div class="vencimiento"><strong>Vence el día: {{subasta.getFechaFin()}}</strong></div>
 					       		          <div class="descripcion">	
 													<strong>{{subasta.getDescripcion()}}</strong></div>
 													<div class="add-cart">
-									      <div class="panel-heading3"><a href="#" title="Haga click para ver la subasta mas detalladamente y/o hacer un ofertar">Ver Subasta</a></div>
+									      <div class="panel-heading3"><a href="../subasta/verdetalle.php?id={{subasta.getIdSubasta()}}" title="Haga click para ver la subasta mas detalladamente y/o hacer un ofertar">Ver Subasta</a></div>
 							                 </div>
 							             <div class="clear"></div>
 								
@@ -201,12 +272,14 @@
 		      <div class="clear"></div>
 		   </div>
          </div>
-		 {%endblock%}
+		{% endblock %}
       </div>
-	  {%endblock%}
+	
     </div>
+{%endblock%}
+{% block footer%}	
    <div class="footer">
-   {% block footer%}
+
    	  <div class="wrap">	
 			 <div class="copy_right">
 				<p>Bestnid © Todos los derechos reservados </p>
@@ -219,9 +292,9 @@
 		   	</ul>
 		   </div>		
         </div>
-	{%endblock%}
+
     </div>
-	{% block final%}
+
     <script type="text/javascript">
 		$(document).ready(function() {			
 			$().UItoTop({ easingType: 'easeOutQuart' });
@@ -230,7 +303,7 @@
 	</script>
     <a href="#" id="toTop"> </a>
     <script type="text/javascript" src="javascript/navigation.js"></script>
-	{%endblock%}
+{% endblock %}
 	
 </body>
 </html>

@@ -3,6 +3,7 @@
   require_once '../Conexion.php';
   require_once '../usuario/usuario.php';
   
+  
   //Usuario logueado al sitio web
     $UserLogged=null;
 	$mail=$_POST['email'];
@@ -22,19 +23,25 @@
 		  //Login exitoso 	  
 		  
 			$_SESSION['UserLogged'] = $UserLogged; /* guardo el objeto usuario en la sesion */  
-		    $tipo=$UserLogged->getTipo();  
+		    $_SESSION['Tipo'] = $UserLogged->getTipo();
+			$_SESSION['Nombre'] = $UserLogged->getNombre();
+			$_SESSION['Apellido'] = $UserLogged->getApellido();
+			$_SESSION['Email'] = $UserLogged->getEmail();
+			$_SESSION['FechaAlta'] = $UserLogged->getFechaAlta();
+			$_SESSION['Id'] = $UserLogged->getIdUsuario();
 			
-		
+			$tipo=$UserLogged->getTipo();  
+
 		    if ($tipo== 1){
 			 
-		            include 'controlbackend.php';
+		            include '../templates/index.php';
 					
 		      }
 			  else {
 		      if ($tipo == 2){
 			  
 			        
-					 include 'controlFrontEnd.php';
+					 include '../templates/index.php';
 					
 					 }		 
 				

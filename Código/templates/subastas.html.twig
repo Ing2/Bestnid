@@ -1,27 +1,42 @@
-
 <!DOCTYPE HTML>
 <head>
 <title>{% block title %}{% endblock %}</title>
 {%block meta%}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
+
+
+
+
+
+
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
 {%endblock%}
 {% block stylesheets %}
+
 <link href="../estilos/style.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="../estilos/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
-
+<link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.min2.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../font/css/font-awesome.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../font/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all"/>
 
 
 {% endblock %}
 {% block javascripts %}
+ 
 <script type="text/javascript" src="../javascript/jquery-1.9.0.min.js"></script> 
 <script src="../javascript/jquery.openCarousel.js" type="text/javascript"></script>
 <script type="text/javascript" src="../javascript/easing.js"></script>
 <script type="text/javascript" src="../javascript/move-top.js"></script>
 <script type="text/javascript" src="../javascript/validarFechas.js"></script>
+<script type="text/javascript" src="../javascript/bootstrap.min.js"></script>
+<script type="text/javascript" src="../javascript/jquery.min.js"></script>
+
+
+
 {% endblock %}
 </head>
 <body>
@@ -31,21 +46,13 @@
   	  		<div class="wrap">
 				<div class="header_top">
 					<div class="logo">
-						<a href="index.html"><img src="../imagenes/logo.jpg" alt="{{Bestnid}}" /></a>
+						<a href="../index.php"><img src="../imagenes/logo.jpg" alt="{{Bestnid}}" /></a>
 						<img src="../imagenes/slider-img.png" alt="{{Bestnid}}" />
 						<img src="../imagenes/logo2.jpg" alt="{{Bestnid}}" />
 					</div>
 					
 			
-						<div class="header_top_right">
-							  <div class="search_box">
-							  	<span>{{Buscar}}</span>
-					     		<form>
-					     			<input type="text" value=""><input type="submit" value="">
-					     		</form>
-					     		<div class="clear"></div>
-					     	</div>
-					</div>
+						
 					
 			     <div class="clear"></div>
   		    </div>     
@@ -53,7 +60,7 @@
   		    	<a class="toggleMenu" href="#">{{Menu}}</a>
 					<ul class="nav">
 						<li>
-							<a href="../templates/index.php">{{Home}}</a>
+						<a href="../templates/index.php">{{Home}}<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>	
 						</li>
 						
 						<li>
@@ -64,18 +71,68 @@
 						</li>
 						
 						
+							{% if contacto is not null %}		
+						<li>
+							<a href="#">{{contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+						</li>
+						{% endif %}
+						
+						
+						
+						{% if IniciarSesion is not null %}		
+						<li>
+							<a href="../sesion/inicioSesion.php">{{IniciarSesion}}<span class="glyphicon glyphicon-off" aria-hidden="true"></span></a>
+						</li>
+						{% endif %}
+						
+						{% if Registrarse is not null %}		
+						<li>
+							<a href="../registro/Registro.php">{{Registrarse}}<span class="glyphicon glyphicon-align-left"></span></a>
+						</li>
+						{% endif %}
+						
+						
+					
+						
+						
+						
+							
+						
+						
+						
+						
+						
+						
+						
+						{% if MiCuenta is not null %}
+						<li>
+							<a href="#">{{MiCuenta}}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span></a>
+					
+							
+							
+						</li>
+						{% endif %}
+						
+						{% if CerrarSesion is not null %}
+						<li>
+							<a href="../sesion/CerrarSesion.php">{{CerrarSesion}}<span class="glyphicon glyphicon-off" aria-hidden="true"></span></a>
+						</li>
+						{% endif %}
 						
 						<li>
-							<a href="../sesion/InicioSesion.php">{{IniciarSesion}}</a>
+							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
 						</li>
 						
+						{% if (nombre is not null) and (apellido is not null) %}		
 						<li>
-							<a href="../registro/Registro.php">{{Registrarse}}</a>
+							
+							{% if tipo==1 %}
+							<a href="../sesion/controlBackEnd.php">{{bienvenido}}{{nombre}} {{apellido}}<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+							{% else %}
+							<a href="../sesion/controlFrontEnd.php">{{bienvenido}}{{nombre}} {{apellido}}<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+							{% endif %}
 						</li>
-						
-						<li>
-							<a href="../ayuda/ayuda.php">{{Ayuda}}</a>
-						</li>
+						{% endif %}
 					</ul>
 					
   		    </div>
@@ -87,6 +144,9 @@
    
   <div class="main">
   {% block main%}
+  		
+					<a href="../templates/index2.php" accesskey="i"> </a>
+				   <a href="../registro/Registro.php" accesskey="q"> </a>
       <div class="content">
     	        <div class="content_top">
 				
@@ -129,10 +189,10 @@
 						  	  <div class="panel-heading">Filtros de subastas</div>
 							   
 						<div class="wrap4">
-								           <form METHOD="GET" onSubmit="return validacionFechas()" action="index3.php" >
+				
+				           <form METHOD="GET" onSubmit="return validacionFechas()" action="index3.php" >
                            <strong>Nombre De subasta: </strong><input class="form-control" type="text" name="titulo" >
-								   
-                           
+						
                            
                            </div>
 						    <div class="wrap4">
@@ -144,29 +204,20 @@
 				   {%endfor %}
 					
 				 </select>
-				 
+				  
                  </div>
 				 <div class="wrap4">
 
 			<strong>Subastas entre dos fechas:</strong><br>
 			Fecha Inicio:<input type="date" name="fechainicio" id="fechainicio"><br><br>
 			Fecha Fin:  &nbsp; <input type="date" name="fechafin" id="fechafin">
-			&nbsp;<input type="submit" class="btn btn-primary" value="Buscar">
-</form>	
-				         
-                 </div>
-				
-				 
-				 
-				 <div class="wrap4">
-
-	<strong>Ordenar subastas por:</strong><hr>
-	
-			
-        <strong><a href='index6.php?tipo={{tipo}}&nombre={{nombre}}&categoria={{categoria}}&fechainicio={{fechainicio}}&fechafin={{fechafin}}'>Ordenar Alfabéticamente</a></strong><hr>
-		<strong><a href='index7.php?tipo={{tipo}}&nombre={{nombre}}&categoria={{categoria}}&fechainicio={{fechainicio}}&fechafin={{fechafin}}'>Ordenar por fecha de vencimiento</a></strong>
 		
+			<div class"subbarra">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-primary" value="Buscar"></div>
+</form>			
 </div>
+				 
+				 
+
 				 
 				 
 						  	 </ul>
@@ -175,18 +226,37 @@
     	    	</div>
     	    	
     	    	<div class="content-bottom-right">
-    	    	<div class="panel-heading2">Subastas Activas</div>
-					
+    	    	<div class="panel-heading2">Subastas</div>
+						<div>
+				 {% if subastas is not empty %}  
+				 
+					<div class="subbarra">
+			
+			    <span class="glyphicon glyphicon-hand-left" aria-hidden="true"></span> Si quiere ver alguna subasta en particular dispone de los filtros para poder buscar la subasta deseada.<br>
+				
+				{{ordenar}}<br>
+				<span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span><a href='index6.php?tipo={{tipo}}&nombre={{nombre}}&categoria={{categoria}}&fechainicio={{fechainicio}}&fechafin={{fechafin}}'><button type="button" class="btn btn-success">Ordenar alfabéticamente</button></a>
+				<span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span><a href='index7.php?tipo={{tipo}}&nombre={{nombre}}&categoria={{categoria}}&fechainicio={{fechainicio}}&fechafin={{fechafin}}'><button type="button" class="btn btn-success">Ordenar por fecha de vencimiento</button></a>
+				</div>
+				<div class="panel-heading2">{{informar}} <span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span>:</div>
+				{% else %}
+				   <div class="subbarra"><h7> >>{{losentimos}}</h7></div>
+				{% endif %}
+				</div>	
          
 	
 			   <div class="section group">
-			
+				
+				
+						
 						
 				        {% for subasta in subastas %}        
 						<div class="grid_1_of_4 images_1_of_4">
 							   <strong><h4>{{subasta.getTitulo()}}</h4></strong>
 								<a href="preview.html" title="{{subasta.getTitulo()}}"><img src="../{{subasta.recuperarFoto(subasta.getIdSubasta())}}" alt="" /></a>
 								  <div class="price-details">
+								  <div class="categoria"><strong>Categoria:{{subasta.recuperarCategoriaSubasta(subasta.getIdCategoriaSub())}}</strong></div>
+								  <div class="inicio"><strong>inicio el día: {{subasta.getFechaInicio()}}</strong></div>
 								  <div class="vencimiento"><strong>Vence el día: {{subasta.getFechaFin()}}</strong></div>
 					       		          <div class="descripcion">	
 													<strong>{{subasta.getDescripcion()}}</strong></div>

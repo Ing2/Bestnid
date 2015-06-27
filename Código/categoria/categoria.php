@@ -75,8 +75,33 @@ public function setIdEstadoCategoria($id)
 		return $a;
 	}
   
-  
-  // AGREGAR UNA SUBASTA //
+public static function altaCategoria($categoria)
+	{
+	$db=conectaDb();
+	
+	
+	
+	if (!(Categoria::existeCategoria($categoria->getIdCategoria()))){
+		
+		
+							
+		
+		
+		$res = $db->prepare('INSERT INTO `grupo10`.`categoria` (`idcategoria`, `contenido_cat`, `idestadocat`) VALUES (NULL, :con , 1)');
+	
+         $res->bindParam(':con', $categoria->getContenidoCategoria());
+
+		  
+            $res->execute();	
+			$db=null;
+			return $categoria;
+		}
+		else{
+			return null;
+			$mensaje="categoria existente";
+			exit;
+	}
+	}
 
 	
 	//eliminar Categoria , es una baja logica, se hace un update , actualiza el valor de idestadosub=2 . estadosub en 2 significa que esta eliminada//
@@ -173,6 +198,7 @@ public function setIdEstadoCategoria($id)
 		
 	}
 }
+
 
 
 

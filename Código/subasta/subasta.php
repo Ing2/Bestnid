@@ -1,6 +1,6 @@
 <?php
 require_once '../Conexion.php';
-
+require_once 'fotosubasta.php';
 
 class Subasta
 {
@@ -138,6 +138,37 @@ public function setTitulo($tit)
   
   // AGREGAR UNA SUBASTA //
 
+	public static function altaSubasta($subasta)
+	{
+	$db=conectaDb();
+	
+	if (!(Subasta::existeSubasta($subasta->getIdSubasta()))){
+		
+		
+							
+		
+		
+		$res = $db->prepare('INSERT INTO grupo10.subasta (idsubasta,descripcion,fecha_inicio,fecha_fin,idestadosub,idusuariosub,idcategoriasub,titulo) VALUES (NULL,:des,:fechai,:fechaf,:estsub,:ususub,:catsub,:tit)');
+	
+         $res->bindParam(':des', $subasta->getDescripcion());
+		  $res->bindParam(':fechai',$subasta->getFechaInicio() );
+		 $res->bindParam(':fechaf', $subasta->getFechaFin());
+         $res->bindParam(':estsub',$subasta->getIdEstadoSub());
+		  $res->bindParam(':ususub',$subasta->getIdUsuarioSub());
+		  	 $res->bindParam(':catsub', $subasta->getIdCategoriaSub());
+          $res->bindParam(':tit', $subasta->getTitulo());
+		  
+            $res->execute();	
+			$id= $db->lastInsertId();
+			$db=null;
+			return $id;
+		}
+		else{
+			return null;
+			$mensaje="subasta existente";
+			exit;
+	}
+	}
 	
 	//eliminar subasta , es una baja logica, se hace un update , actualiza el valor de idestadosub=2 . estadosub en 2 significa que esta eliminada//
 	public static function eliminarSubasta($idSubasta){
@@ -173,6 +204,34 @@ public function setTitulo($tit)
 		$db=null;
 		return $objArrayConsult;
 		}
+		
+		public static function recuperarSubastasActivasParaUnUsuario($id)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('SELECT * from subasta where idestadosub=1 and idusuariosub=:id');
+     $res->bindParam(':id', $id);
+	 $res->execute();
+		if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;
+		}	
+		
+		
+		
+		
 		
   public static function recuperarSubastasTodas()
 	{
@@ -265,6 +324,10 @@ public function setTitulo($tit)
 		
 	}
 	
+	
+	
+	
+	
  public static function recuperarFoto($id)
 	{
 	$db=conectaDb();
@@ -279,6 +342,52 @@ public function setTitulo($tit)
 			}
 	return $row[0];
 	}
+	
+		
+	public static function recuperarFotos($id)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ( "SELECT * from foto_subasta INNER JOIN subasta ON foto_subasta.idsubasta=subasta.idsubasta where subasta.idsubasta=:id");
+	$res->bindParam(':id', $id);
+		  $res->execute();
+		if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = FotoSubasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;
+		}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public static function filtrarPorTitulo($titulo)
 	{
@@ -710,6 +819,666 @@ public static function filtrarPorFechas($fechainicio,$fechafin)
 
 }
 
+
+// ficha inicio
+
+public static function filtrarPorFechaInicio($fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` = '$fechainicio' AND idestadosub=1");
+	
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+
+public static function filtrarPorFechaInicioOrdenarAlfabeticamente($fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` = '$fechainicio' AND idestadosub=1  ORDER BY `titulo` ASC");
+	
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+public static function filtrarPorFechaInicioOrdenarPorVencimiento($fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` = '$fechainicio' AND idestadosub=1   ORDER BY `fecha_fin` ASC");
+	
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+
+
+
+
+
+
+
+
+public static function filtrarPorFechaInicioMasCategoria($cat,$fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` = '$fechainicio' AND `idcategoriasub` =:cat AND idestadosub=1");
+	 $res->bindParam(':cat',$cat); 
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+public static function filtrarPorFechaInicioMasCategoriaOrdenarAlfabeticamente($cat,$fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` = '$fechainicio' AND `idcategoriasub` =:cat AND idestadosub=1 ORDER BY `titulo` ASC");
+	 $res->bindParam(':cat',$cat); 
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+public static function filtrarPorFechaInicioMasCategoriaOrdenarPorVencimiento($cat,$fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` = '$fechainicio' AND `idcategoriasub` =:cat AND idestadosub=1 ORDER BY `fecha_fin` ASC");
+	 $res->bindParam(':cat',$cat); 
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+
+public static function filtrarPorFechaInicioMasTitulo($titulo,$fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` = '$fechainicio' AND `titulo` LIKE '%$titulo%' AND idestadosub=1");
+	
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+public static function filtrarPorFechaInicioMasTituloOrdenarAlfabeticamente($titulo,$fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` = '$fechainicio' AND `titulo` LIKE '%$titulo%' AND idestadosub=1 ORDER BY `titulo` ASC");
+	
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+public static function filtrarPorFechaInicioMasTituloOrdenarPorVencimiento($titulo,$fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` = '$fechainicio' AND `titulo` LIKE '%$titulo%' AND idestadosub=1 ORDER BY `fecha_fin` ASC");
+	
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+
+
+
+
+public static function filtrarPorFechaInicioTituloyCategoria($titulo,$cat,$fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` = '$fechainicio' AND `titulo` LIKE '%$titulo%'  AND `idcategoriasub` =:cat AND idestadosub=1");
+	$res->bindParam(':cat',$cat);
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+
+public static function filtrarPorFechaInicioTituloyCategoriaOrdenarAlfabeticamente($titulo,$cat,$fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` = '$fechainicio' AND `titulo` LIKE '%$titulo%'  AND `idcategoriasub` =:cat AND idestadosub=1 ORDER BY `titulo` ASC");
+	$res->bindParam(':cat',$cat);
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+public static function filtrarPorFechaInicioTituloyCategoriaOrdenarPorVencimiento($titulo,$cat,$fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` = '$fechainicio' AND `titulo` LIKE '%$titulo%'  AND `idcategoriasub` =:cat AND idestadosub=1 ORDER BY `fecha_fin` ASC");
+	$res->bindParam(':cat',$cat);
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+
+
+
+
+//fecha fin
+
+public static function filtrarPorFechaFin($fechafin)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_fin` = '$fechafin' AND idestadosub=1");
+	
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+
+public static function filtrarPorFechaFinOrdenarAlfabeticamente($fechafin)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_fin` = '$fechafin' AND idestadosub=1  ORDER BY `titulo` ASC");
+	
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+public static function filtrarPorFechaFinOrdenarPorVencimiento($fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_fin` = '$fechafin' AND idestadosub=1   ORDER BY `fecha_fin` ASC");
+	
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+
+
+public static function filtrarPorFechaFinMasCategoria($cat,$fechafin)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_fin` = '$fechafin' AND `idcategoriasub` =:cat AND idestadosub=1");
+	 $res->bindParam(':cat',$cat); 
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+}
+public static function filtrarPorFechaFinMasCategoriaOrdenarAlfabeticamente($cat,$fechafin)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_fin` = '$fechafin' AND `idcategoriasub` =:cat AND idestadosub=1 ORDER BY `titulo` ASC");
+	 $res->bindParam(':cat',$cat); 
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+public static function filtrarPorFechaFinMasCategoriaOrdenarPorVencimiento($cat,$fechafin)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_fin` = '$fechafin' AND `idcategoriasub` =:cat AND idestadosub=1 ORDER BY `fecha_fin` ASC");
+	 $res->bindParam(':cat',$cat); 
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+
+
+
+
+
+
+
+
+
+
+
+public static function filtrarPorFechaFinMasTitulo($titulo,$fechafin)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_fin` = '$fechafin' AND `titulo` LIKE '%$titulo%' AND idestadosub=1");
+	
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+
+
+public static function filtrarPorFechaFinMasTituloOrdenarAlfabeticamente($titulo,$fechafin)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_fin` = '$fechafin' AND `titulo` LIKE '%$titulo%' AND idestadosub=1 ORDER BY `titulo` ASC");
+	
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+public static function filtrarPorFechaFinMasTituloOrdenarPorVencimiento($titulo,$fechafin)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_fin` = '$fechafin' AND `titulo` LIKE '%$titulo%' AND idestadosub=1 ORDER BY `fecha_fin` ASC");
+	
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+
+
+
+
+public static function filtrarPorFechaFinTituloyCategoria($titulo,$cat,$fechafin)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_fin` = '$fechafin' AND `titulo` LIKE '%$titulo%'  AND `idcategoriasub` =:cat AND idestadosub=1");
+	$res->bindParam(':cat',$cat);
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+public static function filtrarPorFechaFinTituloyCategoriaOrdenarAlfabeticamente($titulo,$cat,$fechafin)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_fin` = '$fechafin' AND `titulo` LIKE '%$titulo%'  AND `idcategoriasub` =:cat AND idestadosub=1 ORDER BY `titulo` ASC");
+	$res->bindParam(':cat',$cat);
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+public static function filtrarPorFechaFinTituloyCategoriaOrdenarPorVencimiento($titulo,$cat,$fechafin)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_fin` = '$fechafin' AND `titulo` LIKE '%$titulo%'  AND `idcategoriasub` =:cat AND idestadosub=1 ORDER BY `fecha_fin` ASC");
+	$res->bindParam(':cat',$cat);
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public static function filtrarPorFechayOrdenarAlfabeticamente($fechainicio,$fechafin)
 	{
 	$db=conectaDb();
@@ -888,9 +1657,278 @@ public static function ordenarPorFechaVencimiento()
 		return $objArrayConsult;	
 
 }
+public static function TieneOferta($id)
+	{
+	$db=conectaDb();
+
+	$res = $db->prepare('select COUNT(s.idsubasta) as ofertas
+from subasta s , oferta o 
+where (( s.idsubasta = o.idsubastaofer) and ( s.idestadosub = 1 ) and ( s.idsubasta = :id ))
+group by s.idsubasta');
+	$res->bindParam(':id', $id);
+	
+		  $res->execute();
+	
+		if ($row = $res->fetch()){
+			
+			$a=$row[0];
+			
+		}
+		else {
+	
+			return false; 
+		}
+			
+		$db= null;
+		return $a;
+	} 
+	
+	public static function cantidadDeFotos($id)
+	{
+	$db=conectaDb();
+
+	$res = $db->prepare('select COUNT(f.idfoto) as fotos from foto_subasta f , subasta s where (( s.idsubasta = f.idsubasta) and ( s.idestadosub = 1 and ( s.idsubasta = :id ))) group by s.idsubasta');
+	$res->bindParam(':id', $id);
+	
+		  $res->execute();
+	
+		if ($row = $res->fetch()){
+			
+			$a=$row[0];
+			
+		}
+		else {
+	
+			return false; 
+		}
+			
+		$db= null;
+		return $a;
+	} 
+	
+	
+	
+	
+	
+ public static function modificarSubasta($idsubasta,$des,$tit,$cat)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('UPDATE `grupo10`.`subasta` SET descripcion =:des , idcategoriasub =:cat , titulo =:tit WHERE subasta.idsubasta =:id and subasta.idestadosub=1;');
+	$res->bindParam(':id',$idsubasta);
+	$res->bindParam(':des',$des);
+	$res->bindParam(':tit',$tit);
+	$res->bindParam(':cat',$cat);
+	
+
+	$res->execute();
+		if (($row = $res->fetch())){
+			$a=$row;
+			
+			}
+		else {
+			return null; 
+		}
+		$db=null;
+		return $a;
+		
+	}
+public static function modificarSubastaTitulo($idsubasta,$tit)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('UPDATE `grupo10`.`subasta` SET titulo =:tit WHERE subasta.idsubasta =:id and subasta.idestadosub=1;');
+	$res->bindParam(':id',$idsubasta);
+	
+	$res->bindParam(':tit',$tit);
+	
+	
+
+	$res->execute();
+		if (($row = $res->fetch())){
+			$a=$row;
+			
+			}
+		else {
+			return null; 
+		}
+		$db=null;
+		return $a;
+		
+	}
+public static function modificarSubastaDescripcion($idsubasta,$des)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('UPDATE `grupo10`.`subasta` SET descripcion =:des WHERE subasta.idsubasta =:id and subasta.idestadosub=1;');
+	$res->bindParam(':id',$idsubasta);
+	$res->bindParam(':des',$des);
+	
+	
+
+	$res->execute();
+		if (($row = $res->fetch())){
+			$a=$row;
+			
+			}
+		else {
+			return null; 
+		}
+		$db=null;
+		return $a;
+		
+	}
 
 
+public static function modificarSubastaCategoria($idsubasta,$cat)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('UPDATE `grupo10`.`subasta` SET idcategoriasub =:cat WHERE subasta.idsubasta =:id and subasta.idestadosub=1;');
+	$res->bindParam(':id',$idsubasta);
+	$res->bindParam(':cat',$cat);
+	
 
+	$res->execute();
+		if (($row = $res->fetch())){
+			$a=$row;
+			
+			}
+		else {
+			return null; 
+		}
+		$db=null;
+		return $a;
+		
+	}
+	public static function modificarSubastaDescripcionyTitulo($idsubasta,$des,$tit)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('UPDATE `grupo10`.`subasta` SET descripcion =:des , titulo =:tit WHERE subasta.idsubasta =:id and subasta.idestadosub=1;');
+	$res->bindParam(':id',$idsubasta);
+	$res->bindParam(':des',$des);
+	$res->bindParam(':tit',$tit);
+	
+
+	$res->execute();
+		if (($row = $res->fetch())){
+			$a=$row;
+			
+			}
+		else {
+			return null; 
+		}
+		$db=null;
+		return $a;
+		
+	}
+public static function modificarSubastaDescripcionyCategoria($idsubasta,$des,$cat)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('UPDATE `grupo10`.`subasta` SET descripcion =:des , idcategoriasub =:cat WHERE subasta.idsubasta =:id and subasta.idestadosub=1;');
+	$res->bindParam(':id',$idsubasta);
+	$res->bindParam(':des',$des);
+	$res->bindParam(':cat',$cat);
+	
+
+	$res->execute();
+		if (($row = $res->fetch())){
+			$a=$row;
+			
+			}
+		else {
+			return null; 
+		}
+		$db=null;
+		return $a;
+		
+	}
+public static function modificarSubastaTituloyCategoria($idsubasta,$tit,$cat)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('UPDATE `grupo10`.`subasta` SET idcategoriasub =:cat , titulo =:tit WHERE subasta.idsubasta =:id and subasta.idestadosub=1;');
+	$res->bindParam(':id',$idsubasta);
+	$res->bindParam(':tit',$tit);
+	$res->bindParam(':cat',$cat);
+	
+
+	$res->execute();
+		if (($row = $res->fetch())){
+			$a=$row;
+			
+			}
+		else {
+			return null; 
+		}
+		$db=null;
+		return $a;
+		
+	}
+	
+	 public static function controlarSubastas()
+	{
+	$fechafin=date("Y-m-j");
+	$db=conectaDb();
+	$res = $db->prepare('UPDATE grupo10.subasta SET idestadosub = 4 WHERE subasta.idestadosub = 1 and subasta.fecha_fin < :fechafin;');
+	$res->bindParam(':fechafin',$fechafin);
+
+	
+
+	$res->execute();
+		if (($row = $res->fetch())){
+			$a=$row;
+			
+			}
+		else {
+			return null; 
+		}
+		$db=null;
+		return $a;
+		
+	}
+	 public static function controlarFoto($idsubasta)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('select COUNT(f.idfoto)
+from  subasta s left join foto_subasta f ON ( s.idsubasta = f.idsubasta ) 
+where ( s.idsubasta = :id)
+group by s.idsubasta');
+	
+		$res->bindParam(':id', $idsubasta);
+	
+		  $res->execute();
+	
+		if ($row = $res->fetch()){
+			
+			$a=$row[0];
+			
+		}
+		else {
+	
+			return false; 
+		}
+			
+		$db= null;
+		return $a;		
+	}
+	
+	
+	
+	
+	
+	
+	 public static function agregarFotoPorDefecto($idsubasta)
+	{
+
+
+	$db=conectaDb();
+	$res = $db->prepare("INSERT INTO `grupo10`.`foto_subasta` (`idfoto`, `idsubasta`, `foto`) VALUES (NULL,:id, 'imagenes/logobestnid.jpg')");
+	$res->bindParam(':id',$idsubasta);
+
+
+	$res->execute();
+	$db= null;
+	return $res;		
+	}
+	
+	
+	
 
 
 }

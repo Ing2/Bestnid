@@ -1,25 +1,138 @@
-{% extends 'index.html.twig' %}
- 
-{% block title %}Bestnid{% endblock %}
-{% block stylesheets %}
+<!DOCTYPE HTML>
+
+<head>
+<title>Bestnid</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
 
 <link href="../estilos/style.css" rel="stylesheet" type="text/css" media="all"/>
-
 <link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="../estilos/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.min2.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../font/css/font-awesome.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../font/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all"/>
 
-{% endblock %}
+ <script type="text/javascript" src="../javascript/jquery-1.9.0.min.js"></script> 
+<script src="../javascript/jquery.openCarousel.js" type="text/javascript"></script>
+<script type="text/javascript" src="../javascript/easing.js"></script>
+<script type="text/javascript" src="../javascript/move-top.js"></script>
+<script type="text/javascript" src="../javascript/validarFechas.js"></script>
+<script type="text/javascript" src="../javascript/bootstrap.min.js"></script>
+<script type="text/javascript" src="../javascript/jquery.min.js"></script>
 
-{% block javascript %}
-<script type="text/javascript" src="../javascript/validarInicioSesion.js"></script>
-  
-	
-{% endblock %}
+
+</head>
+
+<body>
+
+	<div class="header">
+	 
+  	  		<div class="wrap">
+				<div class="header_top">
+			
+					<div class="logo">
+						<a href="index.html"><img src="../imagenes/logo.jpg" alt="{{Bestnid}}" /></a>
+						<img src="../imagenes/slider-img.png" alt="{{Bestnid}}" />
+						<img src="../imagenes/logo2.jpg" alt="{{Bestnid}}" />
+					</div>
+					
+			
+						
+					
+			     <div class="clear"></div>
+  		    </div>     
+  		    <div class="navigation">
+  		    	<a class="toggleMenu" href="#">{{Menu}}</a>
+					<ul class="nav">
+						<li>
+						<a href="../templates/index.php">{{Home}}<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>	
+						</li>
+						
+						<li>
+							<a href="#">{{Subastas}}</a>
+							<ul>
+								
+							</ul>
+						</li>
+						
+						
+							{% if contacto is not null %}		
+						<li>
+							<a href="../contacto/contacto.php">{{contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+						</li>
+						{% endif %}
+						
+						
+						
+						{% if IniciarSesion is not null %}		
+						<li>
+							<a href="../sesion/inicioSesion.php">{{IniciarSesion}}<span class="glyphicon glyphicon-off" aria-hidden="true"></span></a>
+						</li>
+						{% endif %}
+						
+						{% if Registrarse is not null %}		
+						<li>
+							<a href="../registro/Registro.php">{{Registrarse}}<span class="glyphicon glyphicon-align-left"></span></a>
+						</li>
+						{% endif %}
+						
+						
+					
+						
+						
+						
+							
+						
+						
+						
+						
+						
+						
+						
+						{% if MiCuenta is not null %}
+						<li>
+							<a href="../ayuda/Ayuda.php">{{MiCuenta}}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span></a>
+					
+							
+							
+						</li>
+						{% endif %}
+						
+						{% if CerrarSesion is not null %}
+						<li>
+							<a href="../sesion/CerrarSesion.php">{{CerrarSesion}}<span class="glyphicon glyphicon-off" aria-hidden="true"></span></a>
+						</li>
+						{% endif %}
+						
+						<li>
+							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
+						</li>
+						
+						{% if (nombre is not null) and (apellido is not null) %}		
+						<li>
+							
+							{% if tipo==1 %}
+							<a href="../sesion/controlBackEnd.php">{{bienvenido}}{{nombre}} {{apellido}}<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+							{% else %}
+							<a href="../sesion/controlFrontEnd.php">{{bienvenido}}{{nombre}} {{apellido}}<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+							{% endif %}
+						</li>
+						{% endif %}
+						
+					</ul>
+					
+  		    </div>
+
+   		</div>
+
+   </div>
+
+   <!------------Cabezera------------>
  
-{% block body %}
-
-{{ parent() }} 
-{% block main%} 
+  <div class="main">
 
 <h8>Gracias por volver a elegirnos!</h8><br>
 &nbsp<img src="../imagenes/martillo.jpg" alt="Bienvenido Smile">
@@ -40,12 +153,37 @@
 						
 						</div><br>
 	
-<div class="volver"><a href="../templates/index2.php">Volver Al Inicio</a></div><br>	
+<div class="volver"><a href="../templates/index.php">>>Volver Al Inicio</a></div>	
+  
+	
+    </div>
+	
+   <div class="footer">
 
-{%endblock%}
-{%endblock%}
+   	  <div class="wrap">	
+			 <div class="copy_right">
+				<p>Bestnid © Todos los derechos reservados </p>
+		   </div>	
+		   <div class="footer-nav">
+		   	<ul>
+		   		<li><a href="#">Terminos de uso</a> : </li>
+		   		<li><a href="#">Privacidad</a> : </li>
+		   		
+		   	</ul>
+		   </div>		
+        </div>
 
+    </div>
 
-{% block footer%}	
-{{ parent() }}
-{%endblock%}
+    <script type="text/javascript">
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+	</script>
+    <a href="#" id="toTop"> </a>
+    <script type="text/javascript" src="javascript/navigation.js"></script>
+
+	
+</body>
+</html>

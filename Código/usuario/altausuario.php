@@ -21,7 +21,7 @@ $dardealta=Usuario::altaUsuario($usuario);
 $informar='Por favor diríjase a la sección de registro si desea darse de alta en bestnid';
 
 if($dardealta==null)
-{ $informar='Lo Sentimos pero ya existe un usuario con ese mail por favor vuelva a intentar registrarse!';}
+{ $informar='Lo Sentimos pero ya existe un usuario con ese mail por favor vuelva a intentar registrarse! ';}
 else
   { $informar='Bienvenido a Bestnid , por favor empiece a disfrutar de nuestro sitio';}
 

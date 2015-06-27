@@ -1,0 +1,280 @@
+
+<!DOCTYPE HTML>
+<head>
+
+<title>{% block title %}{% endblock %}</title>
+{%block meta%}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
+{%endblock%}
+{% block stylesheets %}
+<link href="../estilos/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.min2.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../font/css/font-awesome.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../font/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="js/jquery-1.9.0.min.js"></script> 
+<script src="js/jquery.openCarousel.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript" src="js/move-top.js"></script>
+<script src="js/easyResponsiveTabs.js" type="text/javascript"></script>
+<link href="css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" media="all"/>
+ <script type="text/javascript">
+    $(document).ready(function () {
+        $('#horizontalTab').easyResponsiveTabs({
+            type: 'default', //Types: default, vertical, accordion           
+            width: 'auto', //auto or any width like 600px
+            fit: true   // 100% fit in a container
+        });
+    });
+   </script>		
+<link rel="stylesheet" href="css/etalage.css">
+<script src="js/jquery.etalage.min.js"></script>
+<script>
+			jQuery(document).ready(function($){
+
+				$('#etalage').etalage({
+					thumb_image_width: 300,
+					thumb_image_height: 300,
+					source_image_width: 900,
+					source_image_height: 1200,
+					show_hint: true,
+					
+				});
+
+			});
+		</script>
+	  <script src="js/star-rating.js" type="text/javascript"></script>
+{% endblock %}
+	  </head>
+<body>
+
+	<div class="header">
+	 {% block header%}
+  	  		<div class="wrap">
+				<div class="header_top">
+					<div class="logo">
+						<a href="../index.php"><img src="../imagenes/logo.jpg" alt="{{Bestnid}}" /></a>
+						<img src="../imagenes/slider-img.png" alt="{{Bestnid}}" />
+						<img src="../imagenes/logo2.jpg" alt="{{Bestnid}}" />
+					</div>
+					
+		
+					
+			     <div class="clear"></div>
+  		    </div>     
+  		    <div class="navigation">
+  		    	<a class="toggleMenu" href="#">{{Menu}}</a>
+					<ul class="nav">
+						<li>
+						<a href="../templates/index.php">{{Home}}<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>	
+						</li>
+						
+						<li>
+							<a href="#">{{Subastas}}</a>
+							<ul>
+								
+							</ul>
+						</li>
+						
+							{% if sobrebestnid is not null %}		
+						<li>
+							<a href="../sobrebestnid/sobrebestnid.php">{{sobrebestnid}}</a>
+						</li>
+						{% endif %}
+						
+					
+						
+						
+						
+					
+						
+					
+						
+						
+						
+							
+						
+						
+						
+						
+						
+						
+						
+						{% if MiCuenta is not null %}
+						<li>
+							<a href="../ayuda/Ayuda.php">{{MiCuenta}}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span></a>
+					
+							
+							
+						</li>
+						{% endif %}
+						
+						{% if CerrarSesion is not null %}
+						<li>
+							<a href="../sesion/CerrarSesion.php">{{CerrarSesion}}<span class="glyphicon glyphicon-off" aria-hidden="true"></span></a>
+						</li>
+						{% endif %}
+						
+						<li>
+							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
+						</li>
+						
+						{% if (nombre is not null) and (apellido is not null) %}		
+						<li>
+							
+							{% if tipo==1 %}
+							<a href="../sesion/controlBackEnd.php">{{bienvenido}}{{nombre}} {{apellido}}<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+							{% else %}
+							<a href="../sesion/controlFrontEnd.php">{{bienvenido}}{{nombre}} {{apellido}}<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+							{% endif %}
+						</li>
+						{% endif %}
+						
+					</ul>
+					
+  		    </div>
+
+   		</div>
+		{%endblock%}
+   </div>
+   <!------------Cabezera------------>
+   <div class="main">
+    {% block main%}
+   	 <div class="wrap">
+	 {% block menu%}
+	 
+   	 	<div class="preview-page">
+   	 	       <div class="section group">
+			      
+			    
+				<div class="cont-desc span_1_of_2">
+					<ul class="back-links">
+						
+						<li><a href="#">Home</a> ::</li>
+						<li><a href="#">Ver Detalle Producto</a> ::</li>
+						<li>{{subastas.getTitulo()}}</li>
+						<div class="clear"> </div>
+					</ul>
+				  <div class="product-details">	
+					<div class="grid images_3_of_2">
+				
+	         
+							<ul id="etalage">
+							
+							{% for foto in fotos %}
+							
+							<li>
+								<a href="#">
+								
+									<img class="etalage_thumb_image" src="../{{foto.getFoto()}}" />
+									<img class="etalage_source_image" src="../{{foto.getFoto()}}" title="" />
+										
+								</a>
+								</li>
+							{% endfor %}
+							
+							
+						</ul>
+				     </div>
+					 <div class="desc span_3_of_2">
+					 	{% if informar is not null %}
+						<h1>{{informar}}</h1>
+						{% endif %}
+					<h2>{{subastas.getTitulo()}}</h2>
+					<p>{{subastas.getDescripcion()}}</p>					
+					
+					<div class="available">
+						<ul>
+						  
+						  <li><span>Fecha Inicio:</span>{{subastas.getFechaInicio()}}</li>
+						  <li><span>Fecha Fin:</span>{{subastas.getFechaFin()}}</li>
+						  <li><span>Usuario:</span>{{subastas.recuperarUsuarioSubasta(subastas.getIdUsuarioSub())}}</li>
+					    </ul>
+					</div>
+				<div class="share-desc">
+					
+					<div class="button"><span><a href="#">Ofertar</a></span></div>					
+					<div class="clear"></div>
+				</div>
+				
+				   
+		<div class="product_desc">	
+			<div id="horizontalTab">
+				<ul class="resp-tabs-list">
+					<li>Descripcion</li>
+					<li>Comentarios</li>
+					
+					<div class="clear"></div>
+				</ul>
+				<div class="resp-tabs-container">
+					<div class="product-specifications">
+						<ul>
+		                  <li><span class="specification-heading">{{subastas.getDescripcion()}}</span><div class="clear"></div></li>
+		                  
+		                </ul>
+				 	</div>
+				 
+				   <div class="product-tags">
+						 <p> Comentarios:</p>
+					<h4>Agrega tu comentario:</h4>
+					<div class="input-box">
+						<input type="text" value="">
+					</div>
+					
+					<div class="button"><span><a href="#">Agregar comentario</a></span></div>
+			    </div>	
+ 
+						
+				  	   {%endblock%}
+      </div>
+	  {%endblock%}
+    </div>	
+	</div>
+	
+	</div>
+	
+	</div></div>
+	<!-- aca -->
+	
+	
+	</div>
+	
+	</div></div>
+	</div>
+	
+   <div class="footer">
+   {% block footer%}
+   	  <div class="wrap">	
+			 <div class="copy_right">
+				<p>Bestnid © Todos los derechos reservados </p>
+		   </div>	
+		   <div class="footer-nav">
+		   	<ul>
+		   		<li><a href="#">Terminos de uso</a> : </li>
+		   		<li><a href="#">Privacidad</a> : </li>
+		   		
+		   	</ul>
+		   </div>		
+        </div>
+	{%endblock%}
+    </div>
+	{% block final%}
+    <script type="text/javascript">
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+	</script>
+    <a href="#" id="toTop"> </a>
+    <script type="text/javascript" src="javascript/navigation.js"></script>
+	{%endblock%}
+	
+</body>
+</html>
