@@ -53,7 +53,7 @@ for (j=0;j < document.forms.length; j++ ) { // for each form
                        case "alpha":  
                          if(fld.value.length>0 && fld.value.search("[^A-Za-zÑñéáíóú]") >= 0) { 
                               if (!msg || !msg.length)
-                                 msg = "Por favor ingrese solo letras de la A la Z , en minuscula o mayuscula en el Campo Titulo!";
+                                 msg = "Por favor ingrese solo letras de la A la Z , en minuscula o mayuscula en el Campo o!";
                               window.alert(msg);
                               fld.focus();
                               fld.select();

@@ -7,9 +7,13 @@
 //
 // frm - optional, edit check specific frm, or all forms
 // itm - optional, edit check the specific item, or all items.
+
 function valforms(frm,itm)
 {
- 
+ //var sel = document.getElementById("categoria");
+//var cat=(sel.selectedIndex);
+
+//var x = parseInt(cat);
 var i
 var j
 for (j=0;j < document.forms.length; j++ ) { // for each form
@@ -51,9 +55,9 @@ for (j=0;j < document.forms.length; j++ ) { // for each form
 
                        case "alphabetic": 
                        case "alpha":  
-                         if(fld.value.length>0 && fld.value.search("[^A-Z a-zÑñéáíóú]") >= 0) { 
+                         if(fld.value.length>0 && fld.value.search("[^A-Z a-z]") >= 0) { 
                               if (!msg || !msg.length)
-                                 msg = "Por favor ingrese solo letras de la A la Z , en minuscula o mayuscula en el Campo Titulo!";
+                                 msg = "Por favor ingrese solo letras de la A la Z , en minuscula o mayuscula en el Campo Tituloo!";
                               window.alert(msg);
                               fld.focus();
                               fld.select();
@@ -80,7 +84,7 @@ for (j=0;j < document.forms.length; j++ ) { // for each form
 						 case "alpha2":  
                          if(fld.value.length>0 && fld.value.search("[^A-Z a-zÑñéáíóú0-9.]") >= 0) { 
                               if (!msg || !msg.length)
-                                 msg = "Por favor ingrese solo letras de la A la Z , en minuscula o mayuscula y/o caracteres numericos en el Campo Descripcion!";
+                                 msg = "Por favor ingrese solo letras de la A la Z , en minuscula o mayuscula y/o caracteres numericos en el Campo Descripcioon!";
                               window.alert(msg);
                               fld.focus();
                               fld.select();
@@ -96,6 +100,7 @@ for (j=0;j < document.forms.length; j++ ) { // for each form
 						
 							  
                          }//if 
+						
                         break; //alpha 
 
                        case "alphanumeric": 
@@ -111,71 +116,122 @@ for (j=0;j < document.forms.length; j++ ) { // for each form
 
                         break; 
                        }//alphabetic
-					   case "pass":  { 
-                         if(fld.value.length>5 && fld.value.search("[^A-Za-z0-9]") >= 0) { 
-                              if (!msg || !msg.length)
-                                 msg = "Por favor ingrese solo caracteres numericos o letras para la contraseña";
-                              window.alert(msg);
-                              fld.focus();
-                              fld.select();
-                              return false;
-                         }//if                             
-						if(fld.value.length<=5) { 
-                              if (!msg || !msg.length)
-                                 msg = "Por favor ingrese 6 o mas caracteres numericos o letras para la contraseña";
-                              window.alert(msg);
-                              fld.focus();
-                              fld.select();
-                              return false;
-                         }//if				
-                        break; 
-                       }//pass
-					   case "pass2":  { 
-							
-                         if(fld.value.length>0 && fld.value.search("[^A-Za-z0-9]") >= 0) { 
-                              if (!msg || !msg.length)
-                                 msg = "Por favor ingrese solo caracteres numericos o letras para la contrasena";
-                              window.alert(msg);
-                              fld.focus();
-                              fld.select();
-                              return false;
-					      }//if 
-						  if(fld.value.length<=5) { 
-                              if (!msg || !msg.length)
-                                 msg = "Por favor ingrese 6 o mas caracteres numericos o letras para la contrasena";
-                              window.alert(msg);
-                              fld.focus();
-                              fld.select();
-                              return false;
-                         }//if	
-						  
-						
-						if(cons1.toString()!=cons2.toString())
+					    case "categoria":  { 
+                        if(x==0)
 							    {
-							 msg = "Las dos contrasenas ingresadas no coinciden , por favor vuelva a ingresarlas ";
+							 msg = "Por Favor Seleccione una categoria";
                               window.alert(msg);
-                              fld.focus();
-                              fld.select();
+	
                               return false;  
 						  }
-
-                        break; 
+                       break; 
                        }//pass
+					       case "opc":  { 
+							var cantidad = document.getElementById("cantidad").value;
+
+ var cant= parseInt(cantidad);
+
+ var aEliminar=0;
+ 
+  if(cantidad==1)
+ {
+  if (document.form1.opciones[1].checked)
+  {
+	  aEliminar=aEliminar+1;
+  }
+
+ }
+ 
+ 
+ 
+ if(cantidad==2)
+ {
+  if (document.form1.opciones[1].checked)
+  {
+	  aEliminar=aEliminar+1;
+  }
+  
+   if (document.form1.opciones1[1].checked)
+  {
+	  aEliminar=aEliminar+1;
+  } 
+ }
+ 
+
+  if(cantidad==3)
+ {
+  if (document.form1.opciones[1].checked)
+  {
+	  aEliminar=aEliminar+1;
+  }
+   if (document.form1.opciones1[1].checked)
+  {
+	  aEliminar=aEliminar+1;
+  } 
+  if (document.form1.opciones2[1].checked)
+  {
+	  aEliminar=aEliminar+1;
+  } 
+ }
+ 
+ 
+   if(cantidad==4)
+ {
+  if (document.form1.opciones[1].checked)
+  {
+	  aEliminar=aEliminar+1;
+  }
+   if (document.form1.opciones1[1].checked)
+  {
+	  aEliminar=aEliminar+1;
+  } 
+  if (document.form1.opciones2[1].checked)
+  {
+	  aEliminar=aEliminar+1;
+  } 
+   if (document.form1.opciones3[1].checked)
+  {
+	  aEliminar=aEliminar+1;
+  } 
+ }
+ 
+   if(cantidad==5)
+ {
+  if (document.form1.opciones[1].checked)
+  {
+	  aEliminar=aEliminar+1;
+  }
+   if (document.form1.opciones1[1].checked)
+  {
+	  aEliminar=aEliminar+1;
+  } 
+  if (document.form1.opciones2[1].checked)
+  {
+	  aEliminar=aEliminar+1;
+  } 
+   if (document.form1.opciones3[1].checked)
+  {
+	  aEliminar=aEliminar+1;
+  } 
+    if (document.form1.opciones4[1].checked)
+  {
+	  aEliminar=aEliminar+1;
+  } 
+ }
+ 
+ if(cantidad==aEliminar)
+ {
+	 window.alert("No puede eliminar todas las fotos de su subasta, debe quedar al menos una.");
+	 return false;
+ }
+						  
+                       break; 
+                       }//opc
+					   
 					     
 					   
 					   
 
-                       case "email" : 
-                           var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/;
-                           if (fld.value.length>0 && re.test(fld.value) == false) {
-                              if (!msg || !msg.length)
-                                 msg = "La direccion de correo no es valida!Por favor ingrese otra direccion";
-                              window.alert(msg);
-                              fld.focus();
-                              fld.select();
-                              return false;
-                           }
-                           break; // case email
 
 						   
 						   

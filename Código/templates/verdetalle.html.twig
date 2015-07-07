@@ -167,16 +167,19 @@
 	 
    	 	<div class="preview-page">
    	 	       <div class="section group">
-			      
+			      {% if comentarioagregado is not null %}
+			      <div class="alert alert-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					Se Agrego su comentario a Bestnid, si desea ver su comentario vaya a la solapa comentarios dentro de esta misma página
+					<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+					
+					</div>
+
+
+
+			      {% endif %}
 			    
 				<div class="cont-desc span_1_of_2">
-					<ul class="back-links">
-						
-						<li><a href="#">Home</a> ::</li>
-						<li><a href="#">Ver Detalle Producto</a> ::</li>
-						<li>{{subastas.getTitulo()}}</li>
-						<div class="clear"> </div>
-					</ul>
+					<div class="panel-heading2">Ver Subasta: {{subastas.getTitulo()}}</div><br>
 				  <div class="product-details">	
 					<div class="grid images_3_of_2">
 							<ul id="etalage">
@@ -208,37 +211,139 @@
 						  <li><span>Usuario:</span>{{subastas.recuperarUsuarioSubasta(subastas.getIdUsuarioSub())}}</li>
 					    </ul>
 					</div>
-				<div class="share-desc">
 					
-					<div class="button"><span><a href="#">Ofertar</a></span></div>					
-					<div class="clear"></div>
-				</div>
+			{% if aceptada is null %}		
+					
+					{% if (nombre is not null) and (apellido is not null) %}
+							
+							{% if (subastas.esTuSubasta(subastas.getIdSubasta(),idusuario))==0 %}
+							
+							        {% if (subastas.controlarOfertaParaUsuario(subastas.getIdSubasta(),idusuario))==0 %}
+												<form method="POST" name="form1" action="../oferta/altaoferta.php" >
+												<hr>
+					                            Ofertar por el producto
+				                                <div class="share-desc">
 				
+					                            <div class="share">
+												
+						                        <p>Monto :</p><input type="number" class="text_box" type="text" id="numero" name="numero" value="1" min="1" required/>	
+                          					
+					                             </div>
+					                             <div class="button" class="btn btn-danger" >
+												
+												<input name="idsubasta" id="idsubasta" type="hidden" value="{{subastas.getIdSubasta()}}" />
+												  <input name="idusuario" id="idusuario" type="hidden" value="{{idusuario}}" />
+												  
+												 </div>	
+
+					                             <div class="clear"></div>
+					                              Razon: <textarea name="razon" id="razon" rows="4" cols="60" maxlength="250" minlength="2" title="Ingrese minimo 2 caracteres"required/></textarea> 
+												  <input type=submit  class="btn btn-danger" value="Enviar" title="Click para enviar su oferta" />
+				                                  </div>
+												  </form>
+				                                    <hr>
+									 {% else %}
+												<div class="alert alert-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					                             Usted ya realizó una oferta para esta subasta!!!.
+				                            	</div>
+									 {% endif %}
+							{% else %}
+									<div class="alert alert-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					                           Usted en el propietario de la subasta no se le permite ofertar en la misma!!!.
+				                     </div>
+									
+									
+							
+							{% endif %}
+							
+							
+					      
+					
+				   	 
+				    {% else %}
+					<div class="alert alert-success"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							Para poder ofertar por el producto por favor <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> <a href="#">Inicie Sesión</a>
+							o si no posee un usuario <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> <a href="#">Regístrese dentro de bestnid</a> 
+				 </div>
+				
+				   {% endif %}
+	 {% else %}   
+					<div class="alert alert-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					Se Agrego su oferta a Bestnid, si desea ver su oferta ingrese al siguiente link:<br>
+					<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span><a href="verdetalle.php?id={{agrego}}">Su última oferta</a>
+					</div>   
+				   
+	 {% endif %}	   
+				   
+				   
+				   
+				   
+				   
 				   
 		<div class="product_desc">	
 			<div id="horizontalTab">
 				<ul class="resp-tabs-list">
-					<li>Descripcion</li>
 					<li>Comentarios</li>
+					<li>Agregar un nuevo comentario</li>
 					
 					<div class="clear"></div>
 				</ul>
 				<div class="resp-tabs-container">
 					<div class="product-specifications">
 						<ul>
-		                  <li><span class="specification-heading">{{subastas.getDescripcion()}}</span><div class="clear"></div></li>
-		                  
+							{% if comentarios is not null%}
+							{% for comentario in comentarios %}
+		                  <div class="comentarios" >{{comentario.getCuerpo()}}
+
+		                  <div class="fecha">Fecha:{{comentario.getFechaCom()}} Usuario:{{comentario.recuperarUsuarioComentario(comentario.getIdUsuarioCom())}}</div>
+		                  </div>
+		                  	{% endfor %}
+		                  	{% else %}
+
+		                  		<div class="alert alert-info">
+							Lamentablemente la Subasta no posee ningún comentario.
+							Sea el primero en comentar , y deje su opinión en la solapa de agregar un nuevo comentario
+							<span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>.
+				 </div>
+
+		                  	{% endif %}
 		                </ul>
 				 	</div>
 				 
 				   <div class="product-tags">
-						 <p> Comentarios:</p>
+
+{% if (nombre is not null) and (apellido is not null) %}
+							
+									 
 					<h4>Agrega tu comentario:</h4>
+					<form method="POST" name="form1" action="../comentario/agregarcomentario.php">
 					<div class="input-box">
-						<input type="text" value="">
+						<input type="text" name="cuerpocomentario" id="cuerpo" value="" minlength="2" required/>
+						<input type="hidden" name="idusuariocomentario" id="idusuario" value="{{idusuario}}" >
+						<input type="hidden" name="idsubastacomentario" id="idsubasta" value="{{subastas.getIdSubasta()}}" >
 					</div>
-					
-					<div class="button"><span><a href="#">Agregar comentario</a></span></div>
+					<br>
+					 <input type=submit class="btn btn-success" value="Enviar"> 
+					</form>
+				   	 
+				    {% else %}
+					<div class="alert alert-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+							Para poder comentar el producto por favor <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span><a href="#"> Inicie Sesión</a>
+							o si no posee un usuario <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> <a href="#"> Regístrese dentro de bestnid </a>
+				 </div>
+				
+
+{% endif %}
+
+
+				
+
+
+
+
+
+
+
 			    </div>	
  
 						
@@ -251,7 +356,54 @@
 	</div>
 	
 	</div></div>
-	<!-- aca -->
+	 <div class="rightsidebar span_3_of_1 sidebar">
+				<div class="panel-heading"> Otras subastas</div>
+					<ul class="popular-products">
+						<li>
+							 <h4><a href="preview.html">Whirlpool LTE5243D 3.4 CuFt.... </a></h4>
+							  <a href="preview.html"><img src="images/product-img2.jpg" alt="" /></a>
+							  <div class="price-details">
+						       <div class="price-number">
+									<p><span class="rupees line-through">$899.95 </span> &nbsp; <span class="rupees">$839.93 </span></p>
+							    </div>
+							       		<div class="add-cart">								
+											<h4><a href="preview.html">Ver Subasta</a></h4>
+									     </div>
+									 <div class="clear"></div>
+							</div>					 
+						</li>
+						<li>
+							<strong><h4>{{subasta.getTitulo()}}</h4></strong>
+								<a href="../web/preview.php?id={{subasta.getIdSubasta()}}" title="{{subasta.getTitulo()}}"><img src="../{{subasta.recuperarFoto(subasta.getIdSubasta())}}" alt="" /></a>
+								  <div class="price-details">
+								  <div class="categoria"><strong>Categoria:{{subasta.recuperarCategoriaSubasta(subasta.getIdCategoriaSub())}}</strong></div>
+								  <div class="inicio"><strong>inicio el día: {{subasta.getFechaInicio()}}</strong></div>
+								  <div class="vencimiento"><strong>Vence el día: {{subasta.getFechaFin()}}</strong></div>
+					       		          <div class="descripcion">	
+													<strong>{{subasta.getDescripcion()}}</strong></div>
+													<div class="add-cart">
+									      <h4><a href="../subasta/verdetalle.php?id={{subasta.getIdSubasta()}}" title="Haga click para ver la subasta mas detalladamente y/o hacer un ofertar">Ver Subasta</a><h4>
+							                 </div>
+							             <div class="clear"></div>
+												 
+						</li>
+						<li>
+							 <h4><a href="preview.html">Whirlpool LTE5243D 3.4 CuFt.... </a></h4>
+							  <a href="preview.html"><img src="images/product-img4.jpg" alt="" /></a>
+							  <div class="price-details">
+						       <div class="price-number">
+									<p><span class="rupees line-through">$899.95 </span> &nbsp; <span class="rupees">$839.93 </span></p>
+							    </div>
+							       		<div class="add-cart">								
+											<h4><a href="preview.html">More Info</a></h4>
+									     </div>
+									 <div class="clear"></div>
+							</div>					 
+						</li>
+				     </ul>
+				    
+      				  
+					</div>
 	
 	
 	</div>

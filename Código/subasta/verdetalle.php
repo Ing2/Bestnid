@@ -4,6 +4,7 @@ require_once '../twig.php';
 require_once '../categoria/categoria.php';
 require_once '../subasta/subasta.php';
 require_once '../sesion/sesion.php';
+require_once '../comentario/comentario.php';
 
 if (!(isset($_SESSION['UserLogged'])))
    {
@@ -17,12 +18,14 @@ if (!(isset($_SESSION['UserLogged'])))
 	$micuenta=null;
 	$bienvenido=null;
 	$tipo=null;
+	$idusuario=null;
 	}
 else
 	{
 	$tipo=$_SESSION['Tipo'];
 	$nombre=$_SESSION['Nombre'];
 	$apellido=$_SESSION['Apellido'];
+	$idusuario=$_SESSION['Id'];
 	$cerrarsesion='Cerrar Sesion';
 	$micuenta='Mi Cuenta';
 	$bienvenido='Bienvenido:';
@@ -37,8 +40,8 @@ $ID = $_GET['id'];
 $categorias=Categoria::recuperarCategoriasActivas();
 $subastas=Subasta::recuperarSubasta($ID);
 $fotos=Subasta::recuperarFotos($ID);
-
-
+$comentarios=Comentario::recuperarComentariosParaSubasta($ID);
+$comentarioagregado=null;
 
 Twig_Autoloader::register();
 $template = $twig->loadTemplate("verdetalle.html.twig");
@@ -57,7 +60,8 @@ $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => '
 'Categoria'=>'Categorias','categorias'=>$categorias,
 'nombre'=>$nombre,'apellido'=>$apellido,'CerrarSesion'=>$cerrarsesion,'MiCuenta'=>$micuenta,
 'sobrebestnid'=>$sobrebestnid,'contacto'=>$contacto,'informar'=>'El Siguiente listado contiene todas las subastas activas en Bestnid',
-'ordenar'=>'Si lo desea puede ordenar nuestras subastas por alguno de los siguientes criterios:','tipo'=>$tipo,
+'ordenar'=>'Si lo desea puede ordenar nuestras subastas por alguno de los siguientes criterios:','tipo'=>$tipo,'idusuario'=>$idusuario,
+'comentarios'=>$comentarios,
 ));
 
 ?>

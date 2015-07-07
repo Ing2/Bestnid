@@ -130,14 +130,14 @@ public function setIdSubastaOferta($sub)
 	if (!(Oferta::existeOferta($oferta->getIdOferta()))){
 	                   	
 		$res = $db->prepare('INSERT INTO oferta (idoferta,razon,monto,esganador,idestadoofer,idusuarioofer,idsubastaofer) 
-		VALUES (:id,:descripcion,:fechainicio,:fechafin,:idest,;idus,:idcat,:tit)');
-		   $res->bindParam(':id', $subasta->getIdOferta());
-		  $res->bindParam(':razon', $subasta->getRazon());
-		  $res->bindParam(':monto', $subasta->getMonto());
-		 $res->bindParam(':esganador', $subasta->getEsGanador());
-		 $res->bindParam(':idestadoofer', $subasta->getIdEstadoOferta());
-		 $res->bindParam(':idusuarioofer', $subasta->getIdUsuarioOferta());
-		 $res->bindParam(':idsubastaofer', $subasta->getIdSubastaOferta());
+		VALUES (:id,:razon,:monto,:esganador,:idestadoofer,:idusuarioofer,:idsubastaofer)');
+		   $res->bindParam(':id', $oferta->getIdOferta());
+		  $res->bindParam(':razon', $oferta->getRazon());
+		  $res->bindParam(':monto', $oferta->getMonto());
+		 $res->bindParam(':esganador', $oferta->getEsGanador());
+		 $res->bindParam(':idestadoofer', $oferta->getIdEstadoOferta());
+		 $res->bindParam(':idusuarioofer', $oferta->getIdUsuarioOferta());
+		 $res->bindParam(':idsubastaofer', $oferta->getIdSubastaOferta());
 	
 		  
       $res->execute();	
@@ -147,15 +147,15 @@ public function setIdSubastaOferta($sub)
 		else{
 			return null;
 			$mensaje="Oferta Existente";
-			exit
+			exit;
 	}
 	}	
 	
 	//eliminar oferta , es una baja logica, se hace un update , actualiza el valor de idestadosub=2 . estadosub en 2 significa que esta eliminada//
-	public static function eliminarSubasta($idSubasta){
+	public static function eliminarOferta($idOferta){
 	$db=conectaDb();
          	$res = $db->prepare('UPDATE oferta SET idestadoofer=2 WHERE (idoferta=:id)');
-		 $res->bindParam(':id', $idSubasta);
+		 $res->bindParam(':id', $idOferta);
 			$res->execute();
          	$db=null;
 			return true;
@@ -244,10 +244,69 @@ public function setIdSubastaOferta($sub)
 		return $a;
 		
 	}
+	
+	
+		 public static function controlarOfertaParaUsuario($idsubasta,$idusuario)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('select COUNT(o.idoferta)
+from oferta o left join subasta s ON ( o.idsubastaofer = s.idsubasta ) 
+where (( o.idusuarioofer = :idusuario) and (o.idsubastaofer=:idsub) and (o.idestadoofer=1))
+group by s.idsubasta');
+	
+		$res->bindParam(':idsub', $idsubasta);
+		$res->bindParam(':idusuario', $idusuario);
+		  $res->execute();
+	
+		if ($row = $res->fetch()){
+			
+			$a=$row[0];
+			
+		}
+		else {
+	
+			return false; 
+		}
+			
+		$db= null;
+		return $a;		
+	}
+	
+
+	
+	
+	
+		 public static function esTuSubasta($idsubasta,$idusuario)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('select s.idusuariosub
+from oferta o left join subasta s ON ( o.idsubastaofer = s.idsubasta ) 
+where ((o.idsubastaofer=:idsub) and (o.idestadoofer=1))
+group by s.idsubasta');
+	
+		$res->bindParam(':idsub', $idsubasta);
+		  $res->execute();
+	
+		if ($row = $res->fetch()){
+			
+			$a=$row[0];
+			
+		}
+		else {
+	
+			return false; 
+		}
+			
+		$db= null;
+		if($a==$idusuario)
+		{
+			return true;
+		}
+		else{
+		return false;}		
+	}
+	
 }
-
-
-
 
 ?>
 	

@@ -187,30 +187,36 @@ muestra_oculta('contenido_a_mostrar');/* "contenido_a_mostrar" es el nombre que 
     	    	<div class="content-bottom-right2">
     	    	<div class="panel-heading2">Alta de una subasta</div>
 				<div class="wrap">
+						{% if agrego is not null %}		
+					<div class="alert alert-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					Se Agrego una nueva subasta a Bestnid, si desea ver la subasta ingrese al siguiente link:<br>
+					<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span><a href="verdetalle.php?id={{agrego}}">Su última subasta creada</a>
+					</div>
+						
+				{% endif %}
 				<div class="linea">Complete el siguiente formulario para dar de alta una subasta en Bestnid 
 				
 				
 				<span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span></div>
 					
-					{% if agrego is not null %}		
-						Se Agrego una nueva subasta a Bestnid!!!
-				{% endif %}
+			
 					
 	            <form method="POST" name="form1" onSubmit="return valforms(this)" action="../subasta/crearsubasta.php" enctype="multipart/form-data">
   <div class="titulos">Titulo:</div>  
- <input type=text name="titulo" title="Ingrese como minimo 2 letras para el Titulo" class="form-control2" id="titulo"  size="20"  maxlength="50" onChange="return valforms(this.form,this)" editcheck="type=alpha;req=Y=Por favor ingrese su nombre;cvt=UTC" /> 
+ <input type=text name="titulo" title="Ingrese como minimo 2 letras para el Titulo" class="form-control2" id="titulo"  size="20"  maxlength="50" onChange="return valforms(this.form,this)" editcheck="type=alpha;req=Y=Por favor ingrese un Titulo para el producto;cvt=UTC" /> 
 	
  <div class="titulos">Descripción:</div> 
-<input type=text-area name="descripcion" class="form-control2" id="descripcion" size="120"  maxlength="100" onChange="return valforms(this.form,this)" editcheck="type=alpha2;req=Y=Por favor ingrese su apellido;cvt=UTC"/>
+<input type=text-area name="descripcion" class="form-control2" id="descripcion" size="120"  maxlength="100" onChange="return valforms(this.form,this)" editcheck="type=alpha2;req=Y=Por favor ingrese una descripcion para el producto;cvt=UTC"/>
  
  <div class="titulos">Categoría:</div> 
-<select name="categoria" class="form-control11">
-				
+ 
+ <select name="categoria" id="categoria" class="form-control11 onChange="return valforms(this.form,this)" editcheck="type=categoria;req=Y=Por favor ingrese una categoria para el producto;cvt=UTC"/">
+				<option selected="selected" name="categoria" id="categoria" value="0">Seleccionar Categoria</option>
 				   {% for categoria in categorias %}                   							
 								<option  name="categoria" id="categoria" value="{{categoria.getIdCategoria()}}" >{{categoria.getContenidoCategoria()}}</option>
 				   {%endfor %}
 					
-				 </select>
+</select>
 				 <div class="titulos">Cantidad de días en subasta:</div> 
 				 <div class="dias"><input id="dias" name="dias" type="number" value=15 min="15" max="30" title="el valor ingresado debe estar entre 15 y 30 dias"/></div>
 

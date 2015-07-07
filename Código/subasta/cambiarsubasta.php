@@ -68,6 +68,7 @@ $imagen8 = $_FILES['imagen8']['name'];
 else{$imagen8=null;}
 
 
+
 	
 $subasta=Subasta::recuperarSubasta($idsubasta);
 
@@ -504,7 +505,7 @@ if($cantidadFotos==0)
 $categorias=Categoria::recuperarCategoriasActivas();
 $subastas=Subasta::recuperarSubasta($idsubasta);
 $fotos=Subasta::recuperarFotos($idsubasta);
-
+//'aceptada'=>$aceptada,
 
 Twig_Autoloader::register();
 $template = $twig->loadTemplate("verdetalle2.html.twig");
@@ -529,6 +530,7 @@ $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => '
 'VerOfertas' => 'Listado de Ofertas','VerSubastas' => 'Ver Subastas',
 'AgregarAdmin' => 'Gestion de Administradores','fotos' => $fotos,'cant'=>$cant,'cantidad'=>$cantidad,'subastas'=>$subastas,
 'informar'=>$informar,
+
 ));
 
 ?>

@@ -1645,9 +1645,21 @@ background-color:#EBEBEB;
 	font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
 	border-left:1px solid #EEE;
 }
-.product-specifications li:first-child span{
-	border-top:1px solid #eee;
+
+.comentarios{
+	font-weight: 700;
+	color:#E4292F;
+	border:solid;
+	border-color:#eee;
+	margin:5px;
+	padding-left:10px;
 }
+.comentarios .fecha{
+	color:#CBCBCB;
+}
+
+
+
 .product-tags h4 {
 	padding: 10px 0;
 	font-size: 0.95em;

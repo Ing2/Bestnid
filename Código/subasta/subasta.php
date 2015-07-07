@@ -1,6 +1,7 @@
 <?php
 require_once '../Conexion.php';
 require_once 'fotosubasta.php';
+require_once '../oferta/oferta.php';
 
 class Subasta
 {
@@ -1927,7 +1928,63 @@ group by s.idsubasta');
 	return $res;		
 	}
 	
+		 public static function controlarOfertaParaUsuario($idsubasta,$idusuario)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('select COUNT(o.idoferta)
+from oferta o left join subasta s ON ( o.idsubastaofer = s.idsubasta ) 
+where (( o.idusuarioofer = :idusuario) and (o.idsubastaofer=:idsub) and (o.idestadoofer=1))
+group by s.idsubasta');
 	
+		$res->bindParam(':idsub', $idsubasta);
+		$res->bindParam(':idusuario', $idusuario);
+		  $res->execute();
+	
+		if ($row = $res->fetch()){
+			
+			$a=$row[0];
+			
+		}
+		else {
+	
+			return 0; 
+		}
+			
+		$db= null;
+		return $a;		
+	}
+	
+
+	
+	
+	
+		 public static function esTuSubasta($idsubasta,$idusuario)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('select s.idusuariosub
+from oferta o left join subasta s ON ( o.idsubastaofer = s.idsubasta ) 
+where ((o.idsubastaofer=:idsub) and (o.idestadoofer=1))
+group by s.idsubasta');
+	
+		$res->bindParam(':idsub', $idsubasta);
+		  $res->execute();
+	
+		if ($row = $res->fetch()){
+			
+			$a=$row[0];
+			
+		}
+		else {
+	
+			return false; 
+		}
+			
+		$db= null;
+		if($a==$idusuario)
+		{return 1;}
+		else
+		{return 0;}
+	}
 	
 
 

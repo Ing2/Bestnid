@@ -116,12 +116,9 @@ if (isset($_FILES['imagen'.$i]))
 
 
 
-$informar='Por favor diríjase a la sección de registro si desea darse de alta en bestnid';
 
-if($dardealta==null)
-{ $informar='Lo Sentimos pero ya existe un usuario con ese mail por favor vuelva a intentar registrarse! ';}
-else
-  { $informar='Bienvenido a Bestnid , por favor empiece a disfrutar de nuestro sitio';}
+
+
 
 
 
@@ -140,7 +137,7 @@ $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => '
 'Categoria'=>'Categorias','categorias'=>$categorias,
 'nombre'=>$nombre,'apellido'=>$apellido,'CerrarSesion'=>$cerrarsesion,'MiCuenta'=>$micuenta,
 'sobrebestnid'=>$sobrebestnid,'contacto'=>$contacto,'informar'=>'El Siguiente listado contiene todas las subastas activas en Bestnid',
-'ordenar'=>'Si lo desea puede ordenar nuestras subastas por alguno de los siguientes criterios:','tipo'=>$tipo,'agrego'=>'Se Agrego un nueva subasta a Bestnid'
+'ordenar'=>'Si lo desea puede ordenar nuestras subastas por alguno de los siguientes criterios:','tipo'=>$tipo,'agrego'=>$dardealta,
 ));
 ?>
 
