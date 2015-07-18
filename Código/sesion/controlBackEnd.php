@@ -25,7 +25,7 @@ else
 	$cerrarsesion='Cerrar Sesion';
 	$micuenta='Mi Cuenta';
 	$bienvenido='Bienvenido:';
-	$contacto=null;
+	$contacto='Contacto';
 	$iniciarsesion=null;
 	$registrarse=null;
 	$sobrebestnid=null;
@@ -50,8 +50,8 @@ $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => '
 'Admin' => 'Admin','ModificarDatos' => 'Modificar Datos Propios','ManejoUsuario' => 'Gestion De Usuarios',
 'ManejoCategoria' => 'Gestion de Categorias','VerComentarios' => 'Listado de Comentarios',
 'VerOfertas' => 'Listado de Ofertas','VerSubastas' => 'Ver Subastas',
-'AgregarAdmin' => 'Gestion de Administradores',
-'nombre'=>$nombre,'apellido'=>$apellido,'bienvenido'=>$bienvenido,'MiCuenta' => 'Mi Cuenta',
+'AgregarAdmin' => 'Gestion de Administradores','AltaAdmin' => 'Agregar Administrador',
+'nombre'=>$nombre,'apellido'=>$apellido,'bienvenido'=>$bienvenido,'MiCuenta' => 'Mi Cuenta', 'Contacto'=>$contacto,
 ));
 
 

@@ -208,50 +208,7 @@ muestra_oculta('contenido_a_mostrar6');/* "contenido_a_mostrar" es el nombre que
 						<a href="../templates/index.php">{{Home}}<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>	
 						</li>
 						
-						<li>
-							<a href="#">{{Subastas}}</a>
-							<ul>
-								
-							</ul>
-						</li>
 						
-							{% if sobrebestnid is not null %}		
-						<li>
-							<a href="../sobrebestnid/sobrebestnid.php">{{sobrebestnid}}</a>
-						</li>
-						{% endif %}
-						
-							{% if contacto is not null %}		
-						<li>
-							<a href="../contacto/contacto.php">{{contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
-						</li>
-						{% endif %}
-						
-						
-						
-						
-						
-						
-					
-						
-						
-						
-							
-						
-						
-						
-						
-						
-						
-						
-						{% if MiCuenta is not null %}
-						<li>
-							<a href="../ayuda/Ayuda.php">{{MiCuenta}}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span></a>
-					
-							
-							
-						</li>
-						{% endif %}
 						
 						{% if CerrarSesion is not null %}
 						<li>
@@ -261,6 +218,10 @@ muestra_oculta('contenido_a_mostrar6');/* "contenido_a_mostrar" es el nombre que
 						
 						<li>
 							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
+						</li>
+						
+						<li>
+							<a href="../mail/altamail.php">{{Contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
 						</li>
 						
 						{% if (nombre is not null) and (apellido is not null) %}		
@@ -375,11 +336,11 @@ Ingrese una nueva descripción:
                    </div>
                    <div class="radio">
                    <label>
-                          <input type="radio" name="opciones"  onChange="return valforms(this.form,this)" editcheck="type=opc;cvt=UTC" onclick="muestra_oculta2('contenido_a_mostrar2')" value="{{fotos[0].getIdFoto()}}">
+                          <input type="radio" name="opciones"  onChange="return valforms(this.form,this)" editcheck="type=opc;cvt=UTC" onclick="muestra_oculta2('contenido_a_mostrar2')" value="Reemplazar">
                           <strong> Reemplazar Foto </strong>
                           </label>
                           <div id="contenido_a_mostrar2">
-                                    <input type="file" title="Seleccione una imagen para la subasta" name="imagen0" id="imagen0" required/><br>
+                                    <input type="file" title="Seleccione una imagen para la subasta" name="imagen0" id="imagen0" /><br>
                           </div>
                     </div>
                </div>
@@ -417,11 +378,11 @@ Ingrese una nueva descripción:
 </div>
 <div class="radio">
   <label>
-    <input type="radio" name="opciones1" onChange="return valforms(this.form,this)" editcheck="type=opc;cvt=UTC" onclick="muestra_oculta3('contenido_a_mostrar3')" value="{{fotos[1].getIdFoto()}}">
+    <input type="radio" name="opciones1" onChange="return valforms(this.form,this)" editcheck="type=opc;cvt=UTC" onclick="muestra_oculta3('contenido_a_mostrar3')" value="Reemplazar">
     <strong> Reemplazar Foto </strong>
   </label>
   <div id="contenido_a_mostrar3">
-<input type="file" title="Seleccione una imagen para la subasta" name="imagen1" id="imagen1" required/><br>
+<input type="file" title="Seleccione una imagen para la subasta" name="imagen1" id="imagen1" /><br>
 </div>
 </div>
 </div>
@@ -458,11 +419,11 @@ Ingrese una nueva descripción:
 </div>
 <div class="radio">
   <label>
-    <input type="radio" name="opciones1"  onclick="muestra_oculta3('contenido_a_mostrar3')" value="{{fotos[1].getIdFoto()}}">
+    <input type="radio" name="opciones1"  onclick="muestra_oculta3('contenido_a_mostrar3')" value="Reemplazar">
     <strong> Reemplazar Foto </strong>
   </label>
   <div id="contenido_a_mostrar3">
-<input type="file" title="Seleccione una imagen para la subasta" name="imagen1" id="imagen1" required/><br>
+<input type="file" title="Seleccione una imagen para la subasta" name="imagen1" id="imagen1"/><br>
 </div>
 </div>
 </div>
@@ -494,11 +455,11 @@ Ingrese una nueva descripción:
 </div>
 <div class="radio">
   <label>
-    <input type="radio" name="opciones2"  onclick="muestra_oculta4('contenido_a_mostrar4')" value="{{fotos[2].getIdFoto()}}">
+    <input type="radio" name="opciones2"  onclick="muestra_oculta4('contenido_a_mostrar4')" value="Reemplazar">
     <strong> Reemplazar Foto </strong>
   </label>
   <div id="contenido_a_mostrar4">
-<input type="file" title="Seleccione una imagen para la subasta" name="imagen2" id="imagen2" required/><br>
+<input type="file" title="Seleccione una imagen para la subasta" name="imagen2" id="imagen2" /><br>
 </div>
 </div>
 </div>
@@ -535,11 +496,11 @@ Ingrese una nueva descripción:
 </div>
 <div class="radio">
   <label>
-    <input type="radio" name="opciones1"  onclick="muestra_oculta3('contenido_a_mostrar3')" value="{{fotos[1].getIdFoto()}}">
+    <input type="radio" name="opciones1"  onclick="muestra_oculta3('contenido_a_mostrar3')" value="Reemplazar">
     <strong> Reemplazar Foto </strong>
   </label>
   <div id="contenido_a_mostrar3">
-<input type="file" title="Seleccione una imagen para la subasta" name="imagen1" id="imagen1" required/><br>
+<input type="file" title="Seleccione una imagen para la subasta" name="imagen1" id="imagen1"/><br>
 </div>
 </div>
 </div>
@@ -575,11 +536,11 @@ Ingrese una nueva descripción:
 </div>
 <div class="radio">
   <label>
-    <input type="radio" name="opciones2"  onclick="muestra_oculta4('contenido_a_mostrar4')" value="{{fotos[2].getIdFoto()}}">
+    <input type="radio" name="opciones2"  onclick="muestra_oculta4('contenido_a_mostrar4')" value="Reemplazar">
     <strong> Reemplazar Foto </strong>
   </label>
   <div id="contenido_a_mostrar4">
-<input type="file" title="Seleccione una imagen para la subasta" name="imagen2" id="imagen2" required/><br>
+<input type="file" title="Seleccione una imagen para la subasta" name="imagen2" id="imagen2" /><br>
 </div>
 </div>
 </div>
@@ -618,11 +579,11 @@ Ingrese una nueva descripción:
 </div>
 <div class="radio3">
   <label>
-    <input type="radio" name="opciones3" onclick="muestra_oculta5('contenido_a_mostrar5')" value="{{fotos[3].getIdFoto()}}">
+    <input type="radio" name="opciones3" onclick="muestra_oculta5('contenido_a_mostrar5')" value="Reemplazar">
     <strong> Reemplazar Foto </strong>
   </label>
   <div id="contenido_a_mostrar5">
-<input type="file" title="Seleccione una imagen para la subasta" name="imagen3" id="imagen3" required/><br>
+<input type="file" title="Seleccione una imagen para la subasta" name="imagen3" id="imagen3" /><br>
 </div>
 </div>
 </div>
@@ -665,11 +626,11 @@ Ingrese una nueva descripción:
 </div>
 <div class="radio">
   <label>
-    <input type="radio" name="opciones1"  onclick="muestra_oculta3('contenido_a_mostrar3')" value="{{fotos[1].getIdFoto()}}">
+    <input type="radio" name="opciones1"  onclick="muestra_oculta3('contenido_a_mostrar3')" value="Reemplazar">
     <strong> Reemplazar Foto </strong>
   </label>
   <div id="contenido_a_mostrar3">
-<input type="file" title="Seleccione una imagen para la subasta" name="imagen1" id="imagen1" required/><br>
+<input type="file" title="Seleccione una imagen para la subasta" name="imagen1" id="imagen1"/><br>
 </div>
 </div>
 </div>
@@ -705,11 +666,11 @@ Ingrese una nueva descripción:
 </div>
 <div class="radio">
   <label>
-    <input type="radio" name="opciones2"  onclick="muestra_oculta4('contenido_a_mostrar4')" value="{{fotos[2].getIdFoto()}}">
+    <input type="radio" name="opciones2"  onclick="muestra_oculta4('contenido_a_mostrar4')" value="Reemplazar">
     <strong> Reemplazar Foto </strong>
   </label>
   <div id="contenido_a_mostrar4">
-<input type="file" title="Seleccione una imagen para la subasta" name="imagen2" id="imagen2" required/><br>
+<input type="file" title="Seleccione una imagen para la subasta" name="imagen2" id="imagen2" /><br>
 </div>
 </div>
 </div>
@@ -743,11 +704,11 @@ Ingrese una nueva descripción:
 </div>
 <div class="radio3">
   <label>
-    <input type="radio" name="opciones3" onclick="muestra_oculta5('contenido_a_mostrar5')" value="{{fotos[3].getIdFoto()}}">
+    <input type="radio" name="opciones3" onclick="muestra_oculta5('contenido_a_mostrar5')" value="Reemplazar">
     <strong> Reemplazar Foto </strong>
   </label>
   <div id="contenido_a_mostrar5">
-<input type="file" title="Seleccione una imagen para la subasta" name="imagen3" id="imagen3" required/><br>
+<input type="file" title="Seleccione una imagen para la subasta" name="imagen3" id="imagen3" /><br>
 </div>
 </div>
 </div>
@@ -786,11 +747,11 @@ Ingrese una nueva descripción:
 </div>
 <div class="radio4">
   <label>
-    <input type="radio" name="opciones4" onclick="muestra_oculta6('contenido_a_mostrar6')" value="{{fotos[4].getIdFoto()}}">
+    <input type="radio" name="opciones4" onclick="muestra_oculta6('contenido_a_mostrar6')" value="Reemplazar">
     <strong> Reemplazar Foto </strong>
   </label>
   <div id="contenido_a_mostrar6">
-<input type="file" title="Seleccione una imagen para la subasta" name="imagen4" id="imagen4" required/><br>
+<input type="file" title="Seleccione una imagen para la subasta" name="imagen4" id="imagen4" /><br>
 </div>
 </div>
 </div>
@@ -845,7 +806,8 @@ Ingrese una nueva descripción:
 	
 	
 	
-<input type=submit value="Enviar"> <input type=reset>
+<input type=submit class="btn btn-success"value="Enviar" title="Click para finalizar la modificacion de la subasta y enviar los cambios"> 
+<input type=reset class="btn btn-primary">
 
 </form>
 <hr><div class="volver4"><a href="../sesion/controlFrontEnd.php">>>Volver Al Menu de usuario</a></div>

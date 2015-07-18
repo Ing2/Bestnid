@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.11
+-- version 4.1.12
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-06-2015 a las 03:46:55
--- Versión del servidor: 5.6.24
--- Versión de PHP: 5.5.24
+-- Tiempo de generación: 17-07-2015 a las 23:53:29
+-- Versión del servidor: 5.6.16
+-- Versión de PHP: 5.5.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -27,10 +27,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `categoria` (
-  `idcategoria` int(45) NOT NULL,
+  `idcategoria` int(45) NOT NULL AUTO_INCREMENT,
   `contenido_cat` varchar(100) NOT NULL,
-  `idestadocat` int(45) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+  `idestadocat` int(45) NOT NULL,
+  PRIMARY KEY (`idcategoria`),
+  KEY `idestadocat` (`idestadocat`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Volcado de datos para la tabla `categoria`
@@ -58,12 +60,58 @@ INSERT INTO `categoria` (`idcategoria`, `contenido_cat`, `idestadocat`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `comentario` (
-  `idcomentario` int(45) NOT NULL,
+  `idcomentario` int(45) NOT NULL AUTO_INCREMENT,
   `cuerpo` varchar(250) NOT NULL,
   `idusuariocom` int(45) NOT NULL,
   `idsubastacom` int(45) NOT NULL,
-  `idestadocom` int(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `idestadocom` int(45) NOT NULL,
+  `fecha_com` date NOT NULL,
+  PRIMARY KEY (`idcomentario`),
+  KEY `idusuariocom` (`idusuariocom`,`idsubastacom`,`idestadocom`),
+  KEY `idsubastacom` (`idsubastacom`),
+  KEY `idestadocom` (`idestadocom`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=55 ;
+
+--
+-- Volcado de datos para la tabla `comentario`
+--
+
+INSERT INTO `comentario` (`idcomentario`, `cuerpo`, `idusuariocom`, `idsubastacom`, `idestadocom`, `fecha_com`) VALUES
+(1, 'Que talle es la campera?', 10, 74, 1, '2015-07-01'),
+(2, 'Muy linda la campera, abriga mucho?', 11, 74, 1, '2015-07-02'),
+(3, 'Parece nueva,la usaste alguna vez?', 7, 74, 1, '2015-07-03'),
+(4, 'Que tan fuerte suenan los parlantes?', 15, 75, 1, '2015-07-02'),
+(5, 'Funciona bien la impresora?', 4, 76, 1, '2015-07-01'),
+(16, 'la tele es a coloooor?', 3, 78, 1, '2015-07-09'),
+(17, 'Funciona la tele?', 3, 78, 1, '2015-07-03'),
+(18, 'De que material esta hecha la caja?', 20, 82, 1, '2015-07-07'),
+(19, 'Todavia anda el nokia 1100?', 12, 87, 1, '2015-07-07'),
+(20, 'cuantos aÃ±os tiene el caballo?', 12, 86, 1, '2015-07-07'),
+(21, 'como vas a hacer para darme la palmera si lo quiero comprar', 19, 27, 2, '2015-07-07'),
+(22, 'Es trucho el billete?', 6, 88, 1, '2015-07-07'),
+(25, 'Puedo ir al banco y cambiarlo por un peso?', 4, 88, 1, '2015-07-07'),
+(27, 'Muy linda esta , como para hacerme varios licuados.', 6, 79, 1, '2015-07-07'),
+(28, 'funciona,no?', 6, 79, 1, '2015-07-07'),
+(29, 'enfria bien la heladera?', 3, 80, 1, '2015-07-07'),
+(31, 'Esta fria el agua?', 16, 90, 1, '2015-07-08'),
+(32, 'muy fea palmera', 19, 27, 2, '2015-07-09'),
+(33, '	que linda			    ', 3, 74, 1, '2015-07-14'),
+(34, 'trmendo', 3, 77, 1, '2015-07-15'),
+(35, 'tre mene dooooo', 3, 77, 1, '2015-07-15'),
+(37, 'y cambiarle el color?', 19, 94, 2, '2015-07-15'),
+(39, 'usuariopruebamesacomentario', 28, 89, 1, '2015-07-15'),
+(41, 'cuanto la medusa?', 3, 96, 2, '2015-07-15'),
+(42, 'el agua es natural?', 28, 90, 1, '2015-07-17'),
+(45, 'comentario', 29, 92, 2, '2015-07-17'),
+(46, 'son de lana?', 0, 99, 1, '2015-07-17'),
+(47, 'es sumergible?', 0, 92, 1, '2015-07-17'),
+(48, 'es el que me falta en la coleccion', 0, 77, 1, '2015-07-17'),
+(49, 'Es original?', 0, 98, 1, '2015-07-17'),
+(50, 'es hp ? ', 31, 76, 1, '2015-07-17'),
+(51, 'longitud?', 0, 103, 1, '2015-07-17'),
+(52, 'Viene con pico?', 0, 101, 1, '2015-07-17'),
+(53, 'trae pilas?', 0, 92, 1, '2015-07-17'),
+(54, 'Es muy daÃ±ina?', 30, 107, 1, '2015-07-17');
 
 -- --------------------------------------------------------
 
@@ -72,9 +120,10 @@ CREATE TABLE IF NOT EXISTS `comentario` (
 --
 
 CREATE TABLE IF NOT EXISTS `estado_categoria` (
-  `idestadocat` int(45) NOT NULL,
-  `descripcion` varchar(45) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `idestadocat` int(45) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(45) NOT NULL,
+  PRIMARY KEY (`idestadocat`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Volcado de datos para la tabla `estado_categoria`
@@ -91,9 +140,10 @@ INSERT INTO `estado_categoria` (`idestadocat`, `descripcion`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `estado_comentario` (
-  `idestadocom` int(45) NOT NULL,
-  `descripcioncom` varchar(45) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `idestadocom` int(45) NOT NULL AUTO_INCREMENT,
+  `descripcioncom` varchar(45) NOT NULL,
+  PRIMARY KEY (`idestadocom`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Volcado de datos para la tabla `estado_comentario`
@@ -110,15 +160,37 @@ INSERT INTO `estado_comentario` (`idestadocom`, `descripcioncom`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `estado_oferta` (
-  `idestadooferta` int(45) NOT NULL,
-  `descripcion` varchar(45) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `idestadooferta` int(45) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(45) NOT NULL,
+  PRIMARY KEY (`idestadooferta`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `estado_oferta`
 --
 
 INSERT INTO `estado_oferta` (`idestadooferta`, `descripcion`) VALUES
+(1, 'Activa'),
+(2, 'Eliminada'),
+(3, 'Sin exito'),
+(4, 'Ganadora');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estado_respuesta`
+--
+
+CREATE TABLE IF NOT EXISTS `estado_respuesta` (
+  `idestadorespuesta` int(11) NOT NULL,
+  `descripcion` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `estado_respuesta`
+--
+
+INSERT INTO `estado_respuesta` (`idestadorespuesta`, `descripcion`) VALUES
 (1, 'Activa'),
 (2, 'Eliminada');
 
@@ -129,9 +201,11 @@ INSERT INTO `estado_oferta` (`idestadooferta`, `descripcion`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `estado_subasta` (
-  `idestadosubasta` int(45) NOT NULL,
-  `descripcion` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `idestadosubasta` int(45) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(25) NOT NULL,
+  PRIMARY KEY (`idestadosubasta`),
+  KEY `idestadosubasta` (`idestadosubasta`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Volcado de datos para la tabla `estado_subasta`
@@ -141,7 +215,8 @@ INSERT INTO `estado_subasta` (`idestadosubasta`, `descripcion`) VALUES
 (1, 'Activa'),
 (2, 'Cancelada'),
 (3, 'Finalizada con exito'),
-(4, 'Finalizada sin exito');
+(4, 'Finalizada sin exito'),
+(5, 'Esperando Eleccion');
 
 -- --------------------------------------------------------
 
@@ -150,10 +225,11 @@ INSERT INTO `estado_subasta` (`idestadosubasta`, `descripcion`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `foto_subasta` (
-  `idfoto` int(45) NOT NULL,
+  `idfoto` int(45) NOT NULL AUTO_INCREMENT,
   `idsubasta` int(11) NOT NULL,
-  `foto` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=latin1;
+  `foto` varchar(100) NOT NULL,
+  PRIMARY KEY (`idfoto`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=190 ;
 
 --
 -- Volcado de datos para la tabla `foto_subasta`
@@ -195,8 +271,6 @@ INSERT INTO `foto_subasta` (`idfoto`, `idsubasta`, `foto`) VALUES
 (37, 27, 'imagenes/palmera.jpg'),
 (38, 27, 'imagenes/palmera.jpg'),
 (39, 27, 'imagenes/palmera2.jpg'),
-(40, 28, 'imagenes/pino.jpg'),
-(41, 28, 'imagenes/pino2.jpg'),
 (90, 74, 'imagenes/campera1.jpg'),
 (91, 74, 'imagenes/campera2.jpg'),
 (92, 74, 'imagenes/campera3.jpg'),
@@ -239,7 +313,49 @@ INSERT INTO `foto_subasta` (`idfoto`, `idsubasta`, `foto`) VALUES
 (129, 87, 'imagenes/129nokia2.jpg'),
 (130, 87, 'imagenes/130nokia3.jpg'),
 (131, 88, 'imagenes/131patacon1.jpg'),
-(132, 88, 'imagenes/132patacon2.jpg');
+(132, 88, 'imagenes/132patacon2.jpg'),
+(162, 89, 'imagenes/162mesa1.jpg'),
+(163, 89, 'imagenes/163mesa2.jpg'),
+(164, 89, 'imagenes/164mesa3.jpg'),
+(165, 28, 'imagenes/165137pino.jpg'),
+(167, 90, 'imagenes/168Koala.jpg'),
+(168, 92, 'imagenes/168relojpuma.jpg'),
+(169, 93, 'imagenes/169images (4).jpg'),
+(170, 94, 'imagenes/1702.jpg'),
+(171, 95, 'imagenes/171Lighthouse.jpg'),
+(172, 96, 'imagenes/172Jellyfish.jpg'),
+(173, 97, 'imagenes/173camisa.jpg'),
+(174, 97, 'imagenes/174camisa2.jpg'),
+(175, 98, 'imagenes/175spurs.jpg'),
+(176, 98, 'imagenes/176spurs2.jpg'),
+(177, 99, 'imagenes/177Guante-de-lana-rojo2.jpg'),
+(179, 100, 'imagenes/178tenis2.jpg'),
+(180, 100, 'imagenes/179Tennis_Ball.jpg'),
+(181, 101, 'imagenes/181pelota-de-basquet.jpg'),
+(182, 102, 'imagenes/182raqueta-tenis-wilson.jpg'),
+(183, 103, 'imagenes/183soga.jpg'),
+(184, 104, 'imagenes/184piebionico.jpg'),
+(185, 105, 'imagenes/185collar-de-perlas.jpg'),
+(186, 106, 'imagenes/186ak47.jpg'),
+(187, 106, 'imagenes/187AK-47.jpg'),
+(188, 107, 'imagenes/188granada.jpg'),
+(189, 108, 'imagenes/189remato-chaleco-antibalas.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `mail`
+--
+
+CREATE TABLE IF NOT EXISTS `mail` (
+  `idmail` int(11) NOT NULL AUTO_INCREMENT,
+  `origenmail` varchar(50) NOT NULL,
+  `destinomail` varchar(50) NOT NULL,
+  `fechamail` date NOT NULL,
+  `asuntomail` varchar(50) NOT NULL,
+  `contenidomail` varchar(150) NOT NULL,
+  PRIMARY KEY (`idmail`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 -- --------------------------------------------------------
 
@@ -248,31 +364,70 @@ INSERT INTO `foto_subasta` (`idfoto`, `idsubasta`, `foto`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `oferta` (
-  `idoferta` int(45) NOT NULL,
+  `idoferta` int(45) NOT NULL AUTO_INCREMENT,
   `razon` varchar(200) NOT NULL,
   `monto` double NOT NULL,
-  `esganador` tinyint(1) NOT NULL,
+  `esganador` int(11) NOT NULL,
   `idestadoofer` int(45) NOT NULL,
   `idusuarioofer` int(45) NOT NULL,
-  `idsubastaofer` int(45) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+  `idsubastaofer` int(45) NOT NULL,
+  PRIMARY KEY (`idoferta`),
+  KEY `idestadoofer` (`idestadoofer`,`idusuarioofer`,`idsubastaofer`),
+  KEY `idusuarioofer` (`idusuarioofer`),
+  KEY `idsubastaofer` (`idsubastaofer`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
 
 --
 -- Volcado de datos para la tabla `oferta`
 --
 
 INSERT INTO `oferta` (`idoferta`, `razon`, `monto`, `esganador`, `idestadoofer`, `idusuarioofer`, `idsubastaofer`) VALUES
-(1, 'me gusto demasiado.', 1500, 0, 1, 5, 1),
-(2, 'Tengo un local de ropa y me es muy necesario.', 500, 0, 1, 8, 12),
-(3, 'La necesito urgente para un cumple!!', 250, 0, 1, 10, 10),
-(4, 'Me parecio espectacular y me vendria muy bien', 80, 0, 1, 9, 1),
-(5, 'soy carnicero y lamentablemente perdi un dedo trabajando.Me gustaria comprar el producto para que no me vuelva a ocurrir', 600, 0, 1, 6, 1),
-(6, 'Siempre me gustaron los animales porque vivo solo y son buena compania.Una llama es justo lo que necesito.', 2500, 0, 1, 7, 2),
-(7, 'Siempre quise ser un vampiro.Con este espejo no me convertiria en vampiro pero me ayudaria a sentirme uno.', 20, 0, 1, 6, 5),
-(8, 'Odio a superman y si algun dia lo llego a cruzar este producto me vendria al pelo.', 1500, 0, 1, 8, 6),
-(9, 'Soy carpintero y la necesito para cuando manejo la sierra.', 500, 0, 1, 9, 1),
-(10, 'La verdad, si estas seguro de lo que queres hacer, me tenes que elegir a mi.', 10, 0, 1, 6, 7),
-(11, 'Me vendria muy bien una palmera para decorar mi parque pequeño pero extravagante', 200, 0, 1, 7, 27);
+(29, 'Me gusta para el cumple de mi sobrina! ', 25, 0, 1, 30, 99),
+(30, 'Es una locura ese reloj ! tenia uno igual pero me lo robaron y no pude conseguirlo en ningun lado.', 600, 0, 1, 30, 92),
+(31, 'Soy fanatico de los simpsons y solo me falta homero en pen drive.', 100, 0, 1, 31, 77),
+(32, 'Me falta la remera de manu y tengo todo el equipo', 600, 0, 1, 31, 98),
+(33, 'Me gusta para mis hijos', 10, 0, 1, 32, 103),
+(34, 'Tengo una escuelita de basquet y nos faltan pelotas.', 100, 0, 1, 32, 101),
+(35, 'Es el regalo perfecto para mi decimo aniversario.', 1000, 0, 1, 32, 92),
+(36, 'La necesito porque tengo una tienda de ropa', 140, 0, 1, 30, 74);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuesta`
+--
+
+CREATE TABLE IF NOT EXISTS `respuesta` (
+  `idrespuesta` int(11) NOT NULL AUTO_INCREMENT,
+  `idcomentario` int(11) NOT NULL,
+  `idusuariorespuesta` int(11) NOT NULL,
+  `cuerpo` varchar(250) NOT NULL,
+  `fecharespuesta` date NOT NULL,
+  `idestadorespuesta` int(11) NOT NULL,
+  PRIMARY KEY (`idrespuesta`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+
+--
+-- Volcado de datos para la tabla `respuesta`
+--
+
+INSERT INTO `respuesta` (`idrespuesta`, `idcomentario`, `idusuariorespuesta`, `cuerpo`, `fecharespuesta`, `idestadorespuesta`) VALUES
+(1, 1, 16, 'El talle de la campera es XL', '2015-07-11', 1),
+(2, 2, 16, 'Si abriga muchisimo', '2015-07-11', 1),
+(3, 3, 16, 'Si , no mucho pero la use', '2015-07-11', 1),
+(18, 34, 19, 'VISTE?', '2015-07-15', 1),
+(19, 35, 19, 'sisi, claro que si', '2015-07-15', 1),
+(20, 31, 3, 'wdadas', '2015-07-15', 1),
+(21, 33, 3, 'sisi, lo que quieras', '2015-07-15', 1),
+(22, 36, 3, 'si , es posible', '2015-07-15', 1),
+(23, 37, 3, 'claro, podes !', '2015-07-15', 1),
+(24, 39, 3, 'carlosrespuestamesa', '2015-07-15', 1),
+(25, 41, 28, 'la medusa es venenosa.', '2015-07-15', 1),
+(26, 42, 3, 'no.', '2015-07-17', 1),
+(27, 45, 3, 'respuesta2', '2015-07-17', 1),
+(28, 51, 31, '5 metros.', '2015-07-17', 1),
+(29, 52, 30, 'No, no', '2015-07-17', 1),
+(30, 54, 32, 'No, para nada', '2015-07-17', 1);
 
 -- --------------------------------------------------------
 
@@ -281,40 +436,46 @@ INSERT INTO `oferta` (`idoferta`, `razon`, `monto`, `esganador`, `idestadoofer`,
 --
 
 CREATE TABLE IF NOT EXISTS `subasta` (
-  `idsubasta` int(25) NOT NULL,
+  `idsubasta` int(25) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(200) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `fecha_inicio` date NOT NULL,
   `fecha_fin` date NOT NULL,
   `idestadosub` int(45) NOT NULL,
   `idusuariosub` int(45) NOT NULL,
   `idcategoriasub` int(45) NOT NULL,
-  `titulo` varchar(30) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=latin1;
+  `titulo` varchar(30) NOT NULL,
+  PRIMARY KEY (`idsubasta`),
+  KEY `idestadosub` (`idestadosub`,`idusuariosub`,`idcategoriasub`),
+  KEY `idusuariosub` (`idusuariosub`),
+  KEY `idcategoriasub` (`idcategoriasub`),
+  KEY `idestadosub_2` (`idestadosub`),
+  KEY `idsubasta` (`idsubasta`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=109 ;
 
 --
 -- Volcado de datos para la tabla `subasta`
 --
 
 INSERT INTO `subasta` (`idsubasta`, `descripcion`, `fecha_inicio`, `fecha_fin`, `idestadosub`, `idusuariosub`, `idcategoriasub`, `titulo`) VALUES
-(1, 'Guantes de malla de acero inox.tejido, anticorte , marca "manulatex" de marca e industria francesa.', '2015-06-20', '2015-07-07', 1, 3, 3, 'Guantes de acerox'),
-(2, 'llama adulta oriunda de Tilcara.Es mansita.', '2015-06-12', '2015-06-30', 1, 4, 10, 'Llama'),
-(5, 'Espejo sin marco.Medidas 0.8m x 1.2m. ', '2015-06-25', '2015-07-15', 1, 3, 5, 'Espejo'),
-(6, '200 gr. de Kriptonita.', '2015-06-07', '2015-07-01', 1, 4, 13, 'Kriptonita'),
+(1, 'Guantes de malla de acero inox.tejido, anticorte , marca "manulatex" de marca e industria francesa.', '2015-06-30', '2015-07-17', 1, 3, 3, 'Guantes de acerox'),
+(2, 'llama adulta oriunda de Tilcara.Es mansita.', '2015-06-12', '2015-06-30', 4, 4, 10, 'Llama'),
+(5, 'Espejo sin marco.Medidas 0.8m x 1.2m. ', '2015-06-25', '2015-07-15', 4, 3, 5, 'Espejo'),
+(6, '200 gr. de Kriptonita.', '2015-06-07', '2015-07-01', 4, 4, 13, 'Kriptonita'),
 (7, '200ml. de aceite y 300ml de vinagre.No incluye frascos.', '2015-05-30', '2015-06-14', 4, 5, 1, 'Aceite y Vinagre'),
 (8, 'Reloj de pulsera con calculadora incluida.', '2015-03-09', '2015-04-01', 4, 7, 8, 'Reloj calculadora'),
 (9, 'Alcancia personaliza con un Angry Bird.', '2015-06-12', '2015-06-27', 4, 8, 13, 'Alcancia Angry Birds'),
-(10, 'Gato cachorro y macho muy mimoso.', '2015-06-01', '2015-07-01', 1, 9, 10, 'Gatito pardo'),
+(10, 'Gato cachorro y macho muy mimoso.', '2015-06-01', '2015-07-01', 4, 9, 10, 'Gatito pardo'),
 (11, 'Deliciosa torta de chocolate.Hecha por Maru Botana.', '2015-02-03', '2015-03-01', 4, 6, 1, 'Chocotorta'),
 (12, 'Autito HotWells 0km.', '2015-06-09', '2015-06-28', 4, 7, 11, 'Autito Hotweels'),
 (13, 'Hermoso Boyero de Berna.Es mas bueno que el pan.', '2015-06-08', '2015-06-29', 4, 9, 10, 'Boyero de Berna'),
 (14, 'Una obra maestra de la literatura Hispanoamericana.', '2015-06-01', '2015-06-19', 4, 8, 7, 'Cien anos de Soledad'),
 (15, 'Castillo inflable para que se diviertan todos.', '2015-06-01', '2015-06-22', 4, 7, 13, 'Castillo inflable'),
-(16, 'Las empanadas son todas de jamon y queso caseras', '2015-05-27', '2015-06-17', 2, 6, 1, 'Una docena de empanadas'),
-(17, 'Tiene 3m de diametro y 1m de profundidad.', '2015-05-20', '2015-06-02', 2, 8, 13, 'Pileta pelopincho'),
+(16, 'Las empanadas son todas de jamon y queso caseras', '2015-05-27', '2015-06-17', 4, 6, 1, 'Una docena de empanadas'),
+(17, 'Tiene 3m de diametro y 1m de profundidad.', '2015-05-20', '2015-06-02', 4, 8, 13, 'Pileta pelopincho'),
 (19, 'pileta enorme', '2015-06-01', '2015-06-15', 4, 5, 5, 'Pileta'),
-(27, 'Palmera tropical, 3 metros , esta en excelente estado.', '2015-06-20', '2015-07-15', 1, 3, 11, 'Palmera'),
-(28, 'Pinito hermoso, perfecto para decoracion de exteriores', '2015-06-26', '2015-07-10', 1, 3, 11, 'Pino'),
-(74, 'Campera impermeable ideal para el invierno', '2015-06-29', '2015-07-29', 1, 16, 4, 'Campera'),
+(27, 'Palmera tropical, 3 metros , esta en excelente estado.', '2015-06-20', '2015-07-15', 4, 3, 11, 'Palmera'),
+(28, 'Pino para decoracion', '2015-06-26', '2015-07-10', 4, 3, 13, 'Pino'),
+(74, 'Campera impermeable ideal para el invierno', '2015-06-29', '2015-07-17', 1, 3, 4, 'Campera'),
 (75, 'Parlantes Edifier multimedia 2.1', '2015-06-29', '2015-07-29', 1, 17, 2, 'Parlantes'),
 (76, 'Impresora Multifuncion Epson Stylus', '2015-06-29', '2015-07-29', 1, 18, 2, 'Impresora'),
 (77, 'Pendrive 16 Gb Homero Simpson Usb 2.0', '2015-06-29', '2015-07-29', 1, 19, 2, 'Pendrive'),
@@ -328,7 +489,26 @@ INSERT INTO `subasta` (`idsubasta`, `descripcion`, `fecha_inicio`, `fecha_fin`, 
 (85, 'Conejo Neozelandes Muy Inquieto', '2015-06-29', '2015-07-29', 1, 25, 10, 'Conejo'),
 (86, 'Caballo negro muy obediente', '2015-06-29', '2015-07-29', 1, 25, 10, 'Caballo'),
 (87, 'Nokia 1100 irrompible el mejore celular de la historia', '2015-06-29', '2015-07-29', 1, 25, 12, 'Nokia'),
-(88, 'Eran como los pesos pero mas divertidos', '2015-06-29', '2015-07-29', 1, 25, 11, 'Billete Patacon');
+(88, 'Eran como los pesos pero mas divertidos', '2015-06-29', '2015-07-29', 1, 25, 11, 'Billete Patacon'),
+(89, 'Mesa Comedor Laqueada Minimalista Madera Moderna Asia 120cm', '2015-07-09', '2015-08-08', 1, 3, 9, 'Mesa'),
+(90, 'koala adiestrado, 1 decada de edad , muy saludable.', '2015-07-09', '2015-07-17', 1, 3, 1, 'Koala'),
+(92, 'Reloj pulsera puma', '2015-07-15', '2015-08-14', 1, 3, 8, 'Reloj'),
+(93, 'aa', '2015-07-15', '2015-07-11', 0, 3, 10, 'bb'),
+(94, 'carlosdescripcion', '2015-07-15', '2015-07-16', 4, 3, 11, 'subastacarlos'),
+(95, 'prueba1', '2015-07-15', '2015-07-14', 4, 28, 3, 'pruebausuario'),
+(96, 'prueba2', '2015-07-15', '2015-07-07', 4, 28, 4, 'pruebados'),
+(97, 'camisa a estrenar', '2015-07-17', '2015-08-01', 1, 28, 4, 'camisa'),
+(98, 'spursss', '2015-07-17', '2015-08-01', 1, 28, 4, 'remeras'),
+(99, 'guanteeeprueba2', '2015-07-17', '2015-08-01', 1, 29, 4, 'guanteeee'),
+(100, 'Es una pelotita que esta en muy buen estado', '2015-07-17', '2015-08-01', 1, 30, 13, 'Pelotita de Tenis'),
+(101, 'Si queres ser el proximo manu ginobilli no podes dejar pasar esta pelota', '2015-07-17', '2015-08-11', 1, 30, 13, 'Pelota de Basquet'),
+(102, 'Esta raqueta me la regalo Pico Monaco.', '2015-07-17', '2015-08-06', 1, 30, 13, 'Raqueta Pico Monaco'),
+(103, 'soga para distintas funciones', '2015-07-17', '2015-08-01', 1, 31, 13, 'soga'),
+(104, 'Pie bionico 2 anos de uso.', '2015-07-17', '2015-07-14', 4, 31, 2, 'Pie Bionico'),
+(105, 'Collar con perlas blancas', '2015-07-17', '2015-08-06', 1, 31, 4, 'collar de perlas'),
+(106, 'ak47 utilizada en irak', '2015-07-17', '2015-08-01', 1, 32, 5, 'Ak'),
+(107, 'granada de humo de 1998', '2015-07-17', '2015-08-01', 1, 32, 5, 'granada de humo'),
+(108, 'Chaleco de la policia de Estados Unidos', '2015-07-17', '2015-08-06', 1, 32, 5, 'Chaleco Antibalas');
 
 -- --------------------------------------------------------
 
@@ -337,9 +517,11 @@ INSERT INTO `subasta` (`idsubasta`, `descripcion`, `fecha_inicio`, `fecha_fin`, 
 --
 
 CREATE TABLE IF NOT EXISTS `tipo_usuario` (
-  `idtipousuario` int(45) NOT NULL,
-  `descripcion` varchar(45) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `idtipousuario` int(45) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(45) NOT NULL,
+  PRIMARY KEY (`idtipousuario`),
+  KEY `idtipousuario` (`idtipousuario`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `tipo_usuario`
@@ -358,14 +540,17 @@ INSERT INTO `tipo_usuario` (`idtipousuario`, `descripcion`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `usuario` (
-  `idusuario` int(45) NOT NULL,
+  `idusuario` int(45) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(25) NOT NULL,
   `apellido` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   `fecha_alta` date NOT NULL,
   `idtipo` int(45) NOT NULL,
-  `password` varchar(12) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+  `password` varchar(12) NOT NULL,
+  PRIMARY KEY (`idusuario`),
+  KEY `idtipo` (`idtipo`),
+  KEY `idusuario` (`idusuario`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
 
 --
 -- Volcado de datos para la tabla `usuario`
@@ -391,143 +576,20 @@ INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `email`, `fecha_alta`,
 (17, 'Raul', 'Sosa', 'RaulS@hotmail.com', '2015-01-07', 2, '12345'),
 (18, 'Lia', 'Gomez', 'GomezLia@gmail.com', '2015-02-02', 2, '12345lia'),
 (19, 'Fernanda', 'Perez', 'FerPer@hotmail.com', '2015-03-03', 2, 'ferper12345'),
-(20, 'Mario', 'Cascarelli', 'MarioCascarelli@hotmail.com', '2015-05-05', 2, 'contraseña'),
+(20, 'Mario', 'Cascarelli', 'MarioCascarelli@hotmail.com', '2015-05-05', 2, '12345'),
 (21, 'Eugenia', 'Gutierrez', 'EugeGutie@yahoo.com.ar', '2015-03-26', 2, 'euge9'),
 (22, 'Mariano', 'Gonzalez', 'mariangon@hotmail.com', '2015-04-09', 2, '312893'),
 (23, 'Josefina', 'Suarez', 'Josefina@hotmail.com', '2015-05-14', 2, '1234567'),
 (24, 'Roberto', 'Gomez', 'chavo@hotmail.com', '2015-04-24', 2, 'chavito8'),
 (25, 'Andres', 'Formia', 'andyformia@hotmail.com', '2015-01-30', 2, '5555555'),
-(26, 'Carlos', 'Barca', 'CarlosBarca@hotmail.com', '2015-03-30', 2, '1carlos123');
+(26, 'Carlos', 'Barca', 'CarlosBarca@hotmail.com', '2015-03-30', 2, '1carlos123'),
+(27, 'jhkjhj', 'hhuhuh', 'jahdja22qq@hotmail.com', '2015-07-10', 1, '123456'),
+(28, 'prueba', 'usuario', 'prueba@hotmail.com', '2015-07-15', 2, '123456'),
+(29, 'pruebita', 'dos', 'prueba2@hotmail.com', '2015-07-17', 2, '123456'),
+(30, 'nicolas', 'affonso', 'nico@hotmail.com', '2015-07-17', 2, '123456'),
+(31, 'pablo', 'ordonez', 'pablo@hotmail.com', '2015-07-17', 2, '123456'),
+(32, 'mauro', 'coscarelli', 'mauro@hotmail.com', '2015-07-17', 2, '123456');
 
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `categoria`
---
-ALTER TABLE `categoria`
-  ADD PRIMARY KEY (`idcategoria`), ADD KEY `idestadocat` (`idestadocat`);
-
---
--- Indices de la tabla `comentario`
---
-ALTER TABLE `comentario`
-  ADD PRIMARY KEY (`idcomentario`), ADD KEY `idusuariocom` (`idusuariocom`,`idsubastacom`,`idestadocom`), ADD KEY `idsubastacom` (`idsubastacom`), ADD KEY `idestadocom` (`idestadocom`);
-
---
--- Indices de la tabla `estado_categoria`
---
-ALTER TABLE `estado_categoria`
-  ADD PRIMARY KEY (`idestadocat`);
-
---
--- Indices de la tabla `estado_comentario`
---
-ALTER TABLE `estado_comentario`
-  ADD PRIMARY KEY (`idestadocom`);
-
---
--- Indices de la tabla `estado_oferta`
---
-ALTER TABLE `estado_oferta`
-  ADD PRIMARY KEY (`idestadooferta`);
-
---
--- Indices de la tabla `estado_subasta`
---
-ALTER TABLE `estado_subasta`
-  ADD PRIMARY KEY (`idestadosubasta`), ADD KEY `idestadosubasta` (`idestadosubasta`);
-
---
--- Indices de la tabla `foto_subasta`
---
-ALTER TABLE `foto_subasta`
-  ADD PRIMARY KEY (`idfoto`);
-
---
--- Indices de la tabla `oferta`
---
-ALTER TABLE `oferta`
-  ADD PRIMARY KEY (`idoferta`), ADD KEY `idestadoofer` (`idestadoofer`,`idusuarioofer`,`idsubastaofer`), ADD KEY `idusuarioofer` (`idusuarioofer`), ADD KEY `idsubastaofer` (`idsubastaofer`);
-
---
--- Indices de la tabla `subasta`
---
-ALTER TABLE `subasta`
-  ADD PRIMARY KEY (`idsubasta`), ADD KEY `idestadosub` (`idestadosub`,`idusuariosub`,`idcategoriasub`), ADD KEY `idusuariosub` (`idusuariosub`), ADD KEY `idcategoriasub` (`idcategoriasub`), ADD KEY `idestadosub_2` (`idestadosub`), ADD KEY `idsubasta` (`idsubasta`);
-
---
--- Indices de la tabla `tipo_usuario`
---
-ALTER TABLE `tipo_usuario`
-  ADD PRIMARY KEY (`idtipousuario`), ADD KEY `idtipousuario` (`idtipousuario`);
-
---
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`idusuario`), ADD KEY `idtipo` (`idtipo`), ADD KEY `idusuario` (`idusuario`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `categoria`
---
-ALTER TABLE `categoria`
-  MODIFY `idcategoria` int(45) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
---
--- AUTO_INCREMENT de la tabla `comentario`
---
-ALTER TABLE `comentario`
-  MODIFY `idcomentario` int(45) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `estado_categoria`
---
-ALTER TABLE `estado_categoria`
-  MODIFY `idestadocat` int(45) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT de la tabla `estado_comentario`
---
-ALTER TABLE `estado_comentario`
-  MODIFY `idestadocom` int(45) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT de la tabla `estado_oferta`
---
-ALTER TABLE `estado_oferta`
-  MODIFY `idestadooferta` int(45) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT de la tabla `estado_subasta`
---
-ALTER TABLE `estado_subasta`
-  MODIFY `idestadosubasta` int(45) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT de la tabla `foto_subasta`
---
-ALTER TABLE `foto_subasta`
-  MODIFY `idfoto` int(45) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=133;
---
--- AUTO_INCREMENT de la tabla `oferta`
---
-ALTER TABLE `oferta`
-  MODIFY `idoferta` int(45) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT de la tabla `subasta`
---
-ALTER TABLE `subasta`
-  MODIFY `idsubasta` int(25) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=89;
---
--- AUTO_INCREMENT de la tabla `tipo_usuario`
---
-ALTER TABLE `tipo_usuario`
-  MODIFY `idtipousuario` int(45) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  MODIFY `idusuario` int(45) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
 --
 -- Restricciones para tablas volcadas
 --
@@ -536,9 +598,9 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `oferta`
 --
 ALTER TABLE `oferta`
-ADD CONSTRAINT `oferta_ibfk_1` FOREIGN KEY (`idestadoofer`) REFERENCES `estado_oferta` (`idestadooferta`),
-ADD CONSTRAINT `oferta_ibfk_2` FOREIGN KEY (`idusuarioofer`) REFERENCES `usuario` (`idusuario`),
-ADD CONSTRAINT `oferta_ibfk_3` FOREIGN KEY (`idsubastaofer`) REFERENCES `subasta` (`idsubasta`);
+  ADD CONSTRAINT `oferta_ibfk_1` FOREIGN KEY (`idestadoofer`) REFERENCES `estado_oferta` (`idestadooferta`),
+  ADD CONSTRAINT `oferta_ibfk_2` FOREIGN KEY (`idusuarioofer`) REFERENCES `usuario` (`idusuario`),
+  ADD CONSTRAINT `oferta_ibfk_3` FOREIGN KEY (`idsubastaofer`) REFERENCES `subasta` (`idsubasta`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

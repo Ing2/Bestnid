@@ -1,0 +1,262 @@
+<?php
+
+session_start();
+
+
+
+?>
+<!DOCTYPE HTML>
+<head>
+<title>{% block title %}{% endblock %}</title>
+{%block meta%}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
+{%endblock%}
+{% block stylesheets %}
+<link href="../estilos/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../estilos/bootstrap.min2.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../font/css/font-awesome.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="../font/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all"/>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="../javascript/jquery-1.9.0.min.js"></script> 
+<script src="../javascript/jquery.openCarousel.js" type="text/javascript"></script>
+<script type="text/javascript" src="../javascript/easing.js"></script>
+<script type="text/javascript" src="../javascript/move-top.js"></script>
+<script type="text/javascript" src="../javascript/editcheck.js"></script>
+
+<script type="text/javascript" src="../javascript/bootstrap.min.js"></script>
+<script type="text/javascript" src="../javascript/jquery.min.js"></script>
+
+
+<script type="text/javascript" src="../javascript/validarFechas.js"></script>
+
+
+{% endblock %}
+</head>
+<body>
+
+	<div class="header">
+	 {% block header%}
+  	  		<div class="wrap">
+				<div class="header_top">
+					<div class="logo">
+						<a href="index.html"><img src="../imagenes/logo.jpg" alt="{{Bestnid}}" /></a>
+						<img src="../imagenes/slider-img.png" alt="{{Bestnid}}" />
+						<img src="../imagenes/logo2.jpg" alt="{{Bestnid}}" />
+					</div>
+					
+		
+					
+			     <div class="clear"></div>
+  		    </div>     
+  		    <div class="navigation">
+  		    	<a class="toggleMenu" href="#">{{Menu}}</a>
+					<ul class="nav">
+						<li>
+						<a href="../templates/index.php">{{Home}}<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>	
+						</li>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+					
+						
+						
+						
+							
+						
+						
+						
+						
+						
+						
+						
+						
+						{% if CerrarSesion is not null %}
+						<li>
+							<a href="../sesion/CerrarSesion.php">{{CerrarSesion}}<span class="glyphicon glyphicon-off" aria-hidden="true"></span></a>
+						</li>
+						{% endif %}
+						
+						<li>
+							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
+						</li>
+						
+						<li>
+							<a href="../mail/altamail.php">{{Contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+						</li>
+						
+						{% if (nombre is not null) and (apellido is not null) %}		
+						<li>
+							
+							{% if tipo==1 %}
+							<a href="../sesion/controlBackEnd.php">{{bienvenido}}{{nombre}} {{apellido}}<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+							{% else %}
+							<a href="../sesion/controlFrontEnd.php">{{bienvenido}}{{nombre}} {{apellido}}<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+							{% endif %}
+						</li>
+						{% endif %}
+						
+					</ul>
+					
+  		    </div>
+
+   		</div>
+		{%endblock%}
+   </div>
+   <!------------Cabezera------------>
+   
+  <div class="main2">
+  {% block main%}
+      
+    	       
+    	  <div class="content_bottom2">
+		  {% block menu%}
+    	    <div class="wrap">
+    	    	<div class="content-bottom-left2">
+    	    		<div class="categories">
+					<div class="panel-heading">{{Acciones}}</div>
+						    <ul>
+						  	   
+							   <li ><a href="../admin/listadosubastas.php">Listado de Subastas</a></li>
+							     				         
+								<li><a href="../admin/ListadoUsuarios.php">{{ManejoUsuario}}</a></li>
+								<li><a href="../categoria/categorias.php">{{ManejoCategoria}}</a></li>
+			                    <li><a href="../admin/altaadmin.php">{{AltaAdmin}}</a></li>
+								
+								
+								
+						
+						  	 </ul>
+						</div>	
+                         
+    	    	</div>
+    	    	
+    	    	<div class="content-bottom-right2">
+    	    	
+				
+					    <div class="wrap">
+			 
+			 
+			 
+{% if Informar is not null%}
+<div class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  {{Informar}}
+ 
+  
+</div>
+{% endif %}			
+{% if Informar2 is not null%}
+<div class="alert alert-success" role="alert">
+  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  {{Informar2}}
+ 
+  
+</div>
+{% endif %}	
+
+
+
+
+			<br>
+			<div class="panel-headingg">Realice el alta de un administrador a Bestnid:</div>
+    	    <hr>	
+    	  <form method="POST" name="form1" onSubmit="return valforms(this)" action="../admin/crearadmin.php">
+<div class="azul">Correo electr&oacute;nico:</div>
+
+<input type="email" name="email" class="form-control2" id="email" size=50  maxlength=80 onChange="return valforms(this.form,this)" editcheck="type=email;req=Y=Por favor ingrese su e-mail;cvt=UTC" action="../admin/crearadmin.php" required/>
+
+
+ <div class="azul">Nombre:</div>
+    <input type=text name="nombre" title="Ingrese como minimo 2 letras para su nombre" class="form-control2" id="nombre" id=size=20  maxlength=50 onChange="return valforms(this.form,this)" editcheck="type=alpha;req=Y=Por favor ingrese su nombre;cvt=UTC" required/> 
+
+
+<div class="azul">Apellido:</div>
+<input type=text name="apellido" class="form-control2" id="apellido" size=20  maxlength=50 onChange="return valforms(this.form,this)" editcheck="type=alpha2;req=Y=Por favor ingrese su apellido;cvt=UTC" required/>
+ 
+
+<div class="azul">Contraseña:</div> 
+<input type="password" class="form-control2" name="con1" id="con1" size=20 minlength=5 maxlength=25 onChange="return valforms(this.form,this)" editcheck="type=pass;req=Y=Por favor ingrese una contraseña;cvt=UTC" required/>
+
+
+<div class="azul">Repetir Contraseña:</div> 
+<input type="password" class="form-control2" name="con2" id="con2" size=20 minlength=5 maxlength=25 onChange="return valforms(this.form,this)" editcheck="type=pass2;req=Y=Por favor repita su contraseña;cvt=UTC" required/>
+
+<BR><BR>
+
+
+
+
+
+<input type=submit class="btn btn-success" value="Enviar"> <input type=reset class="btn btn-primary">
+
+</form>
+
+
+  <div class="volver"><a href="../sesion/controlbackend.php"> >>Volver Atrás</a></div><br>
+			</div>
+				
+			   
+			  
+				
+				
+			
+			  
+			
+					 
+				
+				    
+				
+				 </div>
+			    </div>
+		      </div>
+		      <div class="clear"></div>
+		 
+         </div>
+		 {%endblock%}
+      </div>
+	  {%endblock%}
+    </div>
+   <div class="footer">
+   {% block footer%}
+   	  <div class="wrap">	
+			 <div class="copy_right">
+				<p>Bestnid © Todos los derechos reservados </p>
+		   </div>	
+		   <div class="footer-nav">
+		   	<ul>
+		   		<li><a href="#">Terminos de uso</a> : </li>
+		   		<li><a href="#">Privacidad</a> : </li>
+		   		
+		   	</ul>
+		   </div>		
+        </div>
+	{%endblock%}
+    </div>
+	{% block final%}
+    <script type="text/javascript">
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+	</script>
+    <a href="#" id="toTop"> </a>
+    <script type="text/javascript" src="javascript/navigation.js"></script>
+	{%endblock%}
+	
+</body>
+</html>

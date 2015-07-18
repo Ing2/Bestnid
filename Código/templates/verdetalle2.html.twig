@@ -76,18 +76,7 @@
 						<a href="../templates/index.php">{{Home}}<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>	
 						</li>
 						
-						<li>
-							<a href="#">{{Subastas}}</a>
-							<ul>
-								
-							</ul>
-						</li>
 						
-							{% if sobrebestnid is not null %}		
-						<li>
-							<a href="../sobrebestnid/sobrebestnid.php">{{sobrebestnid}}</a>
-						</li>
-						{% endif %}
 						
 					
 						
@@ -107,14 +96,6 @@
 						
 						
 						
-						{% if MiCuenta is not null %}
-						<li>
-							<a href="../ayuda/Ayuda.php">{{MiCuenta}}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span></a>
-					
-							
-							
-						</li>
-						{% endif %}
 						
 						{% if CerrarSesion is not null %}
 						<li>
@@ -125,6 +106,11 @@
 						<li>
 							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
 						</li>
+						
+						<li>
+							<a href="../mail/altamail.php">{{Contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+						</li>
+						
 						
 						{% if (nombre is not null) and (apellido is not null) %}		
 						<li>

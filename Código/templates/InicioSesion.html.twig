@@ -34,7 +34,7 @@
 				<div class="header_top">
 			
 					<div class="logo">
-						<a href="index.html"><img src="../imagenes/logo.jpg" alt="{{Bestnid}}" /></a>
+						<a href="../templates/index.php"><img src="../imagenes/logo.jpg" alt="{{Bestnid}}" /></a>
 						<img src="../imagenes/slider-img.png" alt="{{Bestnid}}" />
 						<img src="../imagenes/logo2.jpg" alt="{{Bestnid}}" />
 					</div>
@@ -51,19 +51,9 @@
 						<a href="../templates/index.php">{{Home}}<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>	
 						</li>
 						
-						<li>
-							<a href="#">{{Subastas}}</a>
-							<ul>
-								
-							</ul>
-						</li>
+					
 						
 						
-							{% if contacto is not null %}		
-						<li>
-							<a href="../contacto/contacto.php">{{contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
-						</li>
-						{% endif %}
 						
 						
 						
@@ -92,14 +82,8 @@
 						
 						
 						
-						{% if MiCuenta is not null %}
-						<li>
-							<a href="../ayuda/Ayuda.php">{{MiCuenta}}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span></a>
-					
-							
-							
-						</li>
-						{% endif %}
+						
+						
 						
 						{% if CerrarSesion is not null %}
 						<li>
@@ -110,6 +94,11 @@
 						<li>
 							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
 						</li>
+						
+						<li>
+							<a href="../mail/altamail.php">{{Contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+						</li>
+						
 						
 						{% if (nombre is not null) and (apellido is not null) %}		
 						<li>
@@ -134,7 +123,7 @@
  
   <div class="main">
 
-<h8>Gracias por volver a elegirnos!</h8><br>
+<div class="alert alert-info" role="alert"><h8>Gracias por volver a elegirnos!</h8></div><br><br>
 &nbsp<img src="../imagenes/martillo.jpg" alt="Bienvenido Smile">
 <div class="wrap6">
 						  <form method="POST" onSubmit="return myFunction()" action="ControlarSesion.php">

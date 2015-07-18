@@ -24,7 +24,7 @@ else
 	$cerrarsesion='Cerrar Sesion';
 	$micuenta='Mi Cuenta';
 	$bienvenido='Bienvenido:';
-	$contacto=null;
+  $contacto='Contacto';
 	$iniciarsesion=null;
 	$registrarse=null;
 	$sobrebestnid=null;

@@ -4,6 +4,8 @@ require_once '../twig.php';
 require_once '../categoria/categoria.php';
 require_once '../subasta/subasta.php';
 require_once '../sesion/sesion.php';
+require_once '../comentario/comentario.php';
+require_once '../comentario/respuesta.php';
 
 if (!(isset($_SESSION['UserLogged'])))
    {
@@ -26,7 +28,7 @@ else
 	$cerrarsesion='Cerrar Sesion';
 	$micuenta='Mi Cuenta';
 	$bienvenido='Bienvenido:';
-	$contacto=null;
+	$contacto='Contacto';
 	$iniciarsesion=null;
 	$registrarse=null;
 	$sobrebestnid=null;
@@ -41,6 +43,18 @@ $subasta = $_POST['id'];
 
 if (($ofertas= Subasta::tieneOferta($subasta)) == 0){
 	$dardebaja=Subasta::eliminarSubasta($subasta);
+	$dardebaja3=Comentario::eliminarComentarioSubasta($subasta);
+	$comentarios=Comentario::recuperarComentariosParaSubasta($subasta);
+	if (is_array($comentarios) || is_object($comentarios))
+	{
+		foreach ( $comentarios as $comentario){
+	
+			$dardebaja4=Respuesta::eliminarRespuestaSubasta($comentario->getIdComentario());
+	
+
+
+		}
+	}
 	$mensaje="la subasta fue borrada exitosamente";
 }
 else{
@@ -99,7 +113,7 @@ $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => '
 'ManejoCategoria' => 'Gestion de Categorias','VerComentarios' => 'Listado de Comentarios',
 'VerOfertas' => 'Listado de Ofertas','VerSubastas' => 'Ver Subastas',
 'AgregarAdmin' => 'Gestion de Administradores','notienesubastas'=>$notienesubastas,
-'elimino'=>$elimino,
+'elimino'=>$elimino, 'Contacto'=>$contacto,
 ));
 
 ?>

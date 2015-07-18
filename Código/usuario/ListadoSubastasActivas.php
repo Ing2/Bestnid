@@ -27,7 +27,7 @@ else
 	$cerrarsesion='Cerrar Sesion';
 	$micuenta='Mi Cuenta';
 	$bienvenido='Bienvenido:';
-	$contacto=null;
+	$contacto='Contacto';
 	$iniciarsesion=null;
 	$registrarse=null;
 	$sobrebestnid=null;
@@ -66,7 +66,7 @@ $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => '
 'VerOfertas' => 'Listado de Ofertas','VerSubastas' => 'Ver Subastas', 
 'AgregarAdmin' => 'Gestion de Administradores', 'Ayuda' => 'Ayuda', 'CerrarSesion'=>$cerrarsesion,'MiCuenta'=>$micuenta, 'nombre'=>$nombre,'apellido'=>$apellido,
 'informar'=>$informar,'notienesubastas'=>$notienesubastas,
-'elimino'=>$elimino,
+'elimino'=>$elimino,'Contacto'=>$contacto,
 ));
 
 

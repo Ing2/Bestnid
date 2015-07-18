@@ -72,24 +72,7 @@ muestra_oculta('contenido_a_mostrar');/* "contenido_a_mostrar" es el nombre que 
 						<a href="../templates/index.php">{{Home}}<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>	
 						</li>
 						
-						<li>
-							<a href="#">{{Subastas}}</a>
-							<ul>
-								
-							</ul>
-						</li>
 						
-							{% if sobrebestnid is not null %}		
-						<li>
-							<a href="../sobrebestnid/sobrebestnid.php">{{sobrebestnid}}</a>
-						</li>
-						{% endif %}
-						
-							{% if contacto is not null %}		
-						<li>
-							<a href="../contacto/contacto.php">{{contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
-						</li>
-						{% endif %}
 						
 						
 						
@@ -118,14 +101,7 @@ muestra_oculta('contenido_a_mostrar');/* "contenido_a_mostrar" es el nombre que 
 						
 						
 						
-						{% if MiCuenta is not null %}
-						<li>
-							<a href="../ayuda/Ayuda.php">{{MiCuenta}}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span></a>
-					
-							
-							
-						</li>
-						{% endif %}
+						
 						
 						{% if CerrarSesion is not null %}
 						<li>
@@ -137,6 +113,9 @@ muestra_oculta('contenido_a_mostrar');/* "contenido_a_mostrar" es el nombre que 
 							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
 						</li>
 						
+						<li>
+							<a href="../mail/altamail.php">{{Contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+						</li>
 						
 						{% if (nombre is not null) and (apellido is not null) %}		
 						<li>
@@ -167,16 +146,14 @@ muestra_oculta('contenido_a_mostrar');/* "contenido_a_mostrar" es el nombre que 
     	    <div class="wrap">
     	    	<div class="content-bottom-left2">
     	    		<div class="categories">
-					<div class="panel-heading11">Acciones</div>
+					<div class="panel-heading">Acciones</div>
 					
 						   <ul>
 						 <li ><a href="../usuario/ListadoSubastasActivas.php">Mis Subastas Activas</a></li>
 							     <li><a href="../subasta/altasubasta.php">Crear Subasta</a></li>
-								<li><a href="#">Modificar Datos Personales</a></li>
-								<li><a href="#">Ver Mi Historial de ofertas</a></li>
-			                    <li><a href="#">Ver Ofertas Actuales</a></li>
-								 <li><a href="#">Ver Mis Comentarios</a></li>
-								<li ><a href="#">Darme de baja</a></li>
+								
+			                    <li><a href="../usuario/ListadoOfertasActivas.php">Ver Ofertas Actuales</a></li>
+								
 								
 						
 						  	 </ul>

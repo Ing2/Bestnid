@@ -32,6 +32,21 @@ session_start();
 <script type="text/javascript" src="../javascript/bootstrap.min.js"></script>
 <script type="text/javascript" src="../javascript/jquery.min.js"></script>
 {% endblock %}
+
+<script language="JavaScript">
+function pregunta(){ 
+    
+    if (confirm('Estas seguro que desea eliminar la subasta?'))
+    { 
+       return true;
+    } 
+    else
+    { 
+    	return false;
+    }
+
+} 
+</script>
 </head>
 <body>
 
@@ -40,7 +55,7 @@ session_start();
   	  		<div class="wrap">
 				<div class="header_top">
 					<div class="logo">
-						<a href="index.html"><img src="../imagenes/logo.jpg" alt="{{Bestnid}}" /></a>
+						<a href="../templates/index.php"><img src="../imagenes/logo.jpg" alt="{{Bestnid}}" /></a>
 						<img src="../imagenes/slider-img.png" alt="{{Bestnid}}" />
 						<img src="../imagenes/logo2.jpg" alt="{{Bestnid}}" />
 					</div>
@@ -56,47 +71,7 @@ session_start();
 						<a href="../templates/index.php">{{Home}}<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>	
 						</li>
 						
-						<li>
-							<a href="#">{{Subastas}}</a>
-							<ul>
-								
-							</ul>
-						</li>
 						
-						
-						
-							{% if contacto is not null %}		
-						<li>
-							<a href="../contacto/contacto.php">{{contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
-						</li>
-						{% endif %}
-						
-						
-						
-						
-						
-						
-						
-					
-						
-						
-						
-							
-						
-						
-						
-						
-						
-						
-						
-						{% if MiCuenta is not null %}
-						<li>
-							<a href="#">{{MiCuenta}}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span></a>
-					
-							
-							
-						</li>
-						{% endif %}
 						
 						{% if CerrarSesion is not null %}
 						<li>
@@ -108,6 +83,9 @@ session_start();
 							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
 						</li>
 						
+						<li>
+							<a href="../mail/altamail.php">{{Contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+						</li>
 						
 						{% if (nombre is not null) and (apellido is not null) %}		
 						<li>
@@ -142,11 +120,9 @@ session_start();
 						   <ul>
 						 <li ><a href="../usuario/ListadoSubastasActivas.php">Mis Subastas Activas</a></li>
 							     <li><a href="../subasta/altasubasta.php">Crear Subasta</a></li>				         
-								<li><a href="#">Modificar Datos Personales</a></li>
-								<li><a href="#">Ver Mi Historial de ofertas</a></li>
-			                    <li><a href="#">Ver Ofertas Actuales</a></li>
-								 <li><a href="#">Ver Mis Comentarios</a></li>
-								<li ><a href="#">Darme de baja</a></li>
+								
+			                    <li><a href="../usuario/ListadoOfertasActivas.php">Ver Ofertas Actuales</a></li>
+								 
 								
 						
 						  	 </ul>
@@ -185,6 +161,7 @@ session_start();
 				 
 				<th>Cancelar</th>
 				<th>Modificar</th>
+				<th>Ver Subasta</th>
                 </tr>
                 </thead>
 				<tbody>
@@ -227,10 +204,10 @@ session_start();
 			   
 			    <td>	
 						{% if (subasta.tieneOferta(subasta.getIdSubasta()))==0 %}
-				        <form  action="../subasta/eliminarsubasta.php" method="post"> 
+				        <form  onsubmit="return pregunta()" action="../subasta/eliminarsubasta.php" method="post"> 
 				        <input name="id" id="id" type="hidden" value="{{subasta.getIdSubasta()}}" />
 						
-						<input type="submit" value="Cancelar">
+						<input type="submit" class="btn btn-danger" title="Click para cancelar la subasta" value="Cancelar">
                         </form>
 						{% else %}
 							Tiene Ofertas!
@@ -246,13 +223,14 @@ session_start();
 				        <form  action="../subasta/modificarsubasta.php" method="post"> 
 				        <input name="id" id="id" type="hidden" value="{{subasta.getIdSubasta()}}" />
 						
-						<input type="submit" value="Modificar">
+						<input type="submit" class="btn btn-primary" title="Click para modificar la subasta" value="Modificar">
                         </form>
 						{% else %}
 							Tiene Ofertas!
 						{% endif %}
                </td>
-			   
+			   </td>
+				  <td><div class="panel-heading1"><a href="../subasta/verdetalle.php?id={{subasta.getIdSubasta()}}" title="Haga click para ver la subasta mas detalladamente"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></a></div></td>
 			
 			   
 			   

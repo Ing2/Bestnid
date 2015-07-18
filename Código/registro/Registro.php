@@ -28,6 +28,6 @@ $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => '
 'Terminos' => 'Terminos de uso','Privacidad' => 'Privacidad', 'Ayuda' => 'Ayuda',
 
 'Ingresenombre' => 'Ingrese su nombre de usuario','Ingresecontraseña' => 'Ingrese su contraseña',
-'NombreUsuario' => 'Nombre de usuario','Contraseña' => 'Contraseña','sobrebestnid'=>$sobrebestnid,'contacto'=>$contacto,
+'NombreUsuario' => 'Nombre de usuario','Contraseña' => 'Contraseña','sobrebestnid'=>$sobrebestnid,'contacto'=>$contacto, 'Contacto'=>$contacto,
 ));
 ?>

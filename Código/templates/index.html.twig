@@ -53,19 +53,8 @@
 						<a href="../templates/index.php">{{Home}}<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>	
 						</li>
 						
-						<li>
-							<a href="#">{{Subastas}}</a>
-							<ul>
-								
-							</ul>
-						</li>
 						
-						
-							{% if contacto is not null %}		
-						<li>
-							<a href="#">{{contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
-						</li>
-						{% endif %}
+			
 						
 						
 						
@@ -94,14 +83,6 @@
 						
 						
 						
-						{% if MiCuenta is not null %}
-						<li>
-							<a href="#">{{MiCuenta}}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span></a>
-					
-							
-							
-						</li>
-						{% endif %}
 						
 						{% if CerrarSesion is not null %}
 						<li>
@@ -111,6 +92,10 @@
 						
 						<li>
 							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
+						</li>
+						
+						<li>
+							<a href="../mail/altamail.php">{{Contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
 						</li>
 						
 						{% if (nombre is not null) and (apellido is not null) %}		
@@ -239,14 +224,21 @@
          
 	
 			   <div class="section group">
-				
-				
 						
 						
-				        {% for subasta in subastas %}        
+						
+				        {% for subasta in subastas %}    
+				        {% if (subasta.tieneOferta(subasta.getIdSubasta()))==0 %}
+				        			{{subasta.pasarAsinExito(subasta.getIdSubasta())}}
+						{% else %}
+							{{subasta.pasarAEspera(subasta.getIdSubasta())}}
+						{% endif %}
+
+
+
 						<div class="grid_1_of_4 images_1_of_4">
 							   <strong><h4>{{subasta.getTitulo()}}</h4></strong>
-								<a href="../web/preview.php?id={{subasta.getIdSubasta()}}" title="{{subasta.getTitulo()}}"><img src="../{{subasta.recuperarFoto(subasta.getIdSubasta())}}" alt="" /></a>
+								<a href="../subasta/verdetalle.php?id={{subasta.getIdSubasta()}}" title="{{subasta.getTitulo()}}"><img src="../{{subasta.recuperarFoto(subasta.getIdSubasta())}}" alt="" /></a>
 								  <div class="price-details">
 								  <div class="categoria"><strong>Categoria:{{subasta.recuperarCategoriaSubasta(subasta.getIdCategoriaSub())}}</strong></div>
 								  <div class="inicio"><strong>inicio el día: {{subasta.getFechaInicio()}}</strong></div>
@@ -254,7 +246,7 @@
 					       		          <div class="descripcion">	
 													<strong>{{subasta.getDescripcion()}}</strong></div>
 													<div class="add-cart">
-									      <div class="panel-heading3"><a href="../subasta/verdetalle.php?id={{subasta.getIdSubasta()}}" title="Haga click para ver la subasta mas detalladamente y/o hacer un ofertar">Ver Subasta</a></div>
+									      <div class="panel-heading3"><a href="../subasta/verdetalle.php?id={{subasta.getIdSubasta()}}" title="Haga click para ver la subasta mas detalladamente y/o hacer una oferta">Ver Subasta</a></div>
 							                 </div>
 							             <div class="clear"></div>
 								

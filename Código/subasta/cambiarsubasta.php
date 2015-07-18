@@ -21,16 +21,18 @@ if (!(isset($_SESSION['UserLogged'])))
 	$micuenta=null;
 	$bienvenido=null;
 	$tipo=null;
+	$idusuario=null;
 	}
 else
 	{
 	$tipo=$_SESSION['Tipo'];
 	$nombre=$_SESSION['Nombre'];
 	$apellido=$_SESSION['Apellido'];
+	$idusuario=$_SESSION['Id'];
 	$cerrarsesion='Cerrar Sesion';
 	$micuenta='Mi Cuenta';
 	$bienvenido='Bienvenido:';
-	$contacto=null;
+	$contacto='Contacto';
 	$iniciarsesion=null;
 	$registrarse=null;
 	$sobrebestnid=null;
@@ -154,10 +156,22 @@ $numid=FotoSubasta::idMaximo();
 
 if(isset($_POST['opciones']))
 {
-	
-		$id=$_POST['opciones'];
-		$baja=FotoSubasta::borrarFotoSubasta($id);
-	
+		
+		$accion=$_POST['opciones'];
+		if($accion=='Eliminar')
+		{
+		       $id=$_POST['foto0'];
+		       $baja=FotoSubasta::borrarFotoSubasta($id);
+		}
+		if($accion=='Reemplazar')
+		{
+               $nombreimagen=$_FILES['imagen0']['name'];
+               if((strlen($nombreimagen))>0)
+               {
+		       $id=$_POST['foto0'];
+		       $baja=FotoSubasta::borrarFotoSubasta($id);
+		       }
+		}
 	
 
 		if (isset($_FILES['imagen0']))
@@ -210,9 +224,15 @@ if(isset($_POST['opciones']))
 if(isset($_POST['opciones1']))
 {
 	
-		$id=$_POST['opciones1'];
-
-		$baja=FotoSubasta::borrarFotoSubasta($id);
+			$accion=$_POST['opciones1'];
+		if($accion<>'Mantener')
+		{
+		
+		       $id=$_POST['foto1'];
+		      $baja=FotoSubasta::borrarFotoSubasta($id);
+	        
+		}
+	
 	
 	
 
@@ -263,9 +283,14 @@ if(isset($_POST['opciones1']))
 if(isset($_POST['opciones2']))
 {
 	
-		$id=$_POST['opciones2'];
-		$baja=FotoSubasta::borrarFotoSubasta($id);
-	
+					$accion=$_POST['opciones2'];
+		if($accion<>'Mantener')
+		{
+	          
+		         $id=$_POST['foto2'];
+		         $baja=FotoSubasta::borrarFotoSubasta($id);
+		         
+		}
 	
 
 		if (isset($_FILES['imagen2']))
@@ -315,8 +340,15 @@ if(isset($_POST['opciones2']))
 if(isset($_POST['opciones3']))
 {
 	
-		$id=$_POST['opciones3'];
-		$baja=FotoSubasta::borrarFotoSubasta($id);
+						$accion=$_POST['opciones3'];
+		if($accion<>'Mantener')
+		{
+		    
+		         $id=$_POST['foto3'];
+		         $baja=FotoSubasta::borrarFotoSubasta($id);
+		         
+		}
+	
 	
 	
 
@@ -367,14 +399,21 @@ if(isset($_POST['opciones3']))
 	
 if(isset($_POST['opciones4']))
 {
-		$numid=$numid+1;
-		$id=$_POST['opciones4'];
-		$baja=FotoSubasta::borrarFotoSubasta($id);
+		
+		$accion=$_POST['opciones4'];
+		if($accion<>'Mantener')
+		{
+			
+		         $id=$_POST['foto4'];
+		         $baja=FotoSubasta::borrarFotoSubasta($id);
+		         
+		}
 	
 	
 
 		if (isset($_FILES['imagen4']))
    {
+   	$numid=$numid+1;
 	//if ($_FILES['imagen'.$i]["error"] > 0){
 	//echo "ha ocurrido un error";
 //} else {
@@ -482,15 +521,15 @@ if (isset($_FILES['imagen'.$i]))
 if( ((strlen($titulo))==0) and ((strlen($descripcion))==0) and ($categoria==0) and (!isset($_POST['opciones'])) and (!isset($_POST['opciones1'])) and (!isset($_POST['opciones2'])) and (!isset($_POST['opciones3'])) and (!isset($_POST['opciones4'])))
 {
 
-$informar='No se ingreso ningún dato o imagen para Modificar!!!';}
+$informarmod='No se ingreso ningún dato o imagen para Modificar!!!';}
 
 else
 {
-$informar='Su subasta fue modificada con exito!!!';
+$informarmod='Su subasta fue modificada con exito!!!';
 }
 if((strlen($imagen5)>0) or (strlen($imagen6)>0) or (strlen($imagen7)>0) or (strlen($imagen8)>0))
 {
-	$informar='Se agregaron nuevas fotos';
+	$informarmod='Se agregaron nueva/s fotos';
 }
 
 
@@ -506,21 +545,22 @@ $categorias=Categoria::recuperarCategoriasActivas();
 $subastas=Subasta::recuperarSubasta($idsubasta);
 $fotos=Subasta::recuperarFotos($idsubasta);
 //'aceptada'=>$aceptada,
+$subastasRandom=Subasta::recuperarSubastasActivasRandom($idsubasta);
 
 Twig_Autoloader::register();
-$template = $twig->loadTemplate("verdetalle2.html.twig");
+$template = $twig->loadTemplate("verdetalle.html.twig");
 $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => 'Home'
 ,'Subastas' => 'Subastas','SobreBestnid' => 'Sobre Bestnid','ComoSubastar' => 'Como Subastar',
-'MapaDelSitio' => 'Mapa Del Sitio','IniciarSesion' =>$iniciarsesion,'MiCuenta' => 'Mi Cuenta',
-'Registrarse' =>$registrarse,'Derechos' => 'Bestnid © Todos los derechos reservados ',
+'MapaDelSitio' => 'Mapa Del Sitio',
+'Derechos' => 'Bestnid © Todos los derechos reservados ',
 'Terminos' => 'Terminos de uso','Privacidad' => 'Privacidad','Ayuda' => 'Ayuda','subasta'=>$subasta,
 'Categoria'=>'Categorias','categorias'=>$categorias,'bienvenido'=>$bienvenido,
-'nombre'=>$nombre,'apellido'=>$apellido,'CerrarSesion'=>$cerrarsesion,'MiCuenta'=>$micuenta,
+'nombre'=>$nombre,'apellido'=>$apellido,'CerrarSesion'=>$cerrarsesion,
 'sobrebestnid'=>$sobrebestnid,'contacto'=>$contacto,'informar'=>'El Siguiente listado contiene todas las subastas activas en Bestnid',
 'ordenar'=>'Si lo desea puede ordenar nuestras subastas por alguno de los siguientes criterios:','tipo'=>$tipo,'Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => 'Home'
 ,'Subastas' => 'Subastas','SobreBestnid' => 'Sobre Bestnid','ComoSubastar' => 'Como Subastar',
-'MapaDelSitio' => 'Mapa Del Sitio','IniciarSesion' => 'Iniciar Sesion','MiCuenta' => 'Mi Cuenta',
-'Registrarse' => 'Registrarse','Derechos' => 'Bestnid © Todos los derechos reservados ',
+'MapaDelSitio' => 'Mapa Del Sitio','MiCuenta' => 'Mi Cuenta',
+'Derechos' => 'Bestnid © Todos los derechos reservados ',
 'Terminos' => 'Terminos de uso','Privacidad' => 'Privacidad',
 
 'Ingresenombre' => 'Ingrese su nombre de usuario','Ingresecontraseña' => 'Ingrese su contraseña',
@@ -529,7 +569,7 @@ $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => '
 'ManejoCategoria' => 'Gestion de Categorias','VerComentarios' => 'Listado de Comentarios',
 'VerOfertas' => 'Listado de Ofertas','VerSubastas' => 'Ver Subastas',
 'AgregarAdmin' => 'Gestion de Administradores','fotos' => $fotos,'cant'=>$cant,'cantidad'=>$cantidad,'subastas'=>$subastas,
-'informar'=>$informar,
+'informarmod'=>$informarmod,'subastasrandom'=>$subastasRandom,'idusuario'=>$idusuario, 'Contacto'=>$contacto,
 
 ));
 

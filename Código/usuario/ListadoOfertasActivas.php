@@ -27,7 +27,7 @@ else
 	$cerrarsesion='Cerrar Sesion';
 	$micuenta='Mi Cuenta';
 	$bienvenido='Bienvenido:';
-	$contacto=null;
+	$contacto='Contacto';
 	$iniciarsesion=null;
 	$registrarse=null;
 	$sobrebestnid=null;
@@ -37,27 +37,27 @@ else
  //  $user=$_SESSION['UserLogged'];
    // include '../permisosAdmin.php'; 
    $id=$_SESSION['Id'];
-   $subastas=Subasta::recuperarSubastasActivasParaUnUsuario($id);
+   $ofertas=Oferta::recuperarOfertasActivasParaUnUsuario($id);
 
-if($subastas==null)
+if($ofertas==null)
 {
-	$notienesubastas="Usted no posee ninguna subastas activa!!!";
+	$notieneofertas="Usted no posee ninguna oferta activa!!!";
 }
 else
 {
-	$notienesubastas=null;
+	$notieneofertas=null;
 }
 $elimino=null;
-
+$modifico=null;
 $informar=null;
 Twig_Autoloader::register();
-$template = $twig->loadTemplate("ListadoSubastasActivas.html.twig");
+$template = $twig->loadTemplate("ListadoOfertasActivas.html.twig");
 
 $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => 'Home'
 ,'Subastas' => 'Subastas','SobreBestnid' => 'Sobre Bestnid','ComoSubastar' => 'Como Subastar',
 'MapaDelSitio' => 'Mapa Del Sitio','IniciarSesion' => 'Iniciar Sesion','MiCuenta' => 'Mi Cuenta',
 'Registrarse' => 'Registrarse','Derechos' => 'Bestnid © Todos los derechos reservados ',
-'Terminos' => 'Terminos de uso','Privacidad' => 'Privacidad','subastas'=>$subastas,
+'Terminos' => 'Terminos de uso','Privacidad' => 'Privacidad','ofertas'=>$ofertas,
 
 'Ingresenombre' => 'Ingrese su nombre de usuario','Ingresecontraseña' => 'Ingrese su contraseña',
 'NombreUsuario' => 'Nombre de usuario','Contraseña' => 'Contraseña','Acciones' => 'Acciones',
@@ -65,8 +65,8 @@ $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => '
 'ManejoCategoria' => 'Gestion de Categorias','VerComentarios' => 'Listado de Comentarios',
 'VerOfertas' => 'Listado de Ofertas','VerSubastas' => 'Ver Subastas', 
 'AgregarAdmin' => 'Gestion de Administradores', 'Ayuda' => 'Ayuda', 'CerrarSesion'=>$cerrarsesion,'MiCuenta'=>$micuenta, 'nombre'=>$nombre,'apellido'=>$apellido,
-'informar'=>$informar,'notienesubastas'=>$notienesubastas,
-'elimino'=>$elimino,
+'informar'=>$informar,'notieneofertas'=>$notieneofertas,
+'elimino'=>$elimino,'modifico'=>$modifico,'Contacto'=>$contacto,
 ));
 
 

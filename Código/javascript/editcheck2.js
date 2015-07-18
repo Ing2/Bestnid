@@ -10,10 +10,10 @@
 
 function valforms(frm,itm)
 {
- //var sel = document.getElementById("categoria");
-//var cat=(sel.selectedIndex);
+var sel = document.getElementById("categoria");
+var cat=(sel.selectedIndex);
 
-//var x = parseInt(cat);
+var x = parseInt(cat);
 var i
 var j
 for (j=0;j < document.forms.length; j++ ) { // for each form
@@ -62,10 +62,10 @@ for (j=0;j < document.forms.length; j++ ) { // for each form
                               fld.focus();
                               fld.select();
                               return false;
-						
-							  
+            
+                
                          }//if                             
-						   if(fld.value.length==1 ) { 
+               if(fld.value.length==1 ) { 
                            
                               if (!msg || !msg.length)
                                  msg = "Por favor ingrese mas de 2 letras en el Campo Titulo!";
@@ -73,16 +73,16 @@ for (j=0;j < document.forms.length; j++ ) { // for each form
                               fld.focus();
                               fld.select();
                               return false;
-						
-							 
-                         }//if   	
+            
+               
+                         }//if    
 
 
 
-					  
+            
                         break; //alpha 
-						 case "alpha2":  
-                         if(fld.value.length>0 && fld.value.search("[^A-Z a-zÑñéáíóú0-9.]") >= 0) { 
+             case "alpha2":  
+                         if(fld.value.length>0 && fld.value.search("[^A-Z a-zÃ‘Ã±Ã©Ã¡Ã­Ã³Ãº0-9.]") >= 0) { 
                               if (!msg || !msg.length)
                                  msg = "Por favor ingrese solo letras de la A la Z , en minuscula o mayuscula y/o caracteres numericos en el Campo Descripcioon!";
                               window.alert(msg);
@@ -90,17 +90,17 @@ for (j=0;j < document.forms.length; j++ ) { // for each form
                               fld.select();
                               return false;
                          }//if                             
-						 if(fld.value.length==1 ) { 
+             if(fld.value.length==1 ) { 
                               if (!msg || !msg.length)
                                  msg = "Por favor ingrese mas de 2 letras y/o caracteres numericos en el Campo Descripcion!";
                               window.alert(msg);
                               fld.focus();
                               fld.select();
                               return false;
-						
-							  
+            
+                
                          }//if 
-						
+            
                         break; //alpha 
 
                        case "alphanumeric": 
@@ -116,18 +116,18 @@ for (j=0;j < document.forms.length; j++ ) { // for each form
 
                         break; 
                        }//alphabetic
-					    case "categoria":  { 
+              case "categoria":  { 
                         if(x==0)
-							    {
-							 msg = "Por Favor Seleccione una categoria";
+                  {
+               msg = "Por Favor Seleccione una categoria";
                               window.alert(msg);
-	
+  
                               return false;  
-						  }
+              }
                        break; 
                        }//pass
-					       case "opc":  { 
-							var cantidad = document.getElementById("cantidad").value;
+                 case "opc":  { 
+              var cantidad = document.getElementById("cantidad").value;
 
  var cant= parseInt(cantidad);
 
@@ -137,7 +137,7 @@ for (j=0;j < document.forms.length; j++ ) { // for each form
  {
   if (document.form1.opciones[1].checked)
   {
-	  aEliminar=aEliminar+1;
+    aEliminar=aEliminar+1;
   }
 
  }
@@ -148,12 +148,12 @@ for (j=0;j < document.forms.length; j++ ) { // for each form
  {
   if (document.form1.opciones[1].checked)
   {
-	  aEliminar=aEliminar+1;
+    aEliminar=aEliminar+1;
   }
   
    if (document.form1.opciones1[1].checked)
   {
-	  aEliminar=aEliminar+1;
+    aEliminar=aEliminar+1;
   } 
  }
  
@@ -162,15 +162,15 @@ for (j=0;j < document.forms.length; j++ ) { // for each form
  {
   if (document.form1.opciones[1].checked)
   {
-	  aEliminar=aEliminar+1;
+    aEliminar=aEliminar+1;
   }
    if (document.form1.opciones1[1].checked)
   {
-	  aEliminar=aEliminar+1;
+    aEliminar=aEliminar+1;
   } 
   if (document.form1.opciones2[1].checked)
   {
-	  aEliminar=aEliminar+1;
+    aEliminar=aEliminar+1;
   } 
  }
  
@@ -179,19 +179,19 @@ for (j=0;j < document.forms.length; j++ ) { // for each form
  {
   if (document.form1.opciones[1].checked)
   {
-	  aEliminar=aEliminar+1;
+    aEliminar=aEliminar+1;
   }
    if (document.form1.opciones1[1].checked)
   {
-	  aEliminar=aEliminar+1;
+    aEliminar=aEliminar+1;
   } 
   if (document.form1.opciones2[1].checked)
   {
-	  aEliminar=aEliminar+1;
+    aEliminar=aEliminar+1;
   } 
    if (document.form1.opciones3[1].checked)
   {
-	  aEliminar=aEliminar+1;
+    aEliminar=aEliminar+1;
   } 
  }
  
@@ -199,44 +199,44 @@ for (j=0;j < document.forms.length; j++ ) { // for each form
  {
   if (document.form1.opciones[1].checked)
   {
-	  aEliminar=aEliminar+1;
+    aEliminar=aEliminar+1;
   }
    if (document.form1.opciones1[1].checked)
   {
-	  aEliminar=aEliminar+1;
+    aEliminar=aEliminar+1;
   } 
   if (document.form1.opciones2[1].checked)
   {
-	  aEliminar=aEliminar+1;
+    aEliminar=aEliminar+1;
   } 
    if (document.form1.opciones3[1].checked)
   {
-	  aEliminar=aEliminar+1;
+    aEliminar=aEliminar+1;
   } 
     if (document.form1.opciones4[1].checked)
   {
-	  aEliminar=aEliminar+1;
+    aEliminar=aEliminar+1;
   } 
  }
  
  if(cantidad==aEliminar)
  {
-	 window.alert("No puede eliminar todas las fotos de su subasta, debe quedar al menos una.");
-	 return false;
+   window.alert("No puede eliminar todas las fotos de su subasta, debe quedar al menos una.");
+   return false;
  }
-						  
+              
                        break; 
                        }//opc
-					   
-					     
-					   
-					   
+             
+               
+             
+             
 
 
-						   
-						   
-						   
-						   
+               
+               
+               
+               
                        default:  // regular expression
                          var re = new RegExp(cmdarr[1],'gi');
                          if (fld.value.length>0 && re.test(fld.value) == false) {

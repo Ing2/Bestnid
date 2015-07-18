@@ -1,5 +1,7 @@
 <?php
 require_once '../Conexion.php';
+require_once 'respuesta.php';
+
 
 
 class Comentario
@@ -134,26 +136,55 @@ public function getFechaCom() {
 	
 	}
 	
-	//baja logica idtipo=4 es el id que corresponde a Usuario Eliminado mirar base de datos
-	public static function eliminarUsuario($usuarioId){
+	//baja logica
+	public static function eliminarComentario($idcomentario){
 	$db=conectaDb();
-         	$res = $db->prepare('UPDATE usuario SET idtipo=4 WHERE (idusuario=:id)');
-		 $res->bindParam(':id', $usuarioId);
+         	$res = $db->prepare('UPDATE `grupo10`.`comentario` SET `idestadocom` =2 WHERE `comentario`.`idcomentario`=:id ');
+		 $res->bindParam(':id', $idcomentario);
+			$res->execute();
+			$res2 = $db->prepare('UPDATE `grupo10`.`respuesta` SET `idestadorespuesta` =2 WHERE `respuesta`.`idcomentario`=:id ');
+		 $res2->bindParam(':id', $idcomentario);
+			$res2->execute();
+
+
+
+         	$db=null;
+			return true;
+			exit;
+
+
+
+
+
+	}
+	public static function eliminarComentarioSubasta($subasta){
+	$db=conectaDb();
+         	$res = $db->prepare('UPDATE comentario c SET c.idestadocom=2 WHERE (c.idsubastacom=:id)');
+		 $res->bindParam(':id', $subasta);
 			$res->execute();
          	$db=null;
 			return true;
 			exit;
 	}
-	//baja logica idtipo=3 es el id que corresponde a Administrador Eliminado mirar base de datos
-		public static function eliminarAdministrador($AdminId){
+	public static function eliminarComentarioSubastaUsuario($subasta){
 	$db=conectaDb();
-         	$res = $db->prepare('UPDATE usuario SET idtipo=3 WHERE (idusuario=:id)');
-		 $res->bindParam(':id', $AdminId);
+         	$res = $db->prepare('UPDATE comentario c INNER JOIN subasta s on c.idsubastacom = s.idsubasta SET c.idestadocom=2 WHERE s.idusuariosub=:id');
+		 $res->bindParam(':id', $subasta);
 			$res->execute();
          	$db=null;
 			return true;
 			exit;
 	}
+	public static function eliminarComentarioUsuario($usuario){
+	$db=conectaDb();
+         	$res = $db->prepare('UPDATE comentario c SET c.idestadocom=2 WHERE (c.idusuariocom=:id)');
+		 $res->bindParam(':id', $usuario);
+			$res->execute();
+         	$db=null;
+			return true;
+			exit;
+	}
+
 	
 	// RECUPERAR Todos los comentarios para una subasta dada.
 	public static function recuperarComentariosParaSubasta($id)
@@ -179,69 +210,71 @@ public function getFechaCom() {
 		$db=null;
 		return $objArrayConsult;
 	}
+	public static function recuperarComentariosParaUsuario($id)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('SELECT * FROM `comentario` WHERE idusuariocom=:id and idestadocom=1');
+	$res->bindParam(':id', $id);
+	$res->execute();
+		if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Comentario::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;
+	}
+
+	public static function recuperarRespuestaParaComentario($idcomentario)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('SELECT * FROM respuesta r where r.idcomentario=:id and r.idestadorespuesta=1');
+	$res->bindParam(':id', $idcomentario);
+	$res->execute();
+		if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Respuesta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;
+	}
+
+
  
-// VER USUARIOS ACTIVOS 
- public static function recuperarUsuariosActivos()
-	{
-	$db=conectaDb();
-	$res = $db->prepare('SELECT * from usuario INNER JOIN tipo_usuario where (tipo_usuario.idtipousuario = usuario.idtipo) and (usuario.idtipo=1 or usuario.idtipo=2)');
-	 $res->execute();
-		if (($row = $res->fetch())){
-			$i=0;
-			  $objArrayConsult = array();
-			  do
-			  {
-				 
-				  $objConsult = Usuario::buildFromBD($row);
-				  $objArrayConsult[$i] = $objConsult; 
-				  $i = $i + 1;
-				}while(($row = $res->fetch()));
-			}
-			else{
-			return null;
-			}
-		$db=null;
-		return $objArrayConsult;
-	}
 
 
 
 
-
-// VER USUARIOS ELIMINADOS 	
-	 public static function recuperarUsuariosEliminados()
-	{
-	$db=conectaDb();
-	$res = $db->prepare('SELECT * from usuario INNER JOIN tipo_usuario where (tipo_usuario.idtipousuario = usuario.idtipo) and (usuario.idtipo=3 or usuario.idtipo=4)');
-	 $res->execute();
-		if (($row = $res->fetch())){
-			$i=0;
-			  $objArrayConsult = array();
-			  do
-			  {
-				 
-				  $objConsult = Usuario::buildFromBD($row);
-				  $objArrayConsult[$i] = $objConsult; 
-				  $i = $i + 1;
-				}while(($row = $res->fetch()));
-			}
-			else{
-			return null;
-			}
-		$db=null;
-		return $objArrayConsult;
-	}
 
 
 	
    
   // VER CUANTOS SE NECESITAN DEL MODIFICAR 
-   public static function modUsuario($id){
+   public static function modificarComentario($idcomentario,$comentario,$fechacom){
 	$db=conectaDb();
-	$res = $db->prepare('update usuario set user =:user, pass = :pass where (idusuario = :idwhere)');
-	$res->bindParam(':user',$user);
-	$res->bindParam(':pass',$pass);
-	$res->bindParam(':idwhere',$id);
+	$res = $db->prepare('UPDATE grupo10.comentario SET cuerpo=:comentario, fecha_com =:fecha WHERE comentario.idcomentario =:id');
+	$res->bindParam(':id',$idcomentario);
+	$res->bindParam(':comentario',$comentario);
+	$res->bindParam(':fecha',$fechacom);
 	$res->execute();	
 	$db=null;
 	return $res;
@@ -249,29 +282,27 @@ public function getFechaCom() {
 
 		
 		
-     public static function recuperarUsuario($id)
-	{
-	$db=conectaDb();
-	$res = $db->prepare('select * from usuario where (idusuario=:id)');
-	$res->bindParam(':id',$id);
-	$res->execute();
-		if (($row = $res->fetch())){
-			$a=Usuario::buildFromBD($row);
-			
-			}
-		else {
-			return null; 
-		}
-		
-		$db=null;
-		return $a;
-		
-	}
+
  public static function recuperarUsuarioComentario($id)
 	{
 	$db=conectaDb();
-	$numero=20;
-	$res = $db->prepare('SELECT u.email from usuario u inner join comentario c ON ( u.idusuario = c.idusuariocom ) where (u.idusuario=20)');
+	
+	$res = $db->prepare('SELECT u.email from usuario u inner join comentario c ON ( u.idusuario = c.idusuariocom ) where (u.idusuario=:id)');
+	 $res->bindParam(':id', $id);
+	$res->execute();
+	if (($row = $res->fetch())){
+	    $row = $res->fetch();
+		  }
+			else{
+			return null;
+			}
+	return $row[0];
+	}
+	public static function recuperarComentarioSubasta($id)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare('SELECT * from comentario where (c.idsubastacom=:id)');
 	 $res->bindParam(':id', $id);
 	$res->execute();
 	if (($row = $res->fetch())){
@@ -288,48 +319,20 @@ public function getFechaCom() {
 
 
 
-	public static function filtrarPorFechas($fechainicio,$fechafin)
-	{
-	$db=conectaDb();
-	echo $fechainicio;
-	echo $fechafin;
-	$res = $db->prepare (' select * from usuario u where (( $fechainicio <= u.fecha_alta) and (u.fecha_alta <= $fechafin) and (u.idtipo=2))');
 	
-		  $res->execute();
-		  print_r($res);
-	if (($row = $res->fetch())){
-			$i=0;
-			  $objArrayConsult = array();
-			  do
-			  {
-				
-				  $objConsult = Usuario::buildFromBD($row);
-				  print_r ($objConsult);
-				  $objArrayConsult[$i] = $objConsult; 
-				  $i = $i + 1;
-				}while(($row = $res->fetch()));
-			}
-			else{
-			return null;
-			}
-		$db=null;
-		return $objArrayConsult;	
 
-}
-public static function filtrarPorFechaInicio($fechainicio)
+  public static function recuperarComentariosTodos()
 	{
 	$db=conectaDb();
-	
-	$res = $db->prepare ("SELECT * FROM `usuario` WHERE `fecha_alta` = '$fechainicio' AND idtipo=1");
-	
-		  $res->execute();
-	if (($row = $res->fetch())){
+	$res = $db->prepare('SELECT * from comentario');
+	 $res->execute();
+		if (($row = $res->fetch())){
 			$i=0;
 			  $objArrayConsult = array();
 			  do
 			  {
 				 
-				  $objConsult = Usuario::buildFromBD($row);
+				  $objConsult = Comentario::buildFromBD($row);
 				  $objArrayConsult[$i] = $objConsult; 
 				  $i = $i + 1;
 				}while(($row = $res->fetch()));
@@ -338,11 +341,8 @@ public static function filtrarPorFechaInicio($fechainicio)
 			return null;
 			}
 		$db=null;
-		return $objArrayConsult;	
-
-}
-
-
+		return $objArrayConsult;
+		}
 }
 
 

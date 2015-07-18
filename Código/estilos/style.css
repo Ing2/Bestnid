@@ -92,6 +92,7 @@ h9{
 	padding-top:4%;
 }
 
+
 .form-control {
    font-family: 'Tech';
   display: block;
@@ -131,6 +132,9 @@ h9{
           transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
+.rojo{color:#ff0000;}
+
+.azul{color:#337ab7;}
 .wrap {
 	font-size:20px;
 	width:80%;
@@ -1394,15 +1398,16 @@ background-color:#EBEBEB;
 .span_3_of_2  h2 {
 	font-size: 1.2em;
 	color:#e44f2b;
-	font-weight: normal;
+	font-weight: 700;
 	margin-top: 0px;
 }
 .span_3_of_2  p{
-	font-size:13px;
+	font-size:20px;
+	font-weight: 700;
 	padding:5px 0;
 	color:#8B8B8B;
 	line-height: 1.6em;
-	font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
+	
 }
 .price p {
 	font-size: 0.85em;
@@ -1420,14 +1425,16 @@ background-color:#EBEBEB;
 	border-top: 1px solid #EBEBEB;
 }
 .available li span{
-	font-size:13px;
-	color:#8B8B8B;
-	font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:20px;
+	font-weight: 700;
+	color:black;
+	
 }
 .available li {
 	display:block;
-	color:#000;
+	color:#8B8B8B;
 	font-size:20px;
+	font-weight: 700;
 	padding:5px 0;
 }
 .share-desc{
@@ -1657,8 +1664,12 @@ background-color:#EBEBEB;
 .comentarios .fecha{
 	color:#CBCBCB;
 }
-
-
+.comentarios .respuesta{
+	color:#5cb85c;
+}
+.comentarios .linea{
+	color:black;
+}
 
 .product-tags h4 {
 	padding: 10px 0;
@@ -2181,9 +2192,6 @@ a .glyphicon .glyphicon-home
 {
    	font-family:'Tech';
  }
- 
-
-
 
 
 }

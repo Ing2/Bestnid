@@ -22,7 +22,7 @@ else
 	$cerrarsesion='Cerrar Sesion';
 	$micuenta='Mi Cuenta';
 	$bienvenido='Bienvenido:';
-	$contacto=null;
+	$contacto='Contacto';
 	$iniciarsesion=null;
 	$registrarse=null;
 	$sobrebestnid=null;
@@ -38,6 +38,6 @@ $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => '
 'Terminos' => 'Terminos de uso','Privacidad' => 'Privacidad',
  'Ayuda' => 'Ayuda',
 'nombre'=>$nombre,'apellido'=>$apellido,'CerrarSesion'=>$cerrarsesion,'MiCuenta'=>$micuenta,
-'sobrebestnid'=>$sobrebestnid,'contacto'=>$contacto,'IniciarSesion' =>$iniciarsesion,'Registrarse' =>$registrarse,
+'sobrebestnid'=>$sobrebestnid,'contacto'=>$contacto,'IniciarSesion' =>$iniciarsesion,'Registrarse' =>$registrarse, 'Contacto'=>$contacto,
 ));
 ?>

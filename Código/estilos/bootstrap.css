@@ -5330,6 +5330,15 @@ a.list-group-item-danger.active:focus {
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
 }
+.panel-headingg {
+	font-weight:700;
+  background-color:#2e6da4;
+  padding: 10px 15px;
+  color:white;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
 .panel-heading a{
   color:white;  
 }

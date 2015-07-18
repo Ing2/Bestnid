@@ -25,6 +25,9 @@
 <script type="text/javascript" src="js/move-top.js"></script>
 <script src="js/easyResponsiveTabs.js" type="text/javascript"></script>
 <link href="css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" media="all"/>
+
+
+
  <script type="text/javascript">
     $(document).ready(function () {
         $('#horizontalTab').easyResponsiveTabs({
@@ -52,6 +55,51 @@
 		</script>
 	  <script src="js/star-rating.js" type="text/javascript"></script>
 {% endblock %}
+
+<script language="JavaScript">
+function pregunta(){ 
+    
+    if (confirm('Estas seguro que desea eliminar el comentario?'))
+    { 
+       return true;
+    } 
+    else
+    { 
+    	return false;
+    }
+
+} 
+</script>
+
+<script language="JavaScript">
+function pregunta2(){ 
+    
+    if (confirm('Estas seguro que desea eliminar la respuesta?'))
+    { 
+       return true;
+    } 
+    else
+    { 
+    	return false;
+    }
+
+} 
+</script>
+
+<script language="JavaScript"> 
+function pregunta3(){ 
+    
+    if (confirm('Desea concluir su oferta?'))
+    { 
+       return true;
+    } 
+    else
+    { 
+    	return false;
+    }
+
+} 
+</script>
 	  </head>
 <body>
 
@@ -76,24 +124,7 @@
 						<a href="../templates/index.php">{{Home}}<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>	
 						</li>
 						
-						<li>
-							<a href="#">{{Subastas}}</a>
-							<ul>
-								
-							</ul>
-						</li>
 						
-							{% if sobrebestnid is not null %}		
-						<li>
-							<a href="../sobrebestnid/sobrebestnid.php">{{sobrebestnid}}</a>
-						</li>
-						{% endif %}
-						
-							{% if contacto is not null %}		
-						<li>
-							<a href="#">{{contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
-						</li>
-						{% endif %}
 						
 						
 						
@@ -122,14 +153,7 @@
 						
 						
 						
-						{% if MiCuenta is not null %}
-						<li>
-							<a href="../ayuda/Ayuda.php">{{MiCuenta}}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span></a>
-					
-							
-							
-						</li>
-						{% endif %}
+						
 						
 						{% if CerrarSesion is not null %}
 						<li>
@@ -140,6 +164,11 @@
 						<li>
 							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
 						</li>
+						
+						<li>
+							<a href="../mail/altamail.php">{{Contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+						</li>
+						
 						
 						{% if (nombre is not null) and (apellido is not null) %}		
 						<li>
@@ -167,10 +196,76 @@
 	 
    	 	<div class="preview-page">
    	 	       <div class="section group">
+   	 	       	 {% if informarmod is not null %}
+			   <div class="alert alert-info"><span class="glyphicon glyphicon" aria-hidden="true"></span>
+					
+					{{informarmod}}
+					
+					
+					</div>
+					{% endif %}
+
+   	 	       	
 			      {% if comentarioagregado is not null %}
 			      <div class="alert alert-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 					Se Agrego su comentario a Bestnid, si desea ver su comentario vaya a la solapa comentarios dentro de esta misma página
 					<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+					
+					</div>
+
+
+
+			      {% endif %}
+
+			      {% if comentariomodificado is not null %}
+			      <div class="alert alert-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					Se modifico su comentario correctamente
+					
+					
+					</div>
+
+
+
+			      {% endif %}
+
+			      {% if comentarioeliminado is not null %}
+			      <div class="alert alert-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					Se elimino el comentario correctamente
+					
+					
+					</div>
+
+
+
+			      {% endif %}
+
+
+			      {% if agreguerespuesta is not null %}
+			      <div class="alert alert-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					Se agrego la respuesta correctamente
+					
+					
+					</div>
+
+
+
+			      {% endif %}
+
+			      {% if eliminerespuesta is not null %}
+			      <div class="alert alert-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					Se elimino la respuesta correctamente
+					
+					
+					</div>
+
+
+
+			      {% endif %}
+
+			         {% if modifiquerespuesta is not null %}
+			      <div class="alert alert-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					Se modifico la respuesta correctamente
+					
 					
 					</div>
 
@@ -201,11 +296,11 @@
 				     </div>
 					 <div class="desc span_3_of_2">
 					<h2>{{subastas.getTitulo()}}</h2>
-					<p>{{subastas.getDescripcion()}}</p>					
 					
 					<div class="available">
 						<ul>
-						  
+						   <li><span>Descripcion:</span>{{subastas.getDescripcion()}}</li>
+						   <li><span>Categoria:</span>{{subastas.recuperarCategoriaSubasta(subastas.getIdCategoriaSub())}}</li>
 						  <li><span>Fecha Inicio:</span>{{subastas.getFechaInicio()}}</li>
 						  <li><span>Fecha Fin:</span>{{subastas.getFechaFin()}}</li>
 						  <li><span>Usuario:</span>{{subastas.recuperarUsuarioSubasta(subastas.getIdUsuarioSub())}}</li>
@@ -216,10 +311,11 @@
 					
 					{% if (nombre is not null) and (apellido is not null) %}
 							
-							{% if (subastas.esTuSubasta(subastas.getIdSubasta(),idusuario))==0 %}
+							{% if (subastas.getIdUsuarioSub!=idusuario) %}
 							
 							        {% if (subastas.controlarOfertaParaUsuario(subastas.getIdSubasta(),idusuario))==0 %}
-												<form method="POST" name="form1" action="../oferta/altaoferta.php" >
+							        {% if tipo!=1 %}
+												<form onsubmit="return pregunta3()" method="POST" name="form1" action="../oferta/altaoferta.php" >
 												<hr>
 					                            Ofertar por el producto
 				                                <div class="share-desc">
@@ -242,6 +338,11 @@
 				                                  </div>
 												  </form>
 				                                    <hr>
+				                        {% else %}
+												<div class="alert alert-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					                            No se permiten ofertas de los administradores del sitio!
+				                            	</div>             
+				                      {% endif %}              
 									 {% else %}
 												<div class="alert alert-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					                             Usted ya realizó una oferta para esta subasta!!!.
@@ -249,7 +350,7 @@
 									 {% endif %}
 							{% else %}
 									<div class="alert alert-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-					                           Usted en el propietario de la subasta no se le permite ofertar en la misma!!!.
+					                           Usted es el propietario de la subasta no se le permite ofertar en la misma!!!.
 				                     </div>
 									
 									
@@ -262,15 +363,15 @@
 				   	 
 				    {% else %}
 					<div class="alert alert-success"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-							Para poder ofertar por el producto por favor <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> <a href="#">Inicie Sesión</a>
-							o si no posee un usuario <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> <a href="#">Regístrese dentro de bestnid</a> 
+							Para poder ofertar por el producto por favor <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> <a href="../sesion/InicioSesion.php">Inicie Sesión</a>
+							o si no posee un usuario <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> <a href="../registro/Registro.php">Regístrese dentro de bestnid</a> 
 				 </div>
 				
 				   {% endif %}
 	 {% else %}   
 					<div class="alert alert-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-					Se Agrego su oferta a Bestnid, si desea ver su oferta ingrese al siguiente link:<br>
-					<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span><a href="verdetalle.php?id={{agrego}}">Su última oferta</a>
+					Se Agrego su oferta a Bestnid
+				
 					</div>   
 				   
 	 {% endif %}	   
@@ -295,7 +396,103 @@
 							{% for comentario in comentarios %}
 		                  <div class="comentarios" >{{comentario.getCuerpo()}}
 
-		                  <div class="fecha">Fecha:{{comentario.getFechaCom()}} Usuario:{{comentario.recuperarUsuarioComentario(comentario.getIdUsuarioCom())}}</div>
+		                  <div class="fecha">Fecha:{{comentario.getFechaCom()}} </div>
+		                  			<!-- Usuario del comentario
+		                  			 Usuario:{{comentario.recuperarUsuarioComentario(comentario.getIdUsuarioCom())}} -->
+		                  			 
+		                  		{% set ar = comentario.recuperarRespuestaParaComentario(comentario.getIdComentario()) %}
+		                  		{% if ar is not null %}
+		                  		<div class="respuesta">{{ ar[0].getCuerpo() }} <div class="fecha">Fecha:{{ ar[0].getFechaRespuesta() }}</div></div>
+		                  		{% endif %}
+		                  		{% if comentario.getIdUsuarioCom()==idusuario %}
+		                  		  			<form  onsubmit="return pregunta()" action="../comentario/eliminarcomentario.php" method="post"> 
+				       <input type="hidden" name="idcomentario2" id="idcomentario2" value="{{comentario.getIdComentario()}}" >
+						<input type="hidden" name="idsubasta" id="idsubasta" value="{{comentario.getIdSubastaCom()}}" >
+						<div class="linea">Si lo que desea es eliminar su comentario aprete aqui<input type="submit" class="btn btn-danger" value="Eliminar">
+						
+                        </form>
+
+                        	Para modificar un comentario ingrese el contenido aqui abajo</div>
+		                 <form  method="POST"  action="../comentario/modificarcomentario.php" > 
+				        <textarea name="comentario" id="comentario" class="form-control" rows="3" cols="60" maxlength="250" minlength="2" title="Ingrese minimo 2 caracteres" required/></textarea> 
+						<input type="hidden" name="idcomentario" id="idcomentario" value="{{comentario.getIdComentario()}}" >
+						<input type="hidden" name="idsubasta" id="idsubasta" value="{{comentario.getIdSubastaCom()}}" >
+						<input type="submit" class="btn btn-primary" value="Modificar">
+                        </form>    
+
+
+
+		                  		{% endif %}
+
+
+		                 {% if tipo!=1 %} 		
+		                 {% if subastas.getIdUsuarioSub()==idusuario %}
+		                  	{% if ar is null %}
+		                  			
+						<div class="linea">
+
+
+
+                        	Para responder este comentario ingrese el contenido aqui abajo</div>
+		                 <form  method="POST"  action="../comentario/agregarrespuesta.php" > 
+				        <textarea name="respuesta" id="respuesta" class="form-control" rows="3" cols="60" maxlength="250" minlength="2" title="Ingrese minimo 2 caracteres" required/></textarea> 
+
+						<input type="hidden" name="idcomentario" id="idcomentario" value="{{comentario.getIdComentario()}}" >
+						<input type="hidden" name="idsubasta" id="idsubasta" value="{{comentario.getIdSubastaCom()}}" >
+						<input type="submit" class="btn btn-primary" value="Responder">
+                        </form>
+                        {% else %}
+                            			<hr>
+
+
+		                  			<form  onsubmit="return pregunta2()" action="../comentario/eliminarrespuesta.php" method="post"> 
+		                <input type="hidden" name="idrespuesta2" id="idrespuesta2" value="{{ar[0].getIdRespuesta()}}" >
+				       <input type="hidden" name="idcomentario2" id="idcomentario2" value="{{comentario.getIdComentario()}}" >
+						<input type="hidden" name="idsubasta" id="idsubasta" value="{{comentario.getIdSubastaCom()}}" >
+						<div class="linea">Si lo que desea es eliminar su Respuesta aprete aqui<input type="submit" class="btn btn-danger" value="Eliminar"><br>
+						
+                        </form>
+
+
+
+                        	Para modificar su Respuesta ingrese el contenido aqui abajo</div>
+		                 <form  method="POST"  action="../comentario/modificarrespuesta.php" > 
+				     
+		                 	<textarea name="cuerpo" id="cuerpo" rows="4" cols="50" required/></textarea>
+					
+				    <input type="hidden" name="idrespuesta" id="idrespuesta" value="{{ar[0].getIdRespuesta()}}" >
+						<input type="hidden" name="idsubasta" id="idsubasta" value="{{comentario.getIdSubastaCom()}}" >
+						<input type="submit" class="btn btn-primary" value="Modificar">
+                        </form>  
+
+
+
+                        {% endif %}  
+
+		                  {% endif %}
+		            {% else %}
+		            		{% if tipo==1 %}
+		            		  			<form  onsubmit="return pregunta()" action="../comentario/eliminarcomentario.php" method="post"> 
+				       <input type="hidden" name="idcomentario2" id="idcomentario2" value="{{comentario.getIdComentario()}}" >
+						<input type="hidden" name="idsubasta" id="idsubasta" value="{{comentario.getIdSubastaCom()}}" >
+						 <input type="submit" class="btn btn-danger" value="Eliminar Comentario">
+						
+                        </form>
+                        	{% if ar[0] is not null %}
+                          			<form  onsubmit="return pregunta2()" action="../comentario/eliminarrespuesta.php" method="post"> 
+		                <input type="hidden" name="idrespuesta2" id="idrespuesta2" value="{{ar[0].getIdRespuesta()}}" >
+				       <input type="hidden" name="idcomentario2" id="idcomentario2" value="{{comentario.getIdComentario()}}" >
+						<input type="hidden" name="idsubasta" id="idsubasta" value="{{comentario.getIdSubastaCom()}}" >
+						<input type="submit" class="btn btn-primary" value="Eliminar Sólo la Respuesta"><br>
+						
+                        </form>
+                        	{% endif %}
+
+		            		{% endif %}
+
+		            {% endif %}
+
+
 		                  </div>
 		                  	{% endfor %}
 		                  	{% else %}
@@ -314,7 +511,7 @@
 
 {% if (nombre is not null) and (apellido is not null) %}
 							
-									 
+							 {% if subastas.getIdUsuarioSub()!=idusuario %}		 
 					<h4>Agrega tu comentario:</h4>
 					<form method="POST" name="form1" action="../comentario/agregarcomentario.php">
 					<div class="input-box">
@@ -323,16 +520,20 @@
 						<input type="hidden" name="idsubastacomentario" id="idsubasta" value="{{subastas.getIdSubasta()}}" >
 					</div>
 					<br>
-					 <input type=submit class="btn btn-success" value="Enviar"> 
+					 <input type=submit class="btn btn-success" value="Agregar"> 
 					</form>
-				   	 
+				   	  {% else %}
+				   	      <div class="alert alert-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+							No podes comentar en tu propia subasta
+				         </div>
+				   	   {% endif %}
 				    {% else %}
 					<div class="alert alert-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-							Para poder comentar el producto por favor <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span><a href="#"> Inicie Sesión</a>
-							o si no posee un usuario <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> <a href="#"> Regístrese dentro de bestnid </a>
+							Para poder comentar el producto por favor <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span><a href="../sesion/inicioSesion.php"> Inicie Sesión</a>
+							o si no posee un usuario <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> <a href="../registro/Registro.php"> Regístrese dentro de bestnid </a>
 				 </div>
 				
-
+				
 {% endif %}
 
 
@@ -359,20 +560,11 @@
 	 <div class="rightsidebar span_3_of_1 sidebar">
 				<div class="panel-heading"> Otras subastas</div>
 					<ul class="popular-products">
-						<li>
-							 <h4><a href="preview.html">Whirlpool LTE5243D 3.4 CuFt.... </a></h4>
-							  <a href="preview.html"><img src="images/product-img2.jpg" alt="" /></a>
-							  <div class="price-details">
-						       <div class="price-number">
-									<p><span class="rupees line-through">$899.95 </span> &nbsp; <span class="rupees">$839.93 </span></p>
-							    </div>
-							       		<div class="add-cart">								
-											<h4><a href="preview.html">Ver Subasta</a></h4>
-									     </div>
-									 <div class="clear"></div>
-							</div>					 
-						</li>
-						<li>
+
+						{% for subasta in subastasrandom %}
+    
+
+							<li>
 							<strong><h4>{{subasta.getTitulo()}}</h4></strong>
 								<a href="../web/preview.php?id={{subasta.getIdSubasta()}}" title="{{subasta.getTitulo()}}"><img src="../{{subasta.recuperarFoto(subasta.getIdSubasta())}}" alt="" /></a>
 								  <div class="price-details">
@@ -387,19 +579,7 @@
 							             <div class="clear"></div>
 												 
 						</li>
-						<li>
-							 <h4><a href="preview.html">Whirlpool LTE5243D 3.4 CuFt.... </a></h4>
-							  <a href="preview.html"><img src="images/product-img4.jpg" alt="" /></a>
-							  <div class="price-details">
-						       <div class="price-number">
-									<p><span class="rupees line-through">$899.95 </span> &nbsp; <span class="rupees">$839.93 </span></p>
-							    </div>
-							       		<div class="add-cart">								
-											<h4><a href="preview.html">More Info</a></h4>
-									     </div>
-									 <div class="clear"></div>
-							</div>					 
-						</li>
+				    {% endfor %}
 				     </ul>
 				    
       				  

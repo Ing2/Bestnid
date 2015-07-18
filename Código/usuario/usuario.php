@@ -160,11 +160,45 @@ class Usuario
 	}
 	}	
 	
+	public static function altaAdministrador($usuario)
+	{
+	$db=conectaDb();
+	
+	$fecha=date("Y-m-j");
+	$id=1;
+	
+	if (!(Usuario::existeUsuario($usuario->getEmail()))){
+		
+		
+							//INSERT INTO `grupo10`.`usuario` (`idusuario`, `nombre`, `apellido`, `email`, `fecha_alta`, `idtipo`, `password`, `nombreusuario`);
+		
+		
+		$res = $db->prepare('INSERT INTO `grupo10`.`usuario` (`idusuario`, `nombre`, `apellido`, `email`, `fecha_alta`, `idtipo`, `password`) VALUES (NULL,:nombre,:apellido,:email,:fecha_alta,:idtipo,:pass)');
+	
+         $res->bindParam(':nombre', $usuario->getNombre());
+		  $res->bindParam(':apellido',$usuario->getApellido() );
+		 $res->bindParam(':email', $usuario->getEmail());
+         $res->bindParam(':fecha_alta',$fecha);
+		  $res->bindParam(':idtipo', $id);
+		  	 $res->bindParam(':pass', $usuario->getPass());
+         
+		  
+            $res->execute();	
+			$db=null;
+			return $usuario;
+		}
+		else{
+			return null;
+			$mensaje="Usuario/adminiustrador existente";
+			exit;
+	}
+	}
+	
 	// RECUPERAR EL TIPO te imprimiria todo lo del usuario + el tipo (usuario,administrador,usuario eliminado,administrador eliminado) //
 	
 	public static function recuperarTipo($id)
 	{
-	print_r ($id);
+	
 	$db=conectaDb();
 	$res = $db->prepare('SELECT * FROM tipo_usuario INNER JOIN usuario
 	WHERE (:id = usuario.idusuario)AND (usuario.idtipo = tipo_usuario.idtiposuario)');
@@ -183,6 +217,32 @@ class Usuario
 		return $a;
 	
 	}
+	public static function TieneSubasta($id)
+	{
+	$db=conectaDb();
+
+	$res = $db->prepare('select COUNT(u.idusuario) as ofertas
+from usuario u , subasta s 
+where (( u.idusuario = s.idusuariosub) and ( s.idestadosub = 1 ) and ( u.idusuario = :id ))
+group by u.idusuario');
+	$res->bindParam(':id', $id);
+	
+		  $res->execute();
+	
+		if ($row = $res->fetch()){
+			
+			$a=$row[0];
+			
+		}
+		else {
+	
+			return false; 
+		}
+			
+		$db= null;
+		return $a;
+	} 
+
 	
 	//baja logica idtipo=4 es el id que corresponde a Usuario Eliminado mirar base de datos
 	public static function eliminarUsuario($usuarioId){
@@ -209,7 +269,7 @@ class Usuario
 	public static function recuperarUsuariosTodos()
 	{
 	$db=conectaDb();
-	$res = $db->prepare('SELECT * from usuario INNER JOIN tipo_usuario where tipo_usuario.idtipousuario = usuario.idtipo');
+	$res = $db->prepare('SELECT * from usuario INNER JOIN tipo_usuario where tipo_usuario.idtipousuario = usuario.idtipo and tipo_usuario.idtipousuario=2 ORDER BY fecha_alta');
 	 $res->execute();
 		if (($row = $res->fetch())){
 			$i=0;
@@ -311,6 +371,131 @@ class Usuario
 		return $a;
 		
 	}
+	public static function recuperarEstadoUsuario($id)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('SELECT u.descripcion from tipo_usuario u INNER JOIN usuario us ON u.idtipousuario=:id');
+	 $res->bindParam(':id', $id);
+	$res->execute();
+	if (($row = $res->fetch())){
+	    $row = $res->fetch();
+		  }
+			else{
+			return null;
+			}
+	return $row[0];
+	}
+	public static function filtrarPorFechas($fechainicio,$fechafin)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `usuario` WHERE `fecha_alta` >= '$fechainicio' AND `fecha_alta` <= '$fechafin' AND idtipo=2");
+	
+		  $res->execute();
+		 
+	if (($row = $res->fetch())){
+			$i=0;
+			
+			  $objArrayConsult = array();
+			  do
+			  {
+				
+				  $objConsult = Usuario::buildFromBD($row);
+				
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+public static function filtrarPorFechasFin($fechafin)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `usuario` WHERE `fecha_alta` <= '$fechafin' AND idtipo=2");
+	
+		  $res->execute();
+		 
+	if (($row = $res->fetch())){
+			$i=0;
+			
+			  $objArrayConsult = array();
+			  do
+			  {
+				
+				  $objConsult = Usuario::buildFromBD($row);
+				
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+public static function filtrarPorFechasInicio($fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `usuario` WHERE `fecha_alta` >= '$fechainicio' AND idtipo=2");
+	
+		  $res->execute();
+		 
+	if (($row = $res->fetch())){
+			$i=0;
+			
+			  $objArrayConsult = array();
+			  do
+			  {
+				
+				  $objConsult = Usuario::buildFromBD($row);
+				
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+public static function filtrarPorFechaInicio($fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `usuario` WHERE `fecha_alta` = '$fechainicio' AND idtipo=1");
+	
+		  $res->execute();
+	if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Usuario::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+
+
 }
 
 

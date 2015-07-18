@@ -40,7 +40,7 @@ $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => '
 'Admin' => 'Admin','ModificarDatos' => 'Modificar Datos Propios','ManejoUsuario' => 'Gestion De Usuarios',
 'ManejoCategoria' => 'Gestion de Categorias','VerComentarios' => 'Listado de Comentarios',
 'VerOfertas' => 'Listado de Ofertas','VerSubastas' => 'Ver Subastas',
-'AgregarAdmin' => 'Gestion de Administradores',
+'AgregarAdmin' => 'Gestion de Administradores','Contacto'=>$contacto,
 
 ));
 

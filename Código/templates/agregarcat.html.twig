@@ -17,10 +17,14 @@ session_start();
 <link href="../estilos/style.css" rel="stylesheet" type="text/css" media="all"/>
 {% endblock %}
 {% block javascripts %}
-<script type="text/javascript" src="../javascript/jquery-1.9.0.min.js"></script> 
+ <script type="text/javascript" src="../javascript/jquery-1.9.0.min.js"></script> 
 <script src="../javascript/jquery.openCarousel.js" type="text/javascript"></script>
 <script type="text/javascript" src="../javascript/easing.js"></script>
 <script type="text/javascript" src="../javascript/move-top.js"></script>
+<script type="text/javascript" src="../javascript/validarFechas.js"></script>
+<script type="text/javascript" src="../javascript/pordios.js"></script>
+<script type="text/javascript" src="../javascript/bootstrap.min.js"></script>
+<script type="text/javascript" src="../javascript/jquery.min.js"></script>
 {% endblock %}
 </head>
 <body>
@@ -121,13 +125,13 @@ google_color_text = "000000";
 
 
 
-<script type="text/javascript" src="../javascript/editcheck.js"></script>
 
-<form method="POST" name="form1" onSubmit="return valforms(this)" action="../categoria/agregarcategoria.php">
 
+<form method="POST" name="form1" onSubmit="return pordios()" action="../categoria/agregarcategoria.php">
+ <h7>{{Informar}} </h7><br>
 Agregar categoria:
 
-<input type=text name="titulo" class="form-control2" id="titulo" id=size=20  maxlength=50 onChange="return valforms(this.form,this)" editcheck="type=alpha;req=Y=Por favor ingrese su nombre;cvt=UTC" required/>
+<input type=text name="titulo" class="form-control2" id="titulo" id=size=20  maxlength=50 onChange="return valforms(this.form,this)" editcheck="type=email;req=Y=Por favor ingrese su nombre;cvt=UTC" >
 
 
  

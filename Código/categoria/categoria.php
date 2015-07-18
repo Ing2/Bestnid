@@ -52,12 +52,12 @@ public function setIdEstadoCategoria($id)
   	return new Categoria($userBD['idcategoria'],$userBD['contenido_cat'],$userBD['idestadocat']);
   }
  
-	public static function existeCategoria($id)
+	public static function existeCategoria($contenidoCat)
 	{
 	$db=conectaDb();
 
-	$res = $db->prepare('SELECT * FROM categoria WHERE idcategoria=:id');
-	$res->bindParam(':id', $id);
+	$res = $db->prepare('SELECT * FROM categoria WHERE contenido_cat=:contenidocategoria AND idestadocat=1');
+	$res->bindParam(':contenidocategoria', $contenidoCat);
 	
 		  $res->execute();
 	
@@ -81,7 +81,7 @@ public static function altaCategoria($categoria)
 	
 	
 	
-	if (!(Categoria::existeCategoria($categoria->getIdCategoria()))){
+	if (!(Categoria::existeCategoria($categoria->getContenidoCategoria()))){
 		
 		
 							
@@ -119,7 +119,7 @@ public static function altaCategoria($categoria)
 	public static function recuperarCategoriasActivas()
 	{
 	$db=conectaDb();
-	$res = $db->prepare('SELECT * from categoria where idestadocat=1');
+	$res = $db->prepare('SELECT * from categoria where idestadocat=1 order by contenido_cat');
 	 $res->execute();
 		if (($row = $res->fetch())){
 			$i=0;
@@ -197,11 +197,61 @@ public static function altaCategoria($categoria)
 		return $a;
 		
 	}
+
+
+ public static function modificarCategoria($con, $idcategoria)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare('UPDATE grupo10.categoria SET contenido_cat = :con WHERE categoria.idcategoria = :id and categoria.idestadocat=1;');
+	$res->bindParam(':con',$con);
+	$res->bindParam(':id',$idcategoria);
+	
+	
+	
+
+	$res->execute();
+		if (($row = $res->fetch())){
+			$a=$row;
+			
+			}
+		else {
+			return null; 
+		}
+		$db=null;
+		return $a;
+		
+	}
+
+	public static function TieneSubasta($id)
+	{
+	$db=conectaDb();
+
+	$res = $db->prepare('select COUNT(c.idcategoria)
+from categoria c , subasta s 
+where c.idcategoria = s.idcategoriasub and s.idestadosub=1 and c.idcategoria=:id
+group by c.idcategoria');
+	$res->bindParam(':id', $id);
+	
+		  $res->execute();
+	
+		if ($row = $res->fetch()){
+			
+			$a=$row[0];
+			
+		}
+		else {
+	
+			return false; 
+		}
+			
+		$db= null;
+		
+			return $a;
+		
+		
+	} 
+
 }
-
-
-
-
-
 ?>
 	

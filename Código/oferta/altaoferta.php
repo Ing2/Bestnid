@@ -6,6 +6,7 @@ require_once '../subasta/subasta.php';
 require_once '../sesion/sesion.php';
 require_once '../seguridad.php';
 require_once 'oferta.php';
+require_once '../comentario/comentario.php';
 
 if (!(isset($_SESSION['UserLogged'])))
    {
@@ -28,7 +29,7 @@ else
 	$cerrarsesion='Cerrar Sesion';
 	$micuenta='Mi Cuenta';
 	$bienvenido='Bienvenido:';
-	$contacto=null;
+	$contacto='Contacto';
 	$iniciarsesion=null;
 	$registrarse=null;
 	$sobrebestnid=null;
@@ -47,7 +48,9 @@ $categorias=Categoria::recuperarCategoriasActivas();
 $subastas=Subasta::recuperarSubasta($idsubasta);
 $fotos=Subasta::recuperarFotos($idsubasta);
 $aceptada='Su Subasta fue enviada con exito';
-
+$comentarios=Comentario::recuperarComentariosParaSubasta($idsubasta);
+$comentarioagregado=null;
+$subastasRandom=Subasta::recuperarSubastasActivasRandom($idsubasta);
 
 
 
@@ -63,8 +66,8 @@ $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => '
 'sobrebestnid'=>$sobrebestnid,'contacto'=>$contacto,
 'ordenar'=>'Si lo desea puede ordenar nuestras subastas por alguno de los siguientes criterios:','tipo'=>$tipo,
 'fotos' => $fotos,'subastas'=>$subastas,
-'aceptada'=>$aceptada,
-
+'aceptada'=>$aceptada,'tipo'=>$tipo,'subastasrandom'=>$subastasRandom, 'Contacto'=>$contacto,
+'comentarios'=>$comentarios,
 
 ));
 ?>

@@ -184,7 +184,7 @@ public function setIdSubastaOferta($sub)
 			}
 		$db=null;
 		return $objArrayConsult;
-		}
+    }
 		
   public static function recuperarOfertasTodas()
 	{
@@ -208,6 +208,30 @@ public function setIdSubastaOferta($sub)
 		$db=null;
 		return $objArrayConsult;
 		}	
+		
+	  public static function recuperarOfertasActivasParaUnUsuario($id)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('SELECT * from Oferta where oferta.idusuarioofer=:id and oferta.idestadoofer=1');
+	$res->bindParam(':id',$id);
+	 $res->execute();
+		if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Oferta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;
+		}		
 		
 		
 		
@@ -245,6 +269,28 @@ public function setIdSubastaOferta($sub)
 		
 	}
 	
+	   public static function modificarOferta($monto,$idoferta)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('UPDATE grupo10.oferta SET monto=:monto WHERE oferta.idoferta=:id');
+	$res->bindParam(':monto',$monto);
+	$res->bindParam(':id',$idoferta);
+	
+	$res->execute();
+		if (($row = $res->fetch())){
+			$a=Oferta::buildFromBD($row);
+			
+			}
+		else {
+			return null; 
+		}
+		$db=null;
+		return $a;
+		
+	}
+	
+	
+	
 	
 		 public static function controlarOfertaParaUsuario($idsubasta,$idusuario)
 	{
@@ -271,8 +317,33 @@ group by s.idsubasta');
 		$db= null;
 		return $a;		
 	}
-	
 
+
+	
+		 public static function devolverTitulo($idsubastaofer)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('SELECT s.titulo FROM subasta s inner join oferta o on s.idsubasta=o.idsubastaofer where o.idsubastaofer=:idsub');
+	
+		$res->bindParam(':idsub', $idsubastaofer);
+
+		  $res->execute();
+	
+		if ($row = $res->fetch()){
+			
+			$a=$row[0];
+			
+		}
+		else {
+	
+			return false; 
+		}
+			
+		$db= null;
+		return $a;		
+	}
+	
+	
 	
 	
 	
@@ -306,7 +377,85 @@ group by s.idsubasta');
 		return false;}		
 	}
 	
+
+  public static function recuperarOfertasParaUnaSubasta($id)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('SELECT * FROM `oferta` where idsubastaofer=:id');
+		$res->bindParam(':id', $id);
+	 $res->execute();
+		if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Oferta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;
+	}
+
+	public static function eliminarUsuarioOferta($usuarioId){
+	$db=conectaDb();
+         	$res = $db->prepare('UPDATE oferta o SET o.idestadoofer=2 WHERE (o.idusuarioofer=:id)');
+		 $res->bindParam(':id', $usuarioId);
+			$res->execute();
+         	$db=null;
+			return true;
+			exit;
+	}
+	//baja logica idtipo=4 es el id que corresponde a ofertas de una subasta a un usuario eliminado mirar base de datos
+	public static function eliminarUsuarioSubastaOferta($usuarioId){
+	$db=conectaDb();
+         	$res = $db->prepare('update oferta o INNER JOIN subasta s on o.idsubastaofer = s.idsubasta set o.idestadoofer = 2 where s.idusuariosub =:id');
+		 $res->bindParam(':id', $usuarioId);
+			$res->execute();
+         	$db=null;
+			return true;
+			exit;
+	}
+	
+	
+
+	public static function pasarOfertaASinExito($IdSubasta){
+	$db=conectaDb();
+         	$res = $db->prepare('UPDATE `grupo10`.`oferta` SET `idestadoofer` = 3 WHERE oferta.idsubastaofer = :id');
+		 $res->bindParam(':id', $IdSubasta);
+			$res->execute();
+         	$db=null;
+			return true;
+			exit;
+	}
+		public static function pasarOfertaAGanadora($IdGanadora){
+	$db=conectaDb();
+         	$res = $db->prepare('UPDATE `grupo10`.`oferta` SET `idestadoofer` = 4 WHERE oferta.idoferta = :id');
+		 $res->bindParam(':id', $IdGanadora);
+			$res->execute();
+         	$db=null;
+			return true;
+			exit;
+	}
+	public static function eliminarSubastaOferta($subasta){
+	$db=conectaDb();
+         	$res = $db->prepare('UPDATE oferta o SET o.idestadoofer=2 WHERE (o.idsubastaofer=:id)');
+		 $res->bindParam(':id', $subasta);
+			$res->execute();
+         	$db=null;
+			return true;
+			exit;
+	}
+
+	
+
 }
+
 
 ?>
 	

@@ -32,11 +32,12 @@ else
 	$cerrarsesion='Cerrar Sesion';
 	$micuenta='Mi Cuenta';
 	$bienvenido='Bienvenido:';
-	$contacto=null;
+	$contacto='Contacto';
 	$iniciarsesion=null;
 	$registrarse=null;
 	$sobrebestnid=null;
 }
+
 $cuerpo = $_POST['cuerpocomentario'];
 $usuariocomentario = $_POST['idusuariocomentario'];
 $subastacomentario =  $_POST['idsubastacomentario'];
@@ -55,7 +56,7 @@ $subastas=Subasta::recuperarSubasta($idsubasta);
 $fotos=Subasta::recuperarFotos($idsubasta);
 $comentarios=Comentario::recuperarComentariosParaSubasta($idsubasta);
 $comentarioagregado='Su comentario fue agregado';
-
+$subastasRandom=Subasta::recuperarSubastasActivasRandom($idsubasta);
 
 $aceptada=null;
 
@@ -72,7 +73,7 @@ $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => '
 'ordenar'=>'Si lo desea puede ordenar nuestras subastas por alguno de los siguientes criterios:','tipo'=>$tipo,
 'fotos' => $fotos,'subastas'=>$subastas,
 'aceptada'=>$aceptada,'comentarioagregado'=>$comentarioagregado,'idusuario'=>$idusuario,
-'comentarios'=>$comentarios,
+'comentarios'=>$comentarios,'tipo'=>$tipo,'subastasrandom'=>$subastasRandom, 'Contacto'=>$contacto,
 
 
 ));

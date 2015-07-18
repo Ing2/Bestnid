@@ -229,7 +229,30 @@ public function setTitulo($tit)
 		$db=null;
 		return $objArrayConsult;
 		}	
-		
+	
+public static function recuperarSubastasFinalizadasParaUnUsuario($id)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('SELECT * from subasta where idestadosub=5 and idusuariosub=:id');
+     $res->bindParam(':id', $id);
+	 $res->execute();
+		if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;
+		}		
 		
 		
 		
@@ -237,7 +260,7 @@ public function setTitulo($tit)
   public static function recuperarSubastasTodas()
 	{
 	$db=conectaDb();
-	$res = $db->prepare('SELECT * from subasta');
+	$res = $db->prepare('SELECT * from subasta ORDER BY titulo');
 	 $res->execute();
 		if (($row = $res->fetch())){
 			$i=0;
@@ -798,7 +821,7 @@ public static function filtrarPorFechas($fechainicio,$fechafin)
 	{
 	$db=conectaDb();
 	
-	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` >= '$fechainicio' AND `fecha_fin` <= '$fechafin' AND idestadosub=1");
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` >= '$fechainicio' AND `fecha_fin` <= '$fechafin' order by titulo");
 	
 		  $res->execute();
 	if (($row = $res->fetch())){
@@ -827,7 +850,7 @@ public static function filtrarPorFechaInicio($fechainicio)
 	{
 	$db=conectaDb();
 	
-	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` = '$fechainicio' AND idestadosub=1");
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` >= '$fechainicio' AND idestadosub=1 order by titulo");
 	
 		  $res->execute();
 	if (($row = $res->fetch())){
@@ -1148,7 +1171,7 @@ public static function filtrarPorFechaFin($fechafin)
 	{
 	$db=conectaDb();
 	
-	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_fin` = '$fechafin' AND idestadosub=1");
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_fin` <= '$fechafin' order by titulo");
 	
 		  $res->execute();
 	if (($row = $res->fetch())){
@@ -1862,12 +1885,13 @@ public static function modificarSubastaTituloyCategoria($idsubasta,$tit,$cat)
 		
 	}
 	
-	 public static function controlarSubastas()
+	 public static function pasarAsinExito($idsubasta)
 	{
 	$fechafin=date("Y-m-j");
 	$db=conectaDb();
-	$res = $db->prepare('UPDATE grupo10.subasta SET idestadosub = 4 WHERE subasta.idestadosub = 1 and subasta.fecha_fin < :fechafin;');
+	$res = $db->prepare('UPDATE grupo10.subasta SET idestadosub = 4 WHERE subasta.idestadosub = 1 and subasta.fecha_fin < :fechafin and subasta.idsubasta=:id');
 	$res->bindParam(':fechafin',$fechafin);
+	$res->bindParam(':id',$idsubasta);
 
 	
 
@@ -1883,6 +1907,51 @@ public static function modificarSubastaTituloyCategoria($idsubasta,$tit,$cat)
 		return $a;
 		
 	}
+
+		 public static function pasarAEspera($idsubasta)
+	{
+	$fechafin=date("Y-m-j");
+	$db=conectaDb();
+	$res = $db->prepare('UPDATE grupo10.subasta SET idestadosub = 5 WHERE subasta.idestadosub = 1 and subasta.fecha_fin < :fechafin and subasta.idsubasta=:id');
+	$res->bindParam(':fechafin',$fechafin);
+	$res->bindParam(':id',$idsubasta);
+	
+
+	$res->execute();
+		if (($row = $res->fetch())){
+			$a=$row;
+			
+			}
+		else {
+			return null; 
+		}
+		$db=null;
+		return $a;
+		
+	}
+			 public static function pasarAExito($idsubasta)
+	{
+
+	$db=conectaDb();
+	$res = $db->prepare('UPDATE grupo10.subasta SET idestadosub = 3 WHERE subasta.idestadosub = 5 and subasta.idsubasta=:id');
+	$res->bindParam(':id',$idsubasta);
+	
+
+	$res->execute();
+		if (($row = $res->fetch())){
+			$a=$row;
+			
+			}
+		else {
+			return null; 
+		}
+		$db=null;
+		return $a;
+		
+	}
+
+
+
 	 public static function controlarFoto($idsubasta)
 	{
 	$db=conectaDb();
@@ -1986,6 +2055,98 @@ group by s.idsubasta');
 		{return 0;}
 	}
 	
+	public static function eliminarUsuarioSubasta($usuarioId){
+	$db=conectaDb();
+         	$res = $db->prepare('update subasta set idestadosub=2 where idusuariosub=:id');
+		 $res->bindParam(':id', $usuarioId);
+			$res->execute();
+         	$db=null;
+			return true;
+			exit;}
+			
+	public static function filtrarPorFechasFin($fechafin)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_fin` <= '$fechafin'");
+	
+		  $res->execute();
+		 
+	if (($row = $res->fetch())){
+			$i=0;
+			
+			  $objArrayConsult = array();
+			  do
+			  {
+				
+				  $objConsult = Subasta::buildFromBD($row);
+				
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}
+public static function filtrarPorFechasInicio($fechainicio)
+	{
+	$db=conectaDb();
+	
+	$res = $db->prepare ("SELECT * FROM `subasta` WHERE `fecha_inicio` >= '$fechainicio'");
+	
+		  $res->execute();
+		 
+	if (($row = $res->fetch())){
+			$i=0;
+			
+			  $objArrayConsult = array();
+			  do
+			  {
+				
+				  $objConsult = Subasta::buildFromBD($row);
+				
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;	
+
+}		
+
+public static function recuperarSubastasActivasRandom($idsubasta)
+	{
+	$db=conectaDb();
+	$res = $db->prepare('SELECT * from subasta where idestadosub=1 and idsubasta<>:id ORDER BY RAND() LIMIT 2');
+	$res->bindParam(':id', $idsubasta);
+	 $res->execute();
+		if (($row = $res->fetch())){
+			$i=0;
+			  $objArrayConsult = array();
+			  do
+			  {
+				 
+				  $objConsult = Subasta::buildFromBD($row);
+				  $objArrayConsult[$i] = $objConsult; 
+				  $i = $i + 1;
+				}while(($row = $res->fetch()));
+			}
+			else{
+			return null;
+			}
+		$db=null;
+		return $objArrayConsult;
+		}
+
+
+
 
 
 }

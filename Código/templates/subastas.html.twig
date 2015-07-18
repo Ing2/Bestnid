@@ -104,14 +104,6 @@
 						
 						
 						
-						{% if MiCuenta is not null %}
-						<li>
-							<a href="#">{{MiCuenta}}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span></a>
-					
-							
-							
-						</li>
-						{% endif %}
 						
 						{% if CerrarSesion is not null %}
 						<li>
@@ -121,6 +113,10 @@
 						
 						<li>
 							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
+						</li>
+						
+						<li>
+							<a href="../mail/altamail.php">{{Contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
 						</li>
 						
 						{% if (nombre is not null) and (apellido is not null) %}		

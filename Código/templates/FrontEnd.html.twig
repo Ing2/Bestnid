@@ -56,20 +56,11 @@ session_start();
 						<a href="../templates/index.php">{{Home}}<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>	
 						</li>
 						
-						<li>
-							<a href="#">{{Subastas}}</a>
-							<ul>
-								
-							</ul>
-						</li>
 						
 						
 						
-							{% if contacto is not null %}		
-						<li>
-							<a href="../contacto/contacto.php">{{contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
-						</li>
-						{% endif %}
+						
+					
 						
 						
 						
@@ -87,14 +78,7 @@ session_start();
 						
 						
 						
-						{% if MiCuenta is not null %}
-						<li>
-							<a href="../ayuda/Ayuda.php">{{MiCuenta}}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span></a>
 					
-							
-							
-						</li>
-						{% endif %}
 						
 						{% if CerrarSesion is not null %}
 						<li>
@@ -104,6 +88,10 @@ session_start();
 						
 						<li>
 							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
+						</li>
+						
+						<li>
+							<a href="../mail/altamail.php">{{Contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
 						</li>
 						
 						
@@ -140,11 +128,11 @@ session_start();
 						   <ul>
 						 <li ><a href="../usuario/ListadoSubastasActivas.php">Mis Subastas Activas</a></li>
 							     <li><a href="../subasta/altasubasta.php">Crear Subasta</a></li>				         
-								<li><a href="#">Modificar Datos Personales</a></li>
-								<li><a href="#">Ver Mi Historial de ofertas</a></li>
-			                    <li><a href="#">Ver Ofertas Actuales</a></li>
-								 <li><a href="#">Ver Mis Comentarios</a></li>
-								<li ><a href="#">Darme de baja</a></li>
+								
+								
+			                    <li><a href="../usuario/ListadoOfertasActivas.php">Ver Ofertas Actuales</a></li>
+								 
+							
 								
 						
 						  	 </ul>
@@ -157,11 +145,72 @@ session_start();
 				
 	            Bienvenido:<br>
 				{{apellido}} {{nombre}}
+				{% if informar is not null %}
+				<div class="alert alert-success"><span class="glyphicon glyphicon" aria-hidden="true"></span>
+					{{informar}}
+					
+					
+					</div>
+					{% endif %}
 				
-		
+				{% if subastas is not null %}
+
+				<div class="panel-headingg">Subastas a la Espera de un ganador</div><br>
+				        <div class="alert alert-warning" role="alert">Elija un ganador para su subasta!!!</div><br>
+
+				
+				<table class="table table-bordered">
+				<thead>
+                <tr>
+                <th>Titulo</th>
+                <th>Descripcion</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+
+				<th>Elegir Ganador</th>
+				
+				
+                </tr>
+                </thead>
+				<tbody>
+				{% for subasta in subastas %} 
+						      <tr class="info">
+				 <td>{{subasta.getTitulo()}}</td>
+				 <td>{{subasta.getDescripcion()}}</td>
+				 <td>{{subasta.getFechaInicio()}}</td>
+				 <td>{{subasta.getFechaFin()}}</td>	
+				 <td>
+				   <form  action="../subasta/verrazones.php" method="post"> 
+				        <input name="id" id="id" type="hidden" value="{{subasta.getIdSubasta()}}" />
+						
+						<input type="submit" class="btn btn-primary" value="Razones">
+                        </form>
+				 
+				 </td>
+	               
+				  
+				 
+				  
+				 
+			   
+			
+			   
+				  
+				  
+				  
+				  
 				
 			   
-			  
+			
+			   
+			   
+			   
+				{%endfor %}  
+
+       </tbody>
+</table>
+		   
+	{% endif %}		 
 				
 				
 			

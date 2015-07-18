@@ -26,7 +26,7 @@ else
 	$cerrarsesion='Cerrar Sesion';
 	$micuenta='Mi Cuenta';
 	$bienvenido='Bienvenido:';
-	$contacto=null;
+	$contacto='Contacto';
 	$iniciarsesion=null;
 	$registrarse=null;
 	$sobrebestnid=null;
@@ -36,6 +36,8 @@ else
 	$apellido=$_SESSION['Apellido'];
 	$cerrarsesion='Cerrar Sesion';
 	$bienvenido='Bienvenido:';
+	
+
 
 $categorias=Categoria::recuperarCategoriasActivas();
 	Twig_Autoloader::register();
@@ -52,7 +54,7 @@ $template->display(array('Bestnid' => 'Bestnid','Buscar' => 'Buscar','Home' => '
 'ManejoCategoria' => 'Gestion de Categorias','VerComentarios' => 'Listado de Comentarios',
 'VerOfertas' => 'Listado de Ofertas','VerSubastas' => 'Ver Subastas',
 'AgregarAdmin' => 'Gestion de Administradores',
-'nombre'=>$nombre,'apellido'=>$apellido,'bienvenido'=>$bienvenido,'MiCuenta' => 'Mi Cuenta','categorias'=>$categorias,
+'nombre'=>$nombre,'apellido'=>$apellido,'MiCuenta' => 'Mi Cuenta','categorias'=>$categorias, 'AltaAdmin'=>'Agregar administrador', 'Contacto'=>$contacto,
 ));
 
 

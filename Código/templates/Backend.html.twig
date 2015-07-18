@@ -56,24 +56,9 @@ session_start();
 						<a href="../templates/index.php">{{Home}}<span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>	
 						</li>
 						
-						<li>
-							<a href="#">{{Subastas}}</a>
-							<ul>
-								
-							</ul>
-						</li>
+					
 						
-							{% if sobrebestnid is not null %}		
-						<li>
-							<a href="../sobrebestnid/sobrebestnid.php">{{sobrebestnid}}</a>
-						</li>
-						{% endif %}
 						
-							{% if contacto is not null %}		
-						<li>
-							<a href="../contacto/contacto.php">{{contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
-						</li>
-						{% endif %}
 						
 						
 						
@@ -102,14 +87,7 @@ session_start();
 						
 						
 						
-						{% if MiCuenta is not null %}
-						<li>
-							<a href="../sesion/controlBackEnd.php">{{MiCuenta}}<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span></a>
 					
-							
-							
-						</li>
-						{% endif %}
 						
 						{% if CerrarSesion is not null %}
 						<li>
@@ -121,13 +99,17 @@ session_start();
 							<a href="../ayuda/Ayuda.php">{{Ayuda}}<span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></a>
 						</li>
 						
+						<li>
+							<a href="../mail/altamail.php">{{Contacto}}<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+						</li>
+						
 						{% if (nombre is not null) and (apellido is not null) %}		
 						<li>
 							
 							{% if tipo==1 %}
 							<a href="../sesion/controlBackEnd.php">{{bienvenido}}{{nombre}} {{apellido}}<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
 							{% else %}
-							<a href="../sesion/controlFrontEnd.php">{{bienvenido}}{{nombre}} {{apellido}}<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+							<a href="../sesion/controlBackend.php">{{bienvenido}}{{nombre}} {{apellido}}<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
 							{% endif %}
 						</li>
 						{% endif %}
@@ -154,12 +136,12 @@ session_start();
 						   <ul>
 						  	   
 							   <li ><a href="../admin/listadosubastas.php">Listado de Subastas</a></li>
-							     <li><a href="#">{{ModificarDatos}}</a></li>				         
-								<li><a href="#">{{ManejoUsuario}}</a></li>
-								<li><a href="#">{{ManejoCategoria}}</a></li>
-			                    <li><a href="#">{{VerComentarios}}</a></li>
-								 <li><a href="#">{{VerOfertas}}</a></li>
-								<li ><a href="#">{{VerSubastas}}</a></li>
+							     				         
+								<li><a href="../admin/ListadoUsuarios.php">{{ManejoUsuario}}</a></li>
+								<li><a href="../categoria/categorias.php">{{ManejoCategoria}}</a></li>
+			                    <li><a href="../admin/altaadmin.php">{{AltaAdmin}}</a></li>
+								
+								
 								
 						
 						  	 </ul>
